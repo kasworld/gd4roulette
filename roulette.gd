@@ -2,10 +2,17 @@ extends Node3D
 class_name Roulette
 
 func init(r :float, d :float, fsize :float) -> void:
-	var plane = Global3d.new_cylinder(d*0.5, r,r, Global3d.get_color_mat(Color.GREEN ) )
-	plane.position.y = -d*0.25
+	var plane = Global3d.new_cylinder(d, r,r, Global3d.get_color_mat(Color.GREEN ) )
+	plane.position.y = -d
 	add_child(plane)
-	add_bar(0, 0, r/2, d*2, d)
+	add_bar(0, r*0.1, r*0.9, d, d)
+
+	var cc = Global3d.new_cylinder(d*0.5,r/50,r/50, Global3d.get_color_mat(Color.BLUE))
+	cc.position.y = d*0.5/2
+	add_child(cc)
+	var cc2 = Global3d.new_torus(r/20, r/40, Global3d.get_color_mat(Color.RED))
+	cc2.position.y = d*0.5/2
+	add_child( cc2 )
 
 func add_bar(deg :float, r1 :float, r2 :float, w :float, h:float):
 	var mat = Global3d.get_color_mat(Color.WHITE)
@@ -17,5 +24,4 @@ func add_bar(deg :float, r1 :float, r2 :float, w :float, h:float):
 	var bar_rot = deg_to_rad(-deg)
 	bar.rotation.y = bar_rot
 	bar.position = bar_center
-	bar.position.y = bar_len/2
 	add_child(bar)
