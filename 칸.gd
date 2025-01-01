@@ -34,7 +34,7 @@ func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String
 	mesh.font_size = 반지름 * 0.07
 	mesh.text = 글
 	mesh.material = Global3d.get_color_mat(색깔)
+	mesh.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_RIGHT
 	$"글씨".mesh = mesh
 	$"글씨".rotation = Vector3(-PI/2,PI/2,-PI/2)
-	var 위치 = 반지름*(50.0 - 글.length())/55.0
-	$"글씨".position = Vector3(위치, 깊이/2, 0)
+	$"글씨".position = Vector3(반지름, 깊이/2, 0)
