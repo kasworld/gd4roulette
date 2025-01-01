@@ -16,7 +16,9 @@ func 칸들만들기(칸수 :int, 반지름 :float, 깊이 :float, 선색깔 :Co
 		#var i = 0
 		var 칸각도 = 360.0/칸수
 		var deg = 칸각도 * i
-		var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이, NamedColorList.color_list.pick_random()[0], "%d" % i)
+		var co = NamedColorList.color_list.pick_random()
+		var t = "%s" % [co[1]]
+		var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이,co[0] , t)
 		l.rotation.y = deg_to_rad(-deg)
 		add_child(l)
 
