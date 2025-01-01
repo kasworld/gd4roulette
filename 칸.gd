@@ -22,8 +22,8 @@ func 선만들기(반지름 :float, 깊이 :float, 색깔 :Color)->void:
 	mesh.size = Vector3(반지름*(선끝비 - 선시작비), 깊이, 선폭)
 	mesh.material = Global3d.get_color_mat(색깔)
 	$"시작선".mesh = mesh
-	$"시작선".rotation.y = deg_to_rad(-칸각도/2)
-	var rad = deg_to_rad(-칸각도/2 + 90)
+	$"시작선".rotation.y = deg_to_rad(칸각도/2)
+	var rad = deg_to_rad(칸각도/2 + 90)
 	$"시작선".position = Vector3(sin(rad)*반지름*(선끝비 + 선시작비)/2, 깊이/2, cos(rad)*반지름*(선끝비 + 선시작비)/2)
 
 func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String) -> void:
@@ -36,5 +36,5 @@ func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String
 	mesh.text = 글
 	mesh.material = Global3d.get_color_mat(색깔)
 	$"글씨".mesh = mesh
-	$"글씨".rotation = Vector3(-PI/2,-PI/2,-PI/2)
-	$"글씨".position = Vector3(0, 깊이/2, 반지름)
+	$"글씨".rotation = Vector3(-PI/2,0,-PI/2)
+	$"글씨".position = Vector3(반지름, 깊이/2, 0)
