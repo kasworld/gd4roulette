@@ -8,12 +8,11 @@ var 칸들 :Array[칸]
 func init(칸수 :int, 반지름 :float, 깊이 :float) -> void:
 	배경원판만들기(반지름, 깊이, Color.DARK_GREEN)
 	중앙장식만들기(반지름, 깊이, Color.GOLD, Color.GOLDENROD)
-	칸들만들기(칸수, 반지름, 깊이, Color.WHITE)
+	칸들만들기(칸수, 반지름, 깊이)
 
-func 칸들만들기(칸수 :int, 반지름 :float, 깊이 :float, 선색깔 :Color) -> void:
+func 칸들만들기(칸수 :int, 반지름 :float, 깊이 :float) -> void:
 	칸들 = []
 	for i in 칸수:
-		#var i = 0
 		var 칸각도 = 360.0/칸수
 		var deg = 칸각도 * i
 		var co = NamedColorList.color_list.pick_random()

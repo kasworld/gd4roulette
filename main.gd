@@ -29,8 +29,6 @@ func _process(_delta: float) -> void:
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*sect_width/2 ,sect_width, cos(t)*sect_width/2  )
 		$Camera3D.look_at(Vector3.ZERO)
-	#$ClockSect.rotate_x(_delta)
-	#$Calendar3d.rotate_z(_delta)
 
 # esc to exit
 func _unhandled_input(event: InputEvent) -> void:
