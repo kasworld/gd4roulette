@@ -1,4 +1,4 @@
-# 예능/놀이용 룰렛 
+# 예능/놀이/벌칙게임용 룰렛 
 
 ![alt text](doc/screenshot1.png)
 
