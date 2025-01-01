@@ -1,20 +1,32 @@
 extends Node3D
 class_name Roulette
 
+class 한칸:
+	var 시작선 :MeshInstance3D
+	var 글씨 :MeshInstance3D
+	var 시작각도 :float # degree
+	func _init(d :float, l :MeshInstance3D, t:MeshInstance3D) -> void:
+		시작각도 = d
+		시작선 = l
+		글씨 = t
+
+var 칸들 :Array[한칸]
+
 func init(r :float, d :float, fsize :float) -> void:
 	var plane = Global3d.new_cylinder(d, r,r, Global3d.get_color_mat(Color.DARK_GREEN ) )
 	plane.position.y = -d
 	add_child(plane)
-
+	칸들 = []
 	var n = 36
 	for i in n:
 		var unit = 360.0/n
 		var deg = unit * i
-		add_bar(deg, r*0.5, r, d/10, d)
+		var l = add_bar(deg, r*0.5, r, d/10, d)
 		var co = Color.RED
 		if i % 2 == 0:
 			co = Color.BLUE
-		add_text(deg+ unit/2, r*0.9, r/10, d, co, "%d" % [ i * 25 % n ] )
+		var t = add_text(deg+ unit/2, r*0.9, r/10, d, co, "%d" % [ i * 25 % n ] )
+		칸들.append(한칸.new(deg,l,t))
 
 	var cc = Global3d.new_cylinder(d,r*0.04,r*0.04, Global3d.get_color_mat(Color.GOLD))
 	cc.position.y = d/2
@@ -24,7 +36,7 @@ func init(r :float, d :float, fsize :float) -> void:
 	cc2.position.y = d/2
 	add_child(cc2)
 
-func add_bar(deg :float, r1 :float, r2 :float, w :float, h:float):
+func add_bar(deg :float, r1 :float, r2 :float, w :float, h:float) -> MeshInstance3D:
 	w = max(1,w)
 	h = max(1,h)
 	var mat = Global3d.get_color_mat(Color.WHITE)
@@ -35,11 +47,13 @@ func add_bar(deg :float, r1 :float, r2 :float, w :float, h:float):
 	bar.rotation.y = deg_to_rad(-deg)
 	bar.position = Vector3(sin(rad)*(r1+r2)/2, h/2, cos(rad)*(r1+r2)/2)
 	add_child(bar)
+	return bar
 
-func add_text(deg :float, r :float, fsize :float, h:float,co :Color, s :String):
+func add_text(deg :float, r :float, fsize :float, h:float,co :Color, s :String) -> MeshInstance3D:
 	var mat = Global3d.get_color_mat(co)
 	var rad = deg_to_rad(-deg+90)
 	var t = Global3d.new_text(fsize, h, mat, s)
 	t.rotation = Vector3(-PI/2,deg_to_rad(-deg),-PI/2)
 	t.position = Vector3(sin(rad)*r, h/2, cos(rad)*r)
 	add_child(t)
+	return t
