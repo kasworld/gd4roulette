@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqc03uxia85uv"]
+
+[ext_resource type="Script" path="res://칸.gd" id="1_0xk0q"]
+
+[node name="칸" type="Node3D"]
+script = ExtResource("1_0xk0q")
+
+[node name="시작선" type="MeshInstance3D" parent="."]
+
+[node name="글씨" type="MeshInstance3D" parent="."]
