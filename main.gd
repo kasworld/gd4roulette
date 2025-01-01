@@ -11,7 +11,7 @@ func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	sect_width = min(vp_size.x,vp_size.y)
 	var depth = sect_width/40
-	$Roulette.init(sect_width, depth, depth)
+	$Roulette.init(36, sect_width, depth)
 	$Roulette.position = Vector3(0,0,0)
 
 	$DirectionalLight3D.position = Vector3(0,sect_width,1)
