@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sjnpttkqk1qs"]
+
+[ext_resource type="Script" path="res://회전판.gd" id="1_7pkjq"]
+
+[node name="회전판" type="Node3D"]
+script = ExtResource("1_7pkjq")
