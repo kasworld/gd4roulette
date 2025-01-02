@@ -20,6 +20,7 @@ func 칸들만들기(칸수 :int, 반지름 :float, 깊이 :float) -> void:
 		var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이,co[0] , t)
 		l.rotation.y = deg_to_rad(-deg)
 		add_child(l)
+		칸들.append(l)
 
 func 배경원판만들기(반지름 :float, 깊이 :float, 원판색깔 :Color) -> void:
 	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(원판색깔))
@@ -33,3 +34,9 @@ func 중앙장식만들기(원판반지름 :float, 깊이 :float, 색깔1 :Color
 	var cc2 = Global3d.new_torus(원판반지름*0.1, 원판반지름*0.06, Global3d.get_color_mat(색깔2))
 	cc2.position.y = 깊이/2
 	add_child(cc2)
+
+func 칸강조하기(i :int)->void:
+	칸들[i].강조상태만들기()
+
+func 칸수얻기() -> int:
+	return 칸들.size()

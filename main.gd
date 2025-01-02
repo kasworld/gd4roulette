@@ -23,6 +23,10 @@ func _ready() -> void:
 	$Arrow3D.position = Vector3(0,0,판반지름*1.05)
 	reset_camera_pos()
 
+func 칸선택강조효과() -> void:
+	for i in $"회전판".칸수얻기():
+		$"회전판".칸강조하기(i)
+
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
 	$Camera3D.look_at(Vector3.ZERO)
@@ -44,6 +48,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			camera_move = !camera_move
 			if camera_move == false:
 				reset_camera_pos()
+		elif event.keycode == KEY_SPACE:
+			칸선택강조효과()
 
 var oldvt = Vector2(0,-100)
 func rot_by_accel()->void:

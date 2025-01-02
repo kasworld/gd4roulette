@@ -38,3 +38,14 @@ func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String
 	$"글씨".mesh = mesh
 	$"글씨".rotation = Vector3(-PI/2,PI/2,-PI/2)
 	$"글씨".position = Vector3(반지름, 깊이/2, 0)
+
+func 강조상태만들기() -> void:
+	$"글씨".scale = Vector3(2,2,2)
+	$Timer.start(0.1)
+
+func 강조상태끄기() -> void:
+	$"글씨".scale = Vector3(1,1,1)
+	$Timer.stop()
+
+func _on_timer_timeout() -> void:
+	강조상태끄기()
