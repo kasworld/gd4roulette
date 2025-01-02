@@ -7,6 +7,7 @@ const 선끝비 = 1.0
 
 var 칸각도 :float # degree
 var 글내용 :String
+var 강조중 :bool
 
 func init(각도 :float, 반지름 :float, 깊이 :float, 색깔 :Color, 글 :String) -> 칸:
 	글내용 = 글
@@ -39,8 +40,14 @@ func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String
 	$"글씨".rotation = Vector3(-PI/2,PI/2,-PI/2)
 	$"글씨".position = Vector3(반지름, 깊이/2, 0)
 
-func 강조상태만들기() -> void:
+func 강조상태켜기() -> void:
+	강조중 = true
 	$AnimationPlayer.play("글씨강조")
 
 func 강조상태끄기() -> void:
+	강조중 = false
 	$AnimationPlayer.play("글씨강조끄기")
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "글씨강조":
+		강조상태끄기.call_deferred()

@@ -35,8 +35,18 @@ func 중앙장식만들기(원판반지름 :float, 깊이 :float, 색깔1 :Color
 	cc2.position.y = 깊이/2
 	add_child(cc2)
 
+func 각도로칸선택하기(선택각도 :float) -> 칸:
+	var 현재각도 = -칸들[0].칸각도 /2
+	for 현재칸번호 in 칸들.size():
+		var 현재칸 = 칸들[현재칸번호]
+		if 현재각도 + 현재칸.칸각도 > 선택각도:
+			return 현재칸
+		현재각도 += 현재칸.칸각도
+	print("뭔가 잘못됬다.",선택각도)
+	return null
+
 func 칸강조하기(i :int)->void:
-	칸들[i].강조상태만들기()
+	칸들[i].강조상태켜기()
 
 func 칸강조끄기(i :int)->void:
 	칸들[i].강조상태끄기()

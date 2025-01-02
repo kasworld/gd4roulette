@@ -65,6 +65,9 @@ func rot_by_accel()->void:
 
 func rotate_all(rad :float):
 	$회전판.rotation.y = -rad
+	var 선택칸 = $"회전판".각도로칸선택하기(rad_to_deg(-rad)+90)
+	if 선택칸 != null:
+		선택칸.강조상태켜기()
 
 var 강조번호 :int
 func 칸선택강조효과() -> void:
