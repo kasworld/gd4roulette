@@ -28,11 +28,17 @@ func reset_camera_pos()->void:
 
 var camera_move = false
 func _process(_delta: float) -> void:
+	회전판돌리기()
 	회전판강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
 		$Camera3D.look_at(Vector3.ZERO)
+
+var rot_acc :float
+func 회전판돌리기() -> void:
+	$회전판.rotation.y += rot_acc
+	rot_acc *= 0.99
 
 # esc to exit
 func _unhandled_input(event: InputEvent) -> void:
@@ -44,17 +50,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if camera_move == false:
 				reset_camera_pos()
 		elif event.keycode == KEY_SPACE:
-			$Timer.start(0.01)
+			rot_acc = randfn(0, PI)
 		elif event.keycode == KEY_RIGHT:
 			$회전판.rotation.y += PI/180.0
 		elif event.keycode == KEY_LEFT:
 			$회전판.rotation.y -= PI/180.0
 
-
 func 회전판강조상태켜기() -> void:
 	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
-	if 선택칸 != null:
-		선택칸.강조상태켜기()
-
-func _on_timer_timeout() -> void:
-		$회전판.rotation.y += PI/180.0
+	선택칸.강조상태켜기()
