@@ -23,9 +23,6 @@ func _ready() -> void:
 	$Arrow3D.position = Vector3(0,0,판반지름*1.05)
 	reset_camera_pos()
 
-func 칸선택강조효과() -> void:
-	for i in $"회전판".칸수얻기():
-		$"회전판".칸강조하기(i)
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
@@ -49,7 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if camera_move == false:
 				reset_camera_pos()
 		elif event.keycode == KEY_SPACE:
-			칸선택강조효과()
+			$Timer.start(0.1)
 
 var oldvt = Vector2(0,-100)
 func rot_by_accel()->void:
@@ -68,3 +65,14 @@ func rot_by_accel()->void:
 
 func rotate_all(rad :float):
 	$회전판.rotation.y = -rad
+
+var 강조번호 :int
+func 칸선택강조효과() -> void:
+	$"회전판".칸강조하기(강조번호)
+	강조번호 +=1
+	if 강조번호 >= $"회전판".칸수얻기():
+		강조번호 = 0
+		$Timer.stop()
+
+func _on_timer_timeout() -> void:
+	칸선택강조효과()
