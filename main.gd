@@ -10,7 +10,7 @@ func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	판반지름 = min(vp_size.x,vp_size.y)
 	var depth = 판반지름/40
-	$회전판.init(36, 판반지름, depth)
+	$회전판.init(12, 판반지름, depth)
 	$회전판.position = Vector3(0,0,0)
 
 	$DirectionalLight3D.position = Vector3(판반지름,판반지름,-판반지름)

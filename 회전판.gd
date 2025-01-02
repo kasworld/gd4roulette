@@ -3,24 +3,43 @@ class_name Roulette
 
 var 칸_scene = preload("res://칸.tscn")
 
+var 반지름 :float
+var 깊이 :float
 var 칸들 :Array[칸]
 
-func init(칸수 :int, 반지름 :float, 깊이 :float) -> void:
+func init(칸수 :int, 반지름a :float, 깊이a :float) -> void:
+	반지름 = 반지름a
+	깊이 = 깊이a
 	배경원판만들기(반지름, 깊이, Color.DARK_GREEN)
 	중앙장식만들기(반지름, 깊이, Color.GOLD, Color.GOLDENROD)
-	칸들만들기(칸수, 반지름, 깊이)
+	칸들만들기(칸수)
 
-func 칸들만들기(칸수 :int, 반지름 :float, 깊이 :float) -> void:
+func 칸들만들기(칸수 :int) -> void:
 	칸들 = []
 	for i in 칸수:
-		var 칸각도 = 360.0/칸수
-		var deg = 칸각도 * i
 		var co = NamedColorList.color_list.pick_random()
-		var t = "%s" % [co[1]]
-		var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이,co[0] , t)
-		l.rotation.y = deg_to_rad(-deg)
-		add_child(l)
-		칸들.append(l)
+		칸추가하기(co[0],co[1])
+	칸위치정리하기()
+
+func 칸들지우기() -> void:
+	for i in 칸들.size():
+		remove_child(칸들[i])
+	칸들 = []
+
+func 칸추가하기(co :Color, t :String) -> void:
+	var 칸각도 = 360.0/(칸들.size()+1)
+	var deg = 칸각도 * 칸들.size()
+	var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이, co , t)
+	l.rotation.y = deg_to_rad(-deg)
+	add_child(l)
+	칸들.append(l)
+
+func 칸위치정리하기() -> void:
+	var 칸각도 = 360.0/칸들.size()
+	for i in 칸들.size():
+		칸들[i].칸각도바꾸기(칸각도)
+		var deg = 칸각도 * i
+		칸들[i].rotation.y = deg_to_rad(-deg)
 
 func 배경원판만들기(반지름 :float, 깊이 :float, 원판색깔 :Color) -> void:
 	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(원판색깔))
