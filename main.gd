@@ -2,20 +2,24 @@ extends Node3D
 
 
 var vp_size :Vector2
-var sect_width :float
+var 판반지름 :float
 
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
 
 	vp_size = get_viewport().get_visible_rect().size
-	sect_width = min(vp_size.x,vp_size.y)
-	var depth = sect_width/40
-	$회전판.init(36, sect_width, depth)
+	판반지름 = min(vp_size.x,vp_size.y)
+	var depth = 판반지름/40
+	$회전판.init(36, 판반지름, depth)
 	$회전판.position = Vector3(0,0,0)
 
-	$DirectionalLight3D.position = Vector3(0,sect_width,1)
+	$DirectionalLight3D.position = Vector3(0,판반지름,1)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
+
+	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5)
+	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
+	$Arrow3D.position = Vector3(0,0,판반지름*1.05)
 	reset_camera_pos()
 
 func reset_camera_pos()->void:
@@ -27,7 +31,7 @@ func _process(_delta: float) -> void:
 	rot_by_accel()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*sect_width/2 ,sect_width, cos(t)*sect_width/2  )
+		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
 		$Camera3D.look_at(Vector3.ZERO)
 
 # esc to exit

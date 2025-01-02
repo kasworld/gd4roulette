@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=5 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_uhxg1"]
 [ext_resource type="PackedScene" uid="uid://sjnpttkqk1qs" path="res://회전판.tscn" id="2_yllww"]
 [ext_resource type="PackedScene" uid="uid://ctqhdp0co2165" path="res://FPS/fps.tscn" id="3_4t5fo"]
+[ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow_3d.tscn" id="4_2a6nk"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
@@ -18,3 +19,5 @@ shadow_enabled = true
 directional_shadow_max_distance = 200.0
 
 [node name="FPS" parent="." instance=ExtResource("3_4t5fo")]
+
+[node name="Arrow3D" parent="." instance=ExtResource("4_2a6nk")]
