@@ -20,7 +20,7 @@ func _ready() -> void:
 
 	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5)
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
-	$Arrow3D.position = Vector3(0,0,판반지름*1.05)
+	$Arrow3D.position = Vector3(0,depth,판반지름*1.05)
 	reset_camera_pos()
 
 
