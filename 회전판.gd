@@ -10,8 +10,8 @@ var 칸들 :Array[칸]
 func init(칸수 :int, 반지름a :float, 깊이a :float) -> void:
 	반지름 = 반지름a
 	깊이 = 깊이a
-	배경원판만들기(반지름, 깊이, Color.DARK_GREEN)
-	중앙장식만들기(반지름, 깊이, Color.GOLD, Color.GOLDENROD)
+	배경원판만들기(Color.DARK_GREEN)
+	중앙장식만들기(Color.GOLD, Color.GOLDENROD)
 	칸들만들기(칸수)
 
 func 칸들만들기(칸수 :int) -> void:
@@ -26,6 +26,7 @@ func 칸들지우기() -> void:
 		remove_child(칸들[i])
 	칸들 = []
 
+# 추가로 칸위치정리하기() 호출할것.
 func 칸추가하기(co :Color, t :String) -> void:
 	var 칸각도 = 360.0/(칸들.size()+1)
 	var deg = 칸각도 * 칸들.size()
@@ -34,6 +35,7 @@ func 칸추가하기(co :Color, t :String) -> void:
 	add_child(l)
 	칸들.append(l)
 
+# 칸들의 각도가 동일하게 조정한다.
 func 칸위치정리하기() -> void:
 	var 칸각도 = 360.0/칸들.size()
 	for i in 칸들.size():
@@ -41,12 +43,13 @@ func 칸위치정리하기() -> void:
 		var deg = 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 
-func 배경원판만들기(반지름 :float, 깊이 :float, 원판색깔 :Color) -> void:
+func 배경원판만들기(원판색깔 :Color) -> void:
 	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(원판색깔))
 	plane.position.y = -깊이
 	add_child(plane)
 
-func 중앙장식만들기(원판반지름 :float, 깊이 :float, 색깔1 :Color, 색깔2 :Color) -> void:
+func 중앙장식만들기(색깔1 :Color, 색깔2 :Color) -> void:
+	var 원판반지름 = 반지름
 	var cc = Global3d.new_cylinder(깊이, 원판반지름*0.04, 원판반지름*0.04, Global3d.get_color_mat(색깔1))
 	cc.position.y = 깊이/2
 	add_child(cc)
