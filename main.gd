@@ -46,7 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if camera_move == false:
 				reset_camera_pos()
 		elif event.keycode == KEY_SPACE:
-			$Timer.start(0.1)
+			$Timer.start(0.5)
 
 var oldvt = Vector2(0,-100)
 func rot_by_accel()->void:
@@ -68,9 +68,12 @@ func rotate_all(rad :float):
 
 var 강조번호 :int
 func 칸선택강조효과() -> void:
-	$"회전판".칸강조하기(강조번호)
+	if 강조번호 > 0:
+		$"회전판".칸강조끄기(강조번호-1)
+	if 강조번호 < $"회전판".칸수얻기():
+		$"회전판".칸강조하기(강조번호)
 	강조번호 +=1
-	if 강조번호 >= $"회전판".칸수얻기():
+	if 강조번호 > $"회전판".칸수얻기():
 		강조번호 = 0
 		$Timer.stop()
 

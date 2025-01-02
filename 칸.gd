@@ -41,3 +41,6 @@ func 글씨만들기(반지름 :float, 깊이 :float, 색깔 :Color, 글 :String
 
 func 강조상태만들기() -> void:
 	$AnimationPlayer.play("글씨강조")
+
+func 강조상태끄기() -> void:
+	$AnimationPlayer.play("글씨강조끄기")

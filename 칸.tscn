@@ -1,16 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqc03uxia85uv"]
+[gd_scene load_steps=6 format=3 uid="uid://dqc03uxia85uv"]
 
 [ext_resource type="Script" path="res://칸.gd" id="1_0xk0q"]
 
 [sub_resource type="Animation" id="Animation_npk2h"]
 resource_name = "글씨강조"
+length = 0.5
 tracks/0/type = "scale_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("글씨")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.5, 1, 2, 2, 2, 1, 1, 1, 1, 1)
+tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.5, 1, 2, 2, 2)
 
 [sub_resource type="Animation" id="Animation_qotkk"]
 length = 0.001
@@ -22,10 +23,22 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1)
 
+[sub_resource type="Animation" id="Animation_hqw3w"]
+resource_name = "글씨강조끄기"
+length = 0.5
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("글씨")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 2, 2, 2, 0.5, 1, 1, 1, 1)
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pa73h"]
 _data = {
 "RESET": SubResource("Animation_qotkk"),
-"글씨강조": SubResource("Animation_npk2h")
+"글씨강조": SubResource("Animation_npk2h"),
+"글씨강조끄기": SubResource("Animation_hqw3w")
 }
 
 [node name="칸" type="Node3D"]

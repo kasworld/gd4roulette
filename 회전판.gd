@@ -38,5 +38,8 @@ func 중앙장식만들기(원판반지름 :float, 깊이 :float, 색깔1 :Color
 func 칸강조하기(i :int)->void:
 	칸들[i].강조상태만들기()
 
+func 칸강조끄기(i :int)->void:
+	칸들[i].강조상태끄기()
+
 func 칸수얻기() -> int:
 	return 칸들.size()
