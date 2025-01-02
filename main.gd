@@ -1,6 +1,5 @@
 extends Node3D
 
-
 var vp_size :Vector2
 var 판반지름 :float
 
@@ -22,7 +21,6 @@ func _ready() -> void:
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
 	$Arrow3D.position = Vector3(0,depth,판반지름*1.05)
 	reset_camera_pos()
-
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
@@ -47,6 +45,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				reset_camera_pos()
 		elif event.keycode == KEY_SPACE:
 			$Timer.start(0.01)
+		elif event.keycode == KEY_RIGHT:
+			$회전판.rotation.y += PI/180.0
+		elif event.keycode == KEY_LEFT:
+			$회전판.rotation.y -= PI/180.0
+
 
 func 회전판강조상태켜기() -> void:
 	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
