@@ -16,8 +16,14 @@ fov = 90.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 shadow_enabled = true
-directional_shadow_max_distance = 200.0
+sky_mode = 1
 
 [node name="FPS" parent="." instance=ExtResource("3_4t5fo")]
 
 [node name="Arrow3D" parent="." instance=ExtResource("4_2a6nk")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 5.0
+shadow_enabled = true
+omni_range = 5000.0
+omni_attenuation = 0.1

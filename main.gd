@@ -14,8 +14,9 @@ func _ready() -> void:
 	$회전판.init(36, 판반지름, depth)
 	$회전판.position = Vector3(0,0,0)
 
-	$DirectionalLight3D.position = Vector3(0,판반지름,1)
+	$DirectionalLight3D.position = Vector3(판반지름,판반지름,-판반지름)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
+	$OmniLight3D.position = Vector3(판반지름,판반지름,-판반지름)
 
 	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5)
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
