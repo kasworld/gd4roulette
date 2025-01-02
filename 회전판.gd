@@ -35,6 +35,14 @@ func 칸추가하기(co :Color, t :String) -> void:
 	add_child(l)
 	칸들.append(l)
 
+func 마지막칸지우기() -> void:
+	if 칸들.size() <= 1:
+		print("적어도 한칸은 필요합니다.")
+		return
+	var n = 칸들.pop_back()
+	remove_child(n)
+	칸위치정리하기()
+
 # 칸들의 각도가 동일하게 조정한다.
 func 칸위치정리하기() -> void:
 	var 칸각도 = 360.0/칸들.size()

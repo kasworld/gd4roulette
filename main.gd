@@ -10,7 +10,7 @@ func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	판반지름 = min(vp_size.x,vp_size.y)
 	var depth = 판반지름/40
-	$회전판.init(12, 판반지름, depth)
+	$회전판.init(1, 판반지름, depth)
 	$회전판.position = Vector3(0,0,0)
 
 	$DirectionalLight3D.position = Vector3(판반지름,판반지름,-판반지름)
@@ -55,6 +55,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			$회전판.rotation.y += PI/180.0
 		elif event.keycode == KEY_LEFT:
 			$회전판.rotation.y -= PI/180.0
+		elif event.keycode == KEY_INSERT:
+			var co = NamedColorList.color_list.pick_random()
+			$"회전판".칸추가하기(co[0],co[1])
+			$"회전판".칸위치정리하기()
+		elif event.keycode == KEY_DELETE:
+			$"회전판".마지막칸지우기()
+
+
 
 func 회전판강조상태켜기() -> void:
 	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
