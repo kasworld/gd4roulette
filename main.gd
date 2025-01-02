@@ -30,7 +30,7 @@ func reset_camera_pos()->void:
 
 var camera_move = false
 func _process(_delta: float) -> void:
-	rot_by_accel()
+	회전판강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
@@ -46,39 +46,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if camera_move == false:
 				reset_camera_pos()
 		elif event.keycode == KEY_SPACE:
-			$Timer.start(0.5)
+			$Timer.start(0.01)
 
-var oldvt = Vector2(0,-100)
-func rot_by_accel()->void:
-	var vt = Input.get_accelerometer()
-	if  vt != Vector3.ZERO :
-		oldvt = (Vector2(vt.x,vt.y) + oldvt).normalized() *100
-		var rad = oldvt.angle_to(Vector2(0,-1))
-		rotate_all(rad)
-	else :
-		vt = Input.get_last_mouse_velocity()/100
-		if vt == Vector2.ZERO :
-			vt = Vector2(0,-5)
-		oldvt = (Vector2(vt.x,vt.y) + oldvt).normalized() *100
-		var rad = oldvt.angle_to(Vector2(0,-1))
-		rotate_all(rad)
-
-func rotate_all(rad :float):
-	$회전판.rotation.y = -rad
-	var 선택칸 = $"회전판".각도로칸선택하기(rad_to_deg(-rad)+90)
+func 회전판강조상태켜기() -> void:
+	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
 	if 선택칸 != null:
 		선택칸.강조상태켜기()
 
-var 강조번호 :int
-func 칸선택강조효과() -> void:
-	if 강조번호 > 0:
-		$"회전판".칸강조끄기(강조번호-1)
-	if 강조번호 < $"회전판".칸수얻기():
-		$"회전판".칸강조하기(강조번호)
-	강조번호 +=1
-	if 강조번호 > $"회전판".칸수얻기():
-		강조번호 = 0
-		$Timer.stop()
-
 func _on_timer_timeout() -> void:
-	칸선택강조효과()
+		$회전판.rotation.y += PI/180.0
