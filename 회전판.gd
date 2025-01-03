@@ -12,14 +12,6 @@ func init(반지름a :float, 깊이a :float) -> void:
 	깊이 = 깊이a
 	배경원판만들기(Color.DARK_GREEN)
 	중앙장식만들기(Color.GOLD, Color.GOLDENROD)
-	#칸들만들기(칸수)
-
-#func 칸들만들기(칸수 :int) -> void:
-	#칸들 = []
-	#for i in 칸수:
-		#var co = NamedColorList.color_list.pick_random()
-		#칸추가하기(co[0],co[1])
-	#칸위치정리하기()
 
 func 칸들지우기() -> void:
 	for i in 칸들.size():
@@ -87,3 +79,6 @@ func 칸강조끄기(i :int)->void:
 
 func 칸수얻기() -> int:
 	return 칸들.size()
+
+func 칸얻기(i :int) -> 칸:
+	return 칸들[i]

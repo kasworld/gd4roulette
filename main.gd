@@ -85,6 +85,13 @@ func 참가자추가하기() -> void:
 	$"왼쪽패널/참가자목록".add_child(참가자)
 	$"회전판".칸추가하기(co[0],참가자.text)
 	$"회전판".칸위치정리하기()
+	참가자.text_changed.connect(
+		func(t :String):
+			참가자이름변경됨(현재칸수, t)
+	)
+
+func 참가자이름변경됨(i :int, t :String) -> void:
+	$"회전판".칸얻기(i).글내용바꾸기(t)
 
 func 마지막참가자제거하기() -> void:
 	$"회전판".마지막칸지우기()

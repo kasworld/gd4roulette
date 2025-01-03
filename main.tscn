@@ -54,20 +54,15 @@ theme = SubResource("Theme_kkhyv")
 [node name="FPS" parent="오른쪽패널" instance=ExtResource("3_4t5fo")]
 layout_mode = 2
 
-[node name="도움말" type="Label" parent="오른쪽패널"]
-layout_mode = 2
-text = "회전판돌리기
-"
-
 [node name="참가자추가" type="Button" parent="오른쪽패널"]
 layout_mode = 2
-text = "Ins: 참가자
-추가하기 "
+text = "Ins: 참가자 추가하기"
+alignment = 2
 
 [node name="참가자제거" type="Button" parent="오른쪽패널"]
 layout_mode = 2
-text = " Del: 마지막참가자
-제거하기"
+text = " Del: 참가자 제거하기"
+alignment = 2
 
 [node name="Control" type="Control" parent="오른쪽패널"]
 layout_mode = 2
@@ -75,12 +70,13 @@ size_flags_vertical = 3
 
 [node name="카메라변경" type="Button" parent="오른쪽패널"]
 layout_mode = 2
-text = "카메라변경"
+text = "Enter: 카메라변경"
+alignment = 2
 
 [node name="회전판돌리기" type="Button" parent="오른쪽패널"]
 layout_mode = 2
-text = "Space: 
-회전판돌리기"
+text = "Space: 회전판돌리기"
+alignment = 2
 
 [connection signal="pressed" from="오른쪽패널/참가자추가" to="." method="_on_참가자추가_pressed"]
 [connection signal="pressed" from="오른쪽패널/참가자제거" to="." method="_on_참가자제거_pressed"]
