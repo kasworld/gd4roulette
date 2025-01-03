@@ -16,7 +16,7 @@ func _ready() -> void:
 
 	판반지름 = min(vp_size.x,vp_size.y)
 	var depth = 판반지름/40
-	$회전판.init(1, 판반지름, depth)
+	$회전판.init(판반지름, depth)
 	$회전판.position = Vector3(0,0,0)
 
 	$DirectionalLight3D.position = Vector3(판반지름,판반지름,-판반지름)
@@ -67,8 +67,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			마지막참가자제거하기()
 
 func 회전판강조상태켜기() -> void:
-	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
-	선택칸.강조상태켜기()
+	var 선택칸 = $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
+	if 선택칸 != null:
+		선택칸.강조상태켜기()
 
 func 참가자추가하기() -> void:
 	var 현재칸수 = $"회전판".칸수얻기()
@@ -87,7 +88,7 @@ func 참가자추가하기() -> void:
 func 마지막참가자제거하기() -> void:
 	$"회전판".마지막칸지우기()
 	var 현재참가자수 = $"왼쪽패널/참가자목록".get_child_count()
-	if 현재참가자수 <= 1:
+	if 현재참가자수 <= 0:
 		return
 	var 마지막참가자 = $"왼쪽패널/참가자목록".get_child(현재참가자수-1)
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)

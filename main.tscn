@@ -44,11 +44,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_5eb5m")
 
-[node name="참가자1" type="TextEdit" parent="왼쪽패널/참가자목록"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "참가자1"
-
 [node name="오른쪽패널" type="VBoxContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0

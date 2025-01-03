@@ -7,19 +7,19 @@ var 반지름 :float
 var 깊이 :float
 var 칸들 :Array[칸]
 
-func init(칸수 :int, 반지름a :float, 깊이a :float) -> void:
+func init(반지름a :float, 깊이a :float) -> void:
 	반지름 = 반지름a
 	깊이 = 깊이a
 	배경원판만들기(Color.DARK_GREEN)
 	중앙장식만들기(Color.GOLD, Color.GOLDENROD)
-	칸들만들기(칸수)
+	#칸들만들기(칸수)
 
-func 칸들만들기(칸수 :int) -> void:
-	칸들 = []
-	for i in 칸수:
-		var co = NamedColorList.color_list.pick_random()
-		칸추가하기(co[0],co[1])
-	칸위치정리하기()
+#func 칸들만들기(칸수 :int) -> void:
+	#칸들 = []
+	#for i in 칸수:
+		#var co = NamedColorList.color_list.pick_random()
+		#칸추가하기(co[0],co[1])
+	#칸위치정리하기()
 
 func 칸들지우기() -> void:
 	for i in 칸들.size():
@@ -36,8 +36,7 @@ func 칸추가하기(co :Color, t :String) -> void:
 	칸들.append(l)
 
 func 마지막칸지우기() -> void:
-	if 칸들.size() <= 1:
-		print("적어도 한칸은 필요합니다.")
+	if 칸들.size() <= 0:
 		return
 	var n = 칸들.pop_back()
 	remove_child(n)
@@ -45,6 +44,8 @@ func 마지막칸지우기() -> void:
 
 # 칸들의 각도가 동일하게 조정한다.
 func 칸위치정리하기() -> void:
+	if 칸들.size() == 0 :
+		return
 	var 칸각도 = 360.0/칸들.size()
 	for i in 칸들.size():
 		칸들[i].칸각도바꾸기(칸각도)
@@ -66,6 +67,8 @@ func 중앙장식만들기(색깔1 :Color, 색깔2 :Color) -> void:
 	add_child(cc2)
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
+	if 칸들.size() == 0 :
+		return null
 	while 선택각도 < 0:
 		선택각도 += 360
 	while 선택각도 >= 360:
