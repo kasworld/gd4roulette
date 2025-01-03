@@ -64,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_INSERT:
 			참가자추가하기()
 		elif event.keycode == KEY_DELETE:
-			$"회전판".마지막칸지우기()
+			마지막참가자제거하기()
 
 func 회전판강조상태켜기() -> void:
 	var 선택칸 =  $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
@@ -77,9 +77,17 @@ func 참가자추가하기() -> void:
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.scroll_fit_content_height = true
-	참가자.custom_minimum_size.y = 50
+	#참가자.custom_minimum_size.y = 50
 	$"왼쪽패널/참가자목록".add_child(참가자)
 	#$"왼쪽패널/참가자목록".custom_minimum_size.y = (현재칸수+1) * 50
 	var co = NamedColorList.color_list.pick_random()
-	$"회전판".칸추가하기(co[0],co[1])
+	$"회전판".칸추가하기(co[0],참가자.text)
 	$"회전판".칸위치정리하기()
+
+func 마지막참가자제거하기() -> void:
+	$"회전판".마지막칸지우기()
+	var 현재참가자수 = $"왼쪽패널/참가자목록".get_child_count()
+	if 현재참가자수 <= 1:
+		return
+	var 마지막참가자 = $"왼쪽패널/참가자목록".get_child(현재참가자수-1)
+	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
