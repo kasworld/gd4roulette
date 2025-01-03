@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=7 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_uhxg1"]
 [ext_resource type="PackedScene" uid="uid://sjnpttkqk1qs" path="res://회전판.tscn" id="2_yllww"]
 [ext_resource type="PackedScene" uid="uid://ctqhdp0co2165" path="res://FPS/fps.tscn" id="3_4t5fo"]
 [ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow_3d.tscn" id="4_2a6nk"]
+
+[sub_resource type="Theme" id="Theme_5eb5m"]
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_kkhyv"]
+default_font_size = 48
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
@@ -18,8 +24,6 @@ fov = 90.0
 shadow_enabled = true
 sky_mode = 1
 
-[node name="FPS" parent="." instance=ExtResource("3_4t5fo")]
-
 [node name="Arrow3D" parent="." instance=ExtResource("4_2a6nk")]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
@@ -27,3 +31,28 @@ light_energy = 5.0
 shadow_enabled = true
 omni_range = 5000.0
 omni_attenuation = 0.1
+
+[node name="왼쪽패널" type="ScrollContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="참가자목록" type="VBoxContainer" parent="왼쪽패널"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_5eb5m")
+
+[node name="참가자1" type="TextEdit" parent="왼쪽패널/참가자목록"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "참가자1"
+
+[node name="오른쪽패널" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_kkhyv")
+
+[node name="FPS" parent="오른쪽패널" instance=ExtResource("3_4t5fo")]
+layout_mode = 2
