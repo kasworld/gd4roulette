@@ -13,6 +13,7 @@ func _ready() -> void:
 	print($"왼쪽패널/참가자목록".size)
 	$오른쪽패널.size = Vector2(vp_size.x/2 -r, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + r, 0)
+	$"오른쪽패널/FPS".custom_minimum_size.y = 40
 
 	판반지름 = min(vp_size.x,vp_size.y)
 	var depth = 판반지름/40
@@ -26,6 +27,10 @@ func _ready() -> void:
 	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5)
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
 	$Arrow3D.position = Vector3(0,depth,판반지름 + 판반지름/10)
+
+	for i in 12:
+		참가자추가하기()
+
 	reset_camera_pos()
 
 func reset_camera_pos()->void:
@@ -52,11 +57,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_ESCAPE:
 			get_tree().quit()
 		elif event.keycode == KEY_ENTER:
-			camera_move = !camera_move
-			if camera_move == false:
-				reset_camera_pos()
+			_on_카메라변경_pressed()
 		elif event.keycode == KEY_SPACE:
-			rot_acc = randfn(0, PI)
+			_on_돌리기_pressed()
 		elif event.keycode == KEY_RIGHT:
 			$회전판.rotation.y += PI/180.0
 		elif event.keycode == KEY_LEFT:
@@ -73,15 +76,13 @@ func 회전판강조상태켜기() -> void:
 
 func 참가자추가하기() -> void:
 	var 현재칸수 = $"회전판".칸수얻기()
-	var 참가자 = TextEdit.new()
+	var co = NamedColorList.color_list.pick_random()
+	var 참가자 = LineEdit.new()
 	참가자.text = "참가자%d" % [현재칸수+1]
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	참가자.scroll_fit_content_height = true
-	#참가자.custom_minimum_size.y = 50
+	참가자.self_modulate = co[0]
 	$"왼쪽패널/참가자목록".add_child(참가자)
-	#$"왼쪽패널/참가자목록".custom_minimum_size.y = (현재칸수+1) * 50
-	var co = NamedColorList.color_list.pick_random()
 	$"회전판".칸추가하기(co[0],참가자.text)
 	$"회전판".칸위치정리하기()
 
@@ -92,3 +93,17 @@ func 마지막참가자제거하기() -> void:
 		return
 	var 마지막참가자 = $"왼쪽패널/참가자목록".get_child(현재참가자수-1)
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
+
+func _on_돌리기_pressed() -> void:
+	rot_acc = randfn(0, PI)
+
+func _on_참가자추가_pressed() -> void:
+	참가자추가하기()
+
+func _on_참가자제거_pressed() -> void:
+	마지막참가자제거하기()
+
+func _on_카메라변경_pressed() -> void:
+	camera_move = !camera_move
+	if camera_move == false:
+		reset_camera_pos()

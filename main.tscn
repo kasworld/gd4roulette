@@ -6,10 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow_3d.tscn" id="4_2a6nk"]
 
 [sub_resource type="Theme" id="Theme_5eb5m"]
-default_font_size = 48
+default_font_size = 36
 
 [sub_resource type="Theme" id="Theme_kkhyv"]
-default_font_size = 48
+default_font_size = 36
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
@@ -33,6 +33,7 @@ omni_range = 5000.0
 omni_attenuation = 0.1
 
 [node name="왼쪽패널" type="ScrollContainer" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
@@ -45,9 +46,43 @@ size_flags_vertical = 3
 theme = SubResource("Theme_5eb5m")
 
 [node name="오른쪽패널" type="VBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+modulate = Color(1, 1, 1, 0.501961)
+offset_right = 344.0
+offset_bottom = 371.0
 theme = SubResource("Theme_kkhyv")
 
 [node name="FPS" parent="오른쪽패널" instance=ExtResource("3_4t5fo")]
 layout_mode = 2
+
+[node name="도움말" type="Label" parent="오른쪽패널"]
+layout_mode = 2
+text = "회전판돌리기
+"
+
+[node name="참가자추가" type="Button" parent="오른쪽패널"]
+layout_mode = 2
+text = "Ins: 참가자
+추가하기 "
+
+[node name="참가자제거" type="Button" parent="오른쪽패널"]
+layout_mode = 2
+text = " Del: 마지막참가자
+제거하기"
+
+[node name="Control" type="Control" parent="오른쪽패널"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="카메라변경" type="Button" parent="오른쪽패널"]
+layout_mode = 2
+text = "카메라변경"
+
+[node name="회전판돌리기" type="Button" parent="오른쪽패널"]
+layout_mode = 2
+text = "Space: 
+회전판돌리기"
+
+[connection signal="pressed" from="오른쪽패널/참가자추가" to="." method="_on_참가자추가_pressed"]
+[connection signal="pressed" from="오른쪽패널/참가자제거" to="." method="_on_참가자제거_pressed"]
+[connection signal="pressed" from="오른쪽패널/카메라변경" to="." method="_on_카메라변경_pressed"]
+[connection signal="pressed" from="오른쪽패널/회전판돌리기" to="." method="_on_돌리기_pressed"]
