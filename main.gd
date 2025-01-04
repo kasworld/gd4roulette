@@ -81,7 +81,9 @@ func 참가자추가하기() -> void:
 	참가자.text = "참가자%d" % [현재칸수+1]
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	참가자.self_modulate = co[0]
+	참가자.add_theme_color_override("font_color",co[0])
+	참가자.add_theme_color_override("font_outline_color",Color.WHITE)
+	참가자.add_theme_constant_override("outline_size",1)
 	$"왼쪽패널/참가자목록".add_child(참가자)
 	$"회전판".칸추가하기(co[0],참가자.text)
 	$"회전판".칸위치정리하기()

@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://u40dw1dx85dc"]
+
+[ext_resource type="FontFile" uid="uid://8iwp11xkpx5s" path="res://HakgyoansimBareondotumR.ttf" id="1_bbst5"]
+
+[resource]
+default_font = ExtResource("1_bbst5")
+default_font_size = 36
