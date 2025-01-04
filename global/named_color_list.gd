@@ -162,4 +162,3 @@ const color_list = [
 [Color.YELLOW, "YELLOW"],
 [Color.YELLOW_GREEN, "YELLOW_GREEN"],
 ]
-
