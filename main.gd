@@ -13,7 +13,6 @@ func _ready() -> void:
 	print($"왼쪽패널/참가자목록".size)
 	$오른쪽패널.size = Vector2(vp_size.x/2 -r, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + r, 0)
-	$"오른쪽패널/FPS".custom_minimum_size.y = 40
 
 	판반지름 = min(vp_size.x,vp_size.y)
 	var depth = 판반지름/40

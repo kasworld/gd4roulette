@@ -1,7 +1,6 @@
 extends Node
 
 var colors = {
-	background = Color.BLACK.lightened(0.3),
 	default_clear = Color.BLACK,
 }
 
