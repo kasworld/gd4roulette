@@ -9,8 +9,8 @@ func _ready() -> void:
 
 	var r = min(vp_size.x,vp_size.y)/2
 	$"왼쪽패널".size = Vector2(vp_size.x/2 -r, vp_size.y)
-	print($"왼쪽패널".size)
-	print($"왼쪽패널/참가자목록".size)
+	#print($"왼쪽패널".size)
+	#print($"왼쪽패널/참가자목록".size)
 	$오른쪽패널.size = Vector2(vp_size.x/2 -r, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + r, 0)
 

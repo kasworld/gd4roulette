@@ -2,7 +2,8 @@ extends Node3D
 class_name Arrow3D
 
 const bodyRate = 0.5
-const headRate = 1.0-bodyRate
+const headRate = 1.0 - bodyRate
+const shiftRate = (headRate-bodyRate)/2
 
 func init(l :float, co :Color, bodyw :float, headw :float) -> Arrow3D:
 	var mat = Global3d.get_color_mat(co)
@@ -14,7 +15,7 @@ func init(l :float, co :Color, bodyw :float, headw :float) -> Arrow3D:
 	bodyMesh.radial_segments = clampi( int(bodyw*2) , 64, 360)
 	bodyMesh.material = mat
 	$Body.mesh = bodyMesh
-	$Body.position = Vector3(0,-l*bodyRate/2,0)
+	$Body.position = Vector3(0,-l*bodyRate/2-shiftRate*l,0)
 
 	# head
 	var headMesh = CylinderMesh.new()
@@ -24,6 +25,6 @@ func init(l :float, co :Color, bodyw :float, headw :float) -> Arrow3D:
 	headMesh.radial_segments = clampi( int(headw*2) , 64, 360)
 	headMesh.material = mat
 	$Head.mesh = headMesh
-	$Head.position = Vector3(0,l*headRate/2,0)
+	$Head.position = Vector3(0,l*headRate/2-shiftRate*l,0)
 
 	return self
