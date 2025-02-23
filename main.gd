@@ -23,7 +23,7 @@ func _ready() -> void:
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(판반지름,판반지름,-판반지름)
 
-	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5)
+	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5,0.5)
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
 	$Arrow3D.position = Vector3(0,depth,판반지름 + 판반지름/10)
 
