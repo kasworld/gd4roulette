@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqc03uxia85uv"]
 
-[ext_resource type="Script" path="res://칸.gd" id="1_0xk0q"]
+[ext_resource type="Script" uid="uid://nl8f2irb6sdu" path="res://칸.gd" id="1_0xk0q"]
 
 [sub_resource type="Animation" id="Animation_qotkk"]
 length = 0.001
@@ -36,9 +36,9 @@ tracks/0/keys = PackedFloat32Array(0, 1, 2, 2, 2, 0.5, 1, 1, 1, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pa73h"]
 _data = {
-"RESET": SubResource("Animation_qotkk"),
-"글씨강조": SubResource("Animation_npk2h"),
-"글씨강조끄기": SubResource("Animation_hqw3w")
+&"RESET": SubResource("Animation_qotkk"),
+&"글씨강조": SubResource("Animation_npk2h"),
+&"글씨강조끄기": SubResource("Animation_hqw3w")
 }
 
 [node name="칸" type="Node3D"]
