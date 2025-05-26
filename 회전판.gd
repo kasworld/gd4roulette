@@ -26,12 +26,12 @@ func init(반지름a :float, 깊이a :float) -> void:
 	$"원판/작은장식".mesh.top_radius = 반지름*0.04
 	$"원판/작은장식".mesh.radial_segments = 반지름
 	$"원판/작은장식".mesh.material.albedo_color = Color.GOLD
-	$"원판/작은장식".position.y = 깊이
+	$"원판/작은장식".position.y = 깊이/2
 
 	$"원판/큰장식".mesh.outer_radius = 반지름*0.1
 	$"원판/큰장식".mesh.inner_radius = 반지름*0.06
 	$"원판/큰장식".mesh.material.albedo_color = Color.GOLDENROD
-	$"원판/큰장식".position.y = 깊이
+	$"원판/큰장식".position.y = 깊이/2
 
 var rotation_per_second :float
 var decelerate := 0.5 # per second
@@ -60,7 +60,7 @@ func 멈추기시작(decel :float=0.5) -> void:
 
 func 칸들지우기() -> void:
 	for i in 칸들.size():
-		remove_child(칸들[i])
+		$"원판".remove_child(칸들[i])
 	칸들 = []
 
 # 추가로 칸위치정리하기() 호출할것.
@@ -69,7 +69,8 @@ func 칸추가하기(co :Color, t :String) -> void:
 	var deg = 칸각도 * 칸들.size()
 	var l = 칸_scene.instantiate().init(칸각도, 반지름, 깊이, co , t)
 	l.rotation.y = deg_to_rad(-deg)
-	add_child(l)
+	l.position.y = 깊이/2
+	$"원판".add_child(l)
 	칸들.append(l)
 
 func 마지막칸지우기() -> void:
@@ -88,7 +89,6 @@ func 칸위치정리하기() -> void:
 		칸들[i].칸각도바꾸기(칸각도)
 		var deg = 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
-
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
 	선택각도 += rad_to_deg(rotation.y)
