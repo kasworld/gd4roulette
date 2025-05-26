@@ -1,30 +1,25 @@
 extends Node3D
 
 var vp_size :Vector2
-var 판반지름 :float
+var 짧은길이 :float
 
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
+	짧은길이 = min(vp_size.x,vp_size.y)
 
-	var r = min(vp_size.x,vp_size.y)/2
-	$"왼쪽패널".size = Vector2(vp_size.x/2 -r, vp_size.y)
-	$오른쪽패널.size = Vector2(vp_size.x/2 -r, vp_size.y)
-	$오른쪽패널.position = Vector2(vp_size.x/2 + r, 0)
-
-	판반지름 = min(vp_size.x,vp_size.y)
-	var depth = 판반지름/40
-	$회전판.init(판반지름, depth)
-	$회전판.position = Vector3(0,0,0)
-
-	$DirectionalLight3D.position = Vector3(판반지름,판반지름,-판반지름)
+	$"왼쪽패널".size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
+	$오른쪽패널.size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
+	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
+	$DirectionalLight3D.position = Vector3(짧은길이,짧은길이,-짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
-	$OmniLight3D.position = Vector3(판반지름,판반지름,-판반지름)
-
+	$OmniLight3D.position = Vector3(짧은길이,짧은길이,-짧은길이)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 
+	$회전판.init(짧은길이, 짧은길이/40)
+	$회전판.position = Vector3(0,0,0)
 	for i in 12:
 		참가자추가하기()
 	$"회전판".rotation_stopped.connect(결과가결정됨)
@@ -45,7 +40,7 @@ func _process(delta: float) -> void:
 	$회전판.회전판강조상태켜기(90)
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
+		$Camera3D.position = Vector3(sin(t)*짧은길이/2 ,짧은길이, cos(t)*짧은길이/2  )
 		$Camera3D.look_at(Vector3.ZERO)
 
 # esc to exit
