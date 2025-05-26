@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=8 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" uid="uid://duug0uf5apx3u" path="res://main.gd" id="1_uhxg1"]
 [ext_resource type="PackedScene" uid="uid://sjnpttkqk1qs" path="res://회전판.tscn" id="2_yllww"]
 [ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow3d/arrow_3d.tscn" id="4_2a6nk"]
 [ext_resource type="Theme" uid="uid://u40dw1dx85dc" path="res://패널테마.tres" id="4_endm8"]
+[ext_resource type="PackedScene" uid="uid://c6cct2gj2a3im" path="res://timed_message/timed_message.tscn" id="5_lquwl"]
+
+[sub_resource type="SystemFont" id="SystemFont_bejao"]
+
+[sub_resource type="Theme" id="Theme_7mycd"]
+resource_local_to_scene = true
+default_font = SubResource("SystemFont_bejao")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
@@ -68,6 +75,9 @@ alignment = 2
 layout_mode = 2
 text = "Space: 회전판돌리기"
 alignment = 2
+
+[node name="TimedMessage" parent="." instance=ExtResource("5_lquwl")]
+theme = SubResource("Theme_7mycd")
 
 [connection signal="pressed" from="오른쪽패널/참가자추가" to="." method="_on_참가자추가_pressed"]
 [connection signal="pressed" from="오른쪽패널/참가자제거" to="." method="_on_참가자제거_pressed"]

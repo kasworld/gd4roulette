@@ -21,6 +21,10 @@ func _ready() -> void:
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(판반지름,판반지름,-판반지름)
 
+	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
+	$TimedMessage.init(80, msgrect, tr("회전판 1.1.0"))
+	$TimedMessage.show_message("",0)
+
 	$Arrow3D.init(판반지름/5,Color.WHITE, depth/2, depth*1.5,0.5)
 	$Arrow3D.rotation = Vector3(0,PI/2,-PI/2)
 	$Arrow3D.position = Vector3(0,depth,판반지름 + 판반지름/10)
@@ -33,6 +37,7 @@ func _ready() -> void:
 
 func 결과가결정됨() -> void:
 	print("결과" , $"회전판".각도로칸선택하기(90))
+	$TimedMessage.show_message( "%s (이)가 선택되었습니다." % [$"회전판".각도로칸선택하기(90)] , 3 )
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
