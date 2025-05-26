@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=7 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" uid="uid://duug0uf5apx3u" path="res://main.gd" id="1_uhxg1"]
 [ext_resource type="PackedScene" uid="uid://sjnpttkqk1qs" path="res://회전판.tscn" id="2_yllww"]
-[ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow3d/arrow_3d.tscn" id="4_2a6nk"]
 [ext_resource type="Theme" uid="uid://u40dw1dx85dc" path="res://패널테마.tres" id="4_endm8"]
 [ext_resource type="PackedScene" uid="uid://c6cct2gj2a3im" path="res://timed_message/timed_message.tscn" id="5_lquwl"]
 
@@ -24,8 +23,6 @@ fov = 90.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 shadow_enabled = true
 sky_mode = 1
-
-[node name="Arrow3D" parent="." instance=ExtResource("4_2a6nk")]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_energy = 5.0

@@ -33,10 +33,14 @@ func init(반지름a :float, 깊이a :float) -> void:
 	$"원판/큰장식".mesh.material.albedo_color = Color.GOLDENROD
 	$"원판/큰장식".position.y = 깊이/2
 
+	$화살표.init(반지름/5,Color.WHITE, 깊이/2, 깊이*1.5,0.5)
+	$화살표.rotation = Vector3(0,PI/2,-PI/2)
+	$화살표.position = Vector3(0,깊이,반지름 + 반지름/10)
+
 var rotation_per_second :float
 var decelerate := 0.5 # per second
 func 회전판돌리기(dur_sec :float = 1.0) -> void:
-	rotation.y += rotation_per_second * 2 * PI * dur_sec
+	$"원판".rotation.y += rotation_per_second * 2 * PI * dur_sec
 	if decelerate > 0:
 		rotation_per_second /= pow( 1.0/decelerate , dur_sec)
 	if 회전중인가 and abs(rotation_per_second) <= 0.001:
@@ -91,7 +95,7 @@ func 칸위치정리하기() -> void:
 		칸들[i].rotation.y = deg_to_rad(-deg)
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
-	선택각도 += rad_to_deg(rotation.y)
+	선택각도 += rad_to_deg($"원판".rotation.y)
 	if 칸들.size() == 0 :
 		return null
 	while 선택각도 < 0:

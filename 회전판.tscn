@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://sjnpttkqk1qs"]
+[gd_scene load_steps=9 format=3 uid="uid://sjnpttkqk1qs"]
 
 [ext_resource type="Script" uid="uid://dwpxaxvkorfar" path="res://회전판.gd" id="1_7pkjq"]
+[ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow3d/arrow_3d.tscn" id="2_ed2fd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_areq1"]
 
@@ -31,3 +32,5 @@ mesh = SubResource("CylinderMesh_14kvd")
 
 [node name="큰장식" type="MeshInstance3D" parent="원판"]
 mesh = SubResource("TorusMesh_tiv2y")
+
+[node name="화살표" parent="." instance=ExtResource("2_ed2fd")]
