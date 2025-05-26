@@ -8,13 +8,23 @@ signal rotation_stopped()
 var 반지름 :float
 var 깊이 :float
 var 칸들 :Array[칸]
-var 새결과대기 :bool # need emit
+var 회전중인가 :bool # need emit
 
 func init(반지름a :float, 깊이a :float) -> void:
 	반지름 = 반지름a
 	깊이 = 깊이a
-	배경원판만들기(Color.DARK_GREEN)
-	중앙장식만들기(Color.GOLD, Color.GOLDENROD)
+	
+	# 배경원판 
+	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(Color.DARK_GREEN))
+	plane.position.y = -깊이
+	add_child(plane)
+	#중앙장식
+	var cc = Global3d.new_cylinder(깊이, 반지름*0.04, 반지름*0.04, Global3d.get_color_mat(Color.GOLD))
+	cc.position.y = 깊이/2
+	add_child(cc)
+	var cc2 = Global3d.new_torus(반지름*0.1, 반지름*0.06, Global3d.get_color_mat(Color.GOLDENROD))
+	cc2.position.y = 깊이/2
+	add_child(cc2)
 
 var rotation_per_second :float
 var decelerate := 0.5 # per second
@@ -22,9 +32,9 @@ func 회전판돌리기(dur_sec :float = 1.0) -> void:
 	rotation.y += rotation_per_second * 2 * PI * dur_sec
 	if decelerate > 0:
 		rotation_per_second /= pow( 1.0/decelerate , dur_sec)
-	if 새결과대기 and abs(rotation_per_second) <= 0.001:
+	if 회전중인가 and abs(rotation_per_second) <= 0.001:
 		rotation_stopped.emit()
-		새결과대기 = false
+		회전중인가 = false
 		rotation_per_second = 0.0
 
 func 회전판강조상태켜기(deg: float) -> void:
@@ -35,7 +45,7 @@ func 회전판강조상태켜기(deg: float) -> void:
 # spd : 초당 회전수 
 func 돌리기시작(spd :float) -> void:
 	rotation_per_second = spd
-	새결과대기 = true
+	회전중인가 = true
 
 func 멈추기시작(decel :float=0.5) -> void:
 	assert(decel < 1.0)
@@ -72,19 +82,6 @@ func 칸위치정리하기() -> void:
 		var deg = 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 
-func 배경원판만들기(원판색깔 :Color) -> void:
-	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(원판색깔))
-	plane.position.y = -깊이
-	add_child(plane)
-
-func 중앙장식만들기(색깔1 :Color, 색깔2 :Color) -> void:
-	var 원판반지름 = 반지름
-	var cc = Global3d.new_cylinder(깊이, 원판반지름*0.04, 원판반지름*0.04, Global3d.get_color_mat(색깔1))
-	cc.position.y = 깊이/2
-	add_child(cc)
-	var cc2 = Global3d.new_torus(원판반지름*0.1, 원판반지름*0.06, Global3d.get_color_mat(색깔2))
-	cc2.position.y = 깊이/2
-	add_child(cc2)
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
 	선택각도 += rad_to_deg(rotation.y)
