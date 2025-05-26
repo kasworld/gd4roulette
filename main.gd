@@ -52,10 +52,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_on_카메라변경_pressed()
 		elif event.keycode == KEY_SPACE:
 			_on_돌리기_pressed()
-		elif event.keycode == KEY_RIGHT:
-			$회전판.rotation.y += PI/180.0
-		elif event.keycode == KEY_LEFT:
-			$회전판.rotation.y -= PI/180.0
 		elif event.keycode == KEY_INSERT:
 			참가자추가하기()
 		elif event.keycode == KEY_DELETE:
