@@ -81,7 +81,7 @@ func 마지막칸지우기() -> void:
 	if 칸들.size() <= 0:
 		return
 	var n = 칸들.pop_back()
-	remove_child(n)
+	$"원판".remove_child(n)
 	칸위치정리하기()
 
 # 칸들의 각도가 동일하게 조정한다.

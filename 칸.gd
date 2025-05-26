@@ -57,8 +57,8 @@ func 글내용바꾸기(새글내용 :String) -> void:
 
 func 색깔바꾸기(새색깔 :Color) -> void:
 	색깔 = 새색깔
-	$"시작선".mesh.material = Global3d.get_color_mat(색깔)
-	$"글씨".mesh.material = Global3d.get_color_mat(색깔)
+	$"시작선".mesh.material.albedo_color = 색깔
+	$"글씨".mesh.material.albedo_color = 색깔
 
 func 강조상태켜기() -> void:
 	강조중 = true
