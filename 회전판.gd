@@ -14,17 +14,24 @@ func init(반지름a :float, 깊이a :float) -> void:
 	반지름 = 반지름a
 	깊이 = 깊이a
 	
-	# 배경원판 
-	var plane = Global3d.new_cylinder(깊이, 반지름, 반지름, Global3d.get_color_mat(Color.DARK_GREEN))
-	plane.position.y = -깊이
-	add_child(plane)
-	#중앙장식
-	var cc = Global3d.new_cylinder(깊이, 반지름*0.04, 반지름*0.04, Global3d.get_color_mat(Color.GOLD))
-	cc.position.y = 깊이/2
-	add_child(cc)
-	var cc2 = Global3d.new_torus(반지름*0.1, 반지름*0.06, Global3d.get_color_mat(Color.GOLDENROD))
-	cc2.position.y = 깊이/2
-	add_child(cc2)
+	$"원판".mesh.height = 깊이
+	$"원판".mesh.bottom_radius = 반지름
+	$"원판".mesh.top_radius = 반지름
+	$"원판".mesh.radial_segments = 반지름
+	$"원판".mesh.material.albedo_color = Color.DARK_GREEN
+	$"원판".position.y = -깊이
+	
+	$"원판/작은장식".mesh.height = 깊이
+	$"원판/작은장식".mesh.bottom_radius = 반지름*0.04
+	$"원판/작은장식".mesh.top_radius = 반지름*0.04
+	$"원판/작은장식".mesh.radial_segments = 반지름
+	$"원판/작은장식".mesh.material.albedo_color = Color.GOLD
+	$"원판/작은장식".position.y = 깊이
+
+	$"원판/큰장식".mesh.outer_radius = 반지름*0.1
+	$"원판/큰장식".mesh.inner_radius = 반지름*0.06
+	$"원판/큰장식".mesh.material.albedo_color = Color.GOLDENROD
+	$"원판/큰장식".position.y = 깊이
 
 var rotation_per_second :float
 var decelerate := 0.5 # per second
