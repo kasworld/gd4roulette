@@ -11,7 +11,12 @@ var 깊이 :float
 var 칸들 :Array[칸]
 var 회전중인가 :bool # need emit
 
-func init(ida :int, 반지름a :float, 깊이a :float) -> 회전판:
+func init(ida :int, 반지름a :float, 깊이a :float, 
+		원판색 :Color = Color.DARK_GREEN,
+		작은장식색 :Color = Color.GOLD,
+		큰장식색 :Color = Color.GOLDENROD,
+		화살표색 :Color = Color.WHITE,
+		) -> 회전판:
 	id = ida
 	반지름 = 반지름a
 	깊이 = 깊이a
@@ -20,25 +25,36 @@ func init(ida :int, 반지름a :float, 깊이a :float) -> 회전판:
 	$"원판".mesh.bottom_radius = 반지름
 	$"원판".mesh.top_radius = 반지름
 	$"원판".mesh.radial_segments = 반지름
-	$"원판".mesh.material.albedo_color = Color.DARK_GREEN
+	$"원판".mesh.material.albedo_color = 원판색
 	$"원판".position.y = -깊이
 	
 	$"원판/작은장식".mesh.height = 깊이
 	$"원판/작은장식".mesh.bottom_radius = 반지름*0.04
 	$"원판/작은장식".mesh.top_radius = 반지름*0.04
 	$"원판/작은장식".mesh.radial_segments = 반지름
-	$"원판/작은장식".mesh.material.albedo_color = Color.GOLD
+	$"원판/작은장식".mesh.material.albedo_color = 작은장식색
 	$"원판/작은장식".position.y = 깊이/2
 
 	$"원판/큰장식".mesh.outer_radius = 반지름*0.1
 	$"원판/큰장식".mesh.inner_radius = 반지름*0.06
-	$"원판/큰장식".mesh.material.albedo_color = Color.GOLDENROD
+	$"원판/큰장식".mesh.material.albedo_color = 큰장식색
 	$"원판/큰장식".position.y = 깊이/2
 
-	$화살표.init(반지름/5,Color.WHITE, 깊이/2, 깊이*1.5,0.5)
+	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	$화살표.rotation = Vector3(0,PI/2,-PI/2)
 	$화살표.position = Vector3(0,깊이,반지름 + 반지름/10)
 	return self
+
+func 색바꾸기(
+		원판색 :Color = Color.DARK_GREEN,
+		작은장식색 :Color = Color.GOLD,
+		큰장식색 :Color = Color.GOLDENROD,
+		화살표색 :Color = Color.WHITE,
+		) -> void:
+	$"원판".mesh.material.albedo_color = 원판색
+	$"원판/작은장식".mesh.material.albedo_color = 작은장식색
+	$"원판/큰장식".mesh.material.albedo_color = 큰장식색
+	$"화살표".색바꾸기(화살표색)
 
 var rotation_per_second :float
 var decelerate := 0.5 # per second

@@ -29,3 +29,7 @@ func init(l :float, co :Color, body_width :float, head_width :float, body_rate :
 	$Head.position = Vector3(0,l*head_rate/2-shift_rate*l,0)
 
 	return self
+
+func 색바꾸기(co :Color) -> void:
+	$Body.mesh.material.albedo_color = co
+	$Head.mesh.material.albedo_color = co
