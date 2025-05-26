@@ -12,6 +12,9 @@ var 색깔 :Color
 var 글내용 :String
 var 강조중 :bool
 
+func _to_string() -> String:
+	return "칸 %s" % [글내용]
+
 func init(각도 :float, 반지름a :float, 깊이a :float, 색깔a :Color, 글 :String) -> 칸:
 	칸각도 = 각도
 	반지름 = 반지름a

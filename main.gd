@@ -27,8 +27,12 @@ func _ready() -> void:
 
 	for i in 12:
 		참가자추가하기()
+	$"회전판".rotation_stopped.connect(결과가결정됨)
 
 	reset_camera_pos()
+
+func 결과가결정됨() -> void:
+	print("결과" , $"회전판".각도로칸선택하기(90))
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)

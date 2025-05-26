@@ -3,9 +3,12 @@ class_name Roulette
 
 var 칸_scene = preload("res://칸.tscn")
 
+signal rotation_stopped()
+
 var 반지름 :float
 var 깊이 :float
 var 칸들 :Array[칸]
+var 새결과대기 :bool # need emit
 
 func init(반지름a :float, 깊이a :float) -> void:
 	반지름 = 반지름a
@@ -17,16 +20,22 @@ var rotation_per_second :float
 var decelerate := 0.5 # per second
 func 회전판돌리기(dur_sec :float = 1.0) -> void:
 	rotation.y += rotation_per_second * 2 * PI * dur_sec
-	rotation_per_second /= pow( 1.0/decelerate , dur_sec)
+	if decelerate > 0:
+		rotation_per_second /= pow( 1.0/decelerate , dur_sec)
+	if 새결과대기 and abs(rotation_per_second) <= 0.001:
+		rotation_stopped.emit()
+		새결과대기 = false
+		rotation_per_second = 0.0
 
 func 회전판강조상태켜기(deg: float) -> void:
-	var 선택칸 = 각도로칸선택하기(rad_to_deg(rotation.y)+deg)
+	var 선택칸 = 각도로칸선택하기(deg)
 	if 선택칸 != null:
 		선택칸.강조상태켜기()
 
 # spd : 초당 회전수 
 func 돌리기시작(spd :float) -> void:
 	rotation_per_second = spd
+	새결과대기 = true
 
 func 멈추기시작(decel :float=0.5) -> void:
 	assert(decel < 1.0)
@@ -78,6 +87,7 @@ func 중앙장식만들기(색깔1 :Color, 색깔2 :Color) -> void:
 	add_child(cc2)
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
+	선택각도 += rad_to_deg(rotation.y)
 	if 칸들.size() == 0 :
 		return null
 	while 선택각도 < 0:
