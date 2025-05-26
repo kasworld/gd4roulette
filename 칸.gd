@@ -21,29 +21,24 @@ func init(각도 :float, 반지름a :float, 깊이a :float, 색깔a :Color, 글 
 	깊이 = 깊이a
 	색깔 = 색깔a
 	글내용 = 글
-	선만들기()
-	글씨만들기()
-	return self
 
-func 선만들기()->void:
 	var 선폭 = max(1,깊이 /10)
 	깊이 = max(1,깊이)
+	var rad = deg_to_rad(칸각도/2 + 90)
 	$"시작선".mesh.size = Vector3(반지름*(선끝비 - 선시작비), 깊이, 선폭)
 	$"시작선".mesh.material.albedo_color = 색깔
 	$"시작선".rotation.y = deg_to_rad(칸각도/2)
-	var rad = deg_to_rad(칸각도/2 + 90)
 	$"시작선".position = Vector3(sin(rad)*반지름*(선끝비 + 선시작비)/2, 깊이/2, cos(rad)*반지름*(선끝비 + 선시작비)/2)
-
-func 글씨만들기() -> void:
 	$"글씨".mesh.font = Global3d.font
 	$"글씨".mesh.depth = 깊이
 	$"글씨".mesh.pixel_size = 반지름 * 0.001
-	$"글씨".mesh.font_size = 반지름 * 0.07
+	$"글씨".mesh.font_size = 반지름  
 	$"글씨".mesh.text = 글내용
 	$"글씨".mesh.material.albedo_color = 색깔
 	$"글씨".mesh.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_RIGHT
 	$"글씨".rotation = Vector3(-PI/2,PI/2,-PI/2)
 	$"글씨".position = Vector3(반지름, 깊이/2, 0)
+	return self
 
 func 칸각도바꾸기(새각도 :float) -> void:
 	칸각도 = 새각도
@@ -59,6 +54,10 @@ func 색깔바꾸기(새색깔 :Color) -> void:
 	색깔 = 새색깔
 	$"시작선".mesh.material.albedo_color = 색깔
 	$"글씨".mesh.material.albedo_color = 색깔
+
+func 글씨크기바꾸기(pixel_size :float, font_size :int) -> void:
+	$"글씨".mesh.pixel_size = pixel_size
+	$"글씨".mesh.font_size = font_size
 
 func 강조상태켜기() -> void:
 	강조중 = true
