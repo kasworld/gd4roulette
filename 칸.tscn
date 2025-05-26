@@ -50,7 +50,7 @@ script = ExtResource("1_0xk0q")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_pa73h")
+&"": SubResource("AnimationLibrary_pa73h")
 }
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

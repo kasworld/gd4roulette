@@ -9,8 +9,6 @@ func _ready() -> void:
 
 	var r = min(vp_size.x,vp_size.y)/2
 	$"왼쪽패널".size = Vector2(vp_size.x/2 -r, vp_size.y)
-	#print($"왼쪽패널".size)
-	#print($"왼쪽패널/참가자목록".size)
 	$오른쪽패널.size = Vector2(vp_size.x/2 -r, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + r, 0)
 
@@ -38,17 +36,10 @@ func reset_camera_pos()->void:
 
 var camera_move = false
 func _process(_delta: float) -> void:
-	회전판돌리기()
-	회전판강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
 		$Camera3D.look_at(Vector3.ZERO)
-
-var rot_acc :float
-func 회전판돌리기() -> void:
-	$회전판.rotation.y += rot_acc
-	rot_acc *= 0.99
 
 # esc to exit
 func _unhandled_input(event: InputEvent) -> void:
@@ -67,11 +58,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			참가자추가하기()
 		elif event.keycode == KEY_DELETE:
 			마지막참가자제거하기()
-
-func 회전판강조상태켜기() -> void:
-	var 선택칸 = $"회전판".각도로칸선택하기(rad_to_deg($"회전판".rotation.y)+90)
-	if 선택칸 != null:
-		선택칸.강조상태켜기()
 
 func 참가자추가하기() -> void:
 	var 현재칸수 = $"회전판".칸수얻기()
@@ -103,7 +89,7 @@ func 마지막참가자제거하기() -> void:
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
 
 func _on_돌리기_pressed() -> void:
-	rot_acc = randfn(0, PI)
+	$회전판.돌리기시작(randfn(-PI, PI) )
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
