@@ -18,17 +18,26 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 
-	회전판추가(0)
-	회전판들[0].position = Vector3(0,0,0)
+	var n = 4
+	for i in n:
+		var rd = 2*PI/n *i
+		var r = 짧은길이
+		회전판추가(i)
+		회전판들[i].position = Vector3(sin(rd)*r,0,cos(rd)*r)
 	
 	reset_camera_pos()
 
 func 회전판추가(id :int) -> 회전판:
-	var rp = preload("res://회전판.tscn").instantiate().init(id, 짧은길이, 짧은길이/40)
+	var rp = preload("res://회전판.tscn").instantiate().init(id, 짧은길이*0.7, 짧은길이/40)
 	회전판들.append(rp)
 	for i in 12:
-		참가자추가하기()
-	rp.rotation_stopped.connect(결과가결정됨)
+		if id == 0:
+			참가자추가하기()
+			rp.rotation_stopped.connect(결과가결정됨)
+		else :
+			var co = NamedColorList.color_list.pick_random()
+			rp.칸추가하기(co[0],"%d" % i)
+			rp.칸위치정리하기()
 	add_child(rp)
 	return rp
 	
@@ -42,8 +51,9 @@ func reset_camera_pos()->void:
 
 var camera_move = false
 func _process(delta: float) -> void:
-	$회전판.회전판돌리기(delta)
-	$회전판.회전판강조상태켜기(90)
+	for rp in 회전판들:
+		rp.회전판돌리기(delta)
+		rp.회전판강조상태켜기(90)
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*짧은길이/2 ,짧은길이, cos(t)*짧은길이/2  )
@@ -93,7 +103,8 @@ func 마지막참가자제거하기() -> void:
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
 
 func _on_돌리기_pressed() -> void:
-	$회전판.돌리기시작(randfn(0, 5) )
+	for rp in 회전판들:
+		rp.돌리기시작(randfn(0, 5) )
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
