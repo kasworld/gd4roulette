@@ -77,6 +77,7 @@ text = "Space: 회전판돌리기"
 alignment = 2
 
 [node name="TimedMessage" parent="." instance=ExtResource("5_lquwl")]
+self_modulate = Color(1, 1, 1, 0.498039)
 theme = SubResource("Theme_7mycd")
 
 [connection signal="pressed" from="오른쪽패널/참가자추가" to="." method="_on_참가자추가_pressed"]
