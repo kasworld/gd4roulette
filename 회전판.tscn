@@ -4,18 +4,21 @@
 [ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow3d/arrow_3d.tscn" id="2_ed2fd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_areq1"]
+resource_local_to_scene = true
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ed2fd"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_areq1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ed2fd"]
+resource_local_to_scene = true
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_14kvd"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ed2fd")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phm1c"]
+resource_local_to_scene = true
 
 [sub_resource type="TorusMesh" id="TorusMesh_tiv2y"]
 resource_local_to_scene = true
