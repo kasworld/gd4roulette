@@ -13,22 +13,24 @@ func init(반지름a :float, 깊이a :float) -> void:
 	배경원판만들기(Color.DARK_GREEN)
 	중앙장식만들기(Color.GOLD, Color.GOLDENROD)
 
-func _process(_delta: float) -> void:
-	회전판돌리기()
-	회전판강조상태켜기(90)
-
-var rot_acc :float
-func 회전판돌리기() -> void:
-	rotation.y += rot_acc
-	rot_acc *= 0.99
+var rotation_per_second :float
+var decelerate := 0.5 # per second
+func 회전판돌리기(dur_sec :float = 1.0) -> void:
+	rotation.y += rotation_per_second * 2 * PI * dur_sec
+	rotation_per_second /= pow( 1.0/decelerate , dur_sec)
 
 func 회전판강조상태켜기(deg: float) -> void:
 	var 선택칸 = 각도로칸선택하기(rad_to_deg(rotation.y)+deg)
 	if 선택칸 != null:
 		선택칸.강조상태켜기()
 
-func 돌리기시작(acc :float) -> void:
-	rot_acc = acc
+# spd : 초당 회전수 
+func 돌리기시작(spd :float) -> void:
+	rotation_per_second = spd
+
+func 멈추기시작(decel :float=0.5) -> void:
+	assert(decel < 1.0)
+	decelerate = decel
 
 func 칸들지우기() -> void:
 	for i in 칸들.size():

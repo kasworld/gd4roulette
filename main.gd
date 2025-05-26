@@ -35,7 +35,9 @@ func reset_camera_pos()->void:
 	$Camera3D.look_at(Vector3.ZERO)
 
 var camera_move = false
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	$회전판.회전판돌리기(delta)
+	$회전판.회전판강조상태켜기(90)
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*판반지름/2 ,판반지름, cos(t)*판반지름/2  )
@@ -89,7 +91,7 @@ func 마지막참가자제거하기() -> void:
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
 
 func _on_돌리기_pressed() -> void:
-	$회전판.돌리기시작(randfn(-PI, PI) )
+	$회전판.돌리기시작(randfn(0, 5) )
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
