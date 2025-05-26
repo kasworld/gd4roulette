@@ -15,15 +15,15 @@ func init(반지름a :float, 깊이a :float) -> void:
 
 func _process(_delta: float) -> void:
 	회전판돌리기()
-	회전판강조상태켜기()
+	회전판강조상태켜기(90)
 
 var rot_acc :float
 func 회전판돌리기() -> void:
 	rotation.y += rot_acc
 	rot_acc *= 0.99
 
-func 회전판강조상태켜기() -> void:
-	var 선택칸 = 각도로칸선택하기(rad_to_deg(rotation.y)+90)
+func 회전판강조상태켜기(deg: float) -> void:
+	var 선택칸 = 각도로칸선택하기(rad_to_deg(rotation.y)+deg)
 	if 선택칸 != null:
 		선택칸.강조상태켜기()
 
