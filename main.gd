@@ -28,16 +28,23 @@ func _ready() -> void:
 	reset_camera_pos()
 
 func 회전판추가(id :int) -> 회전판:
-	var rp = preload("res://회전판.tscn").instantiate().init(id, 짧은길이*0.7, 짧은길이/40)
+	var rp = preload("res://회전판.tscn").instantiate().init(
+		id, 짧은길이*0.7, 짧은길이/40,
+		NamedColorList.color_list.pick_random()[0],
+		NamedColorList.color_list.pick_random()[0],
+		NamedColorList.color_list.pick_random()[0],
+		NamedColorList.color_list.pick_random()[0],
+		)
 	회전판들.append(rp)
 	for i in 12:
 		if id == 0:
 			참가자추가하기()
-			rp.rotation_stopped.connect(결과가결정됨)
 		else :
 			var co = NamedColorList.color_list.pick_random()
 			rp.칸추가하기(co[0],"%d" % i)
 			rp.칸위치정리하기()
+	if id == 0:
+		rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	return rp
 	
