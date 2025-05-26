@@ -1,16 +1,18 @@
 extends Node3D
-class_name Roulette
+class_name 회전판
 
 var 칸_scene = preload("res://칸.tscn")
 
-signal rotation_stopped()
+signal rotation_stopped(n :int)
 
+var id :int
 var 반지름 :float
 var 깊이 :float
 var 칸들 :Array[칸]
 var 회전중인가 :bool # need emit
 
-func init(반지름a :float, 깊이a :float) -> void:
+func init(ida :int, 반지름a :float, 깊이a :float) -> 회전판:
+	id = ida
 	반지름 = 반지름a
 	깊이 = 깊이a
 	
@@ -36,6 +38,7 @@ func init(반지름a :float, 깊이a :float) -> void:
 	$화살표.init(반지름/5,Color.WHITE, 깊이/2, 깊이*1.5,0.5)
 	$화살표.rotation = Vector3(0,PI/2,-PI/2)
 	$화살표.position = Vector3(0,깊이,반지름 + 반지름/10)
+	return self
 
 var rotation_per_second :float
 var decelerate := 0.5 # per second
@@ -44,7 +47,7 @@ func 회전판돌리기(dur_sec :float = 1.0) -> void:
 	if decelerate > 0:
 		rotation_per_second /= pow( 1.0/decelerate , dur_sec)
 	if 회전중인가 and abs(rotation_per_second) <= 0.001:
-		rotation_stopped.emit()
+		rotation_stopped.emit(id)
 		회전중인가 = false
 		rotation_per_second = 0.0
 

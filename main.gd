@@ -2,7 +2,7 @@ extends Node3D
 
 var vp_size :Vector2
 var 짧은길이 :float
-
+var 회전판들 :Array
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
@@ -18,17 +18,23 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 
-	$회전판.init(짧은길이, 짧은길이/40)
-	$회전판.position = Vector3(0,0,0)
-	for i in 12:
-		참가자추가하기()
-	$"회전판".rotation_stopped.connect(결과가결정됨)
-
+	회전판추가(0)
+	회전판들[0].position = Vector3(0,0,0)
+	
 	reset_camera_pos()
 
-func 결과가결정됨() -> void:
-	print("결과" , $"회전판".각도로칸선택하기(90))
-	$TimedMessage.show_message( "%s (이)가 선택되었습니다." % [$"회전판".각도로칸선택하기(90)] , 3 )
+func 회전판추가(id :int) -> 회전판:
+	var rp = preload("res://회전판.tscn").instantiate().init(id, 짧은길이, 짧은길이/40)
+	회전판들.append(rp)
+	for i in 12:
+		참가자추가하기()
+	rp.rotation_stopped.connect(결과가결정됨)
+	add_child(rp)
+	return rp
+	
+func 결과가결정됨(id :int) -> void:
+	print("결과" , 회전판들[0].각도로칸선택하기(90))
+	$TimedMessage.show_message( "%d %s (이)가 선택되었습니다." % [id, 회전판들[0].각도로칸선택하기(90)] ,3 )
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
@@ -58,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			마지막참가자제거하기()
 
 func 참가자추가하기() -> void:
-	var 현재칸수 = $"회전판".칸수얻기()
+	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
 	참가자.text = "참가자%d" % [현재칸수+1]
@@ -68,18 +74,18 @@ func 참가자추가하기() -> void:
 	참가자.add_theme_color_override("font_outline_color",Color.WHITE)
 	참가자.add_theme_constant_override("outline_size",1)
 	$"왼쪽패널/참가자목록".add_child(참가자)
-	$"회전판".칸추가하기(co[0],참가자.text)
-	$"회전판".칸위치정리하기()
+	회전판들[0].칸추가하기(co[0],참가자.text)
+	회전판들[0].칸위치정리하기()
 	참가자.text_changed.connect(
 		func(t :String):
 			참가자이름변경됨(현재칸수, t)
 	)
 
 func 참가자이름변경됨(i :int, t :String) -> void:
-	$"회전판".칸얻기(i).글내용바꾸기(t)
+	회전판들[0].칸얻기(i).글내용바꾸기(t)
 
 func 마지막참가자제거하기() -> void:
-	$"회전판".마지막칸지우기()
+	회전판들[0].마지막칸지우기()
 	var 현재참가자수 = $"왼쪽패널/참가자목록".get_child_count()
 	if 현재참가자수 <= 0:
 		return
