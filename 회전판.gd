@@ -29,26 +29,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".mesh.material.albedo_color = 원판색
 	$"원판".position.y = -깊이
 	
-	$"원판/작은장식".mesh.height = 깊이*2
-	$"원판/작은장식".mesh.radius = 반지름*0.01
-	$"원판/작은장식".mesh.material.albedo_color = 작은장식색
-	$"원판/작은장식".position.y = 깊이*1.5
-
-	$"원판/큰장식".mesh.outer_radius = 반지름*0.1
-	$"원판/큰장식".mesh.inner_radius = 반지름*0.08
-	$"원판/큰장식".mesh.material.albedo_color = 큰장식색
-	$"원판/큰장식".position.y = 깊이*2
-	
-	$"원판/가로장식".mesh.height = 반지름*0.2
-	$"원판/가로장식".mesh.radius = 반지름*0.01
-	$"원판/가로장식".mesh.material.albedo_color = 십자장식색
-	$"원판/가로장식".position.y = 깊이*2
-
-	$"원판/세로장식".mesh.height = 반지름*0.2
-	$"원판/세로장식".mesh.radius = 반지름*0.01
-	$"원판/세로장식".mesh.material.albedo_color = 십자장식색
-	$"원판/세로장식".position.y = 깊이*2
-	
+	$"원판/ValveHandle".init(반지름*0.1, 깊이, 작은장식색, 큰장식색, 십자장식색 )
 
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	$화살표.rotation = Vector3(0,PI/2,-PI/2)
@@ -63,10 +44,7 @@ func 색바꾸기(
 		화살표색 :Color = Color.WHITE,
 		) -> void:
 	$"원판".mesh.material.albedo_color = 원판색
-	$"원판/작은장식".mesh.material.albedo_color = 작은장식색
-	$"원판/큰장식".mesh.material.albedo_color = 큰장식색
-	$"원판/가로장식".mesh.material.albedo_color = 십자장식색
-	$"원판/세로장식".mesh.material.albedo_color = 십자장식색
+	$"원판/ValveHandle".색바꾸기(작은장식색, 큰장식색, 십자장식색)
 	$"화살표".색바꾸기(화살표색)
 
 var rotation_per_second :float
