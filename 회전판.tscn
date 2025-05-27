@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_areq1")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ed2fd"]
 resource_local_to_scene = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_14kvd"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_14kvd"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ed2fd")
 
@@ -38,7 +38,7 @@ script = ExtResource("1_7pkjq")
 mesh = SubResource("CylinderMesh_ed2fd")
 
 [node name="작은장식" type="MeshInstance3D" parent="원판"]
-mesh = SubResource("SphereMesh_14kvd")
+mesh = SubResource("CapsuleMesh_14kvd")
 
 [node name="큰장식" type="MeshInstance3D" parent="원판"]
 mesh = SubResource("TorusMesh_tiv2y")
