@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://sjnpttkqk1qs"]
+[gd_scene load_steps=11 format=3 uid="uid://sjnpttkqk1qs"]
 
 [ext_resource type="Script" uid="uid://dwpxaxvkorfar" path="res://회전판.gd" id="1_7pkjq"]
 [ext_resource type="PackedScene" uid="uid://c8npqlgeyy3xa" path="res://arrow3d/arrow_3d.tscn" id="2_ed2fd"]
@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_areq1")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ed2fd"]
 resource_local_to_scene = true
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_14kvd"]
+[sub_resource type="SphereMesh" id="SphereMesh_14kvd"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ed2fd")
 
@@ -24,6 +24,13 @@ resource_local_to_scene = true
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_phm1c")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14kvd"]
+resource_local_to_scene = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_phm1c"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_14kvd")
+
 [node name="회전판" type="Node3D"]
 script = ExtResource("1_7pkjq")
 
@@ -31,9 +38,17 @@ script = ExtResource("1_7pkjq")
 mesh = SubResource("CylinderMesh_ed2fd")
 
 [node name="작은장식" type="MeshInstance3D" parent="원판"]
-mesh = SubResource("CylinderMesh_14kvd")
+mesh = SubResource("SphereMesh_14kvd")
 
 [node name="큰장식" type="MeshInstance3D" parent="원판"]
 mesh = SubResource("TorusMesh_tiv2y")
+
+[node name="가로장식" type="MeshInstance3D" parent="원판"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_phm1c")
+
+[node name="세로장식" type="MeshInstance3D" parent="원판"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_phm1c")
 
 [node name="화살표" parent="." instance=ExtResource("2_ed2fd")]
