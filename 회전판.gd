@@ -15,6 +15,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 		원판색 :Color = Color.DARK_GREEN,
 		작은장식색 :Color = Color.GOLD,
 		큰장식색 :Color = Color.GOLDENROD,
+		십자장식색 :Color = Color.GOLDENROD,
 		화살표색 :Color = Color.WHITE,
 		) -> 회전판:
 	id = ida
@@ -40,9 +41,12 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	
 	$"원판/가로장식".mesh.height = 반지름*0.2
 	$"원판/가로장식".mesh.radius = 반지름*0.01
+	$"원판/가로장식".mesh.material.albedo_color = 십자장식색
 	$"원판/가로장식".position.y = 깊이
+
 	$"원판/세로장식".mesh.height = 반지름*0.2
 	$"원판/세로장식".mesh.radius = 반지름*0.01
+	$"원판/세로장식".mesh.material.albedo_color = 십자장식색
 	$"원판/세로장식".position.y = 깊이
 	
 
@@ -55,11 +59,14 @@ func 색바꾸기(
 		원판색 :Color = Color.DARK_GREEN,
 		작은장식색 :Color = Color.GOLD,
 		큰장식색 :Color = Color.GOLDENROD,
+		십자장식색 :Color = Color.GOLDENROD,
 		화살표색 :Color = Color.WHITE,
 		) -> void:
 	$"원판".mesh.material.albedo_color = 원판색
 	$"원판/작은장식".mesh.material.albedo_color = 작은장식색
 	$"원판/큰장식".mesh.material.albedo_color = 큰장식색
+	$"원판/가로장식".mesh.material.albedo_color = 십자장식색
+	$"원판/세로장식".mesh.material.albedo_color = 십자장식색
 	$"화살표".색바꾸기(화살표색)
 
 var rotation_per_second :float
