@@ -42,7 +42,7 @@ func 회전판추가(id :int) -> 회전판:
 			참가자추가하기()
 		else :
 			var co = NamedColorList.color_list.pick_random()
-			rp.칸추가하기(co[0],"%d" % i)
+			rp.칸추가하기(co[0],"%02X" % i)
 	rp.칸위치정리하기()
 	if id == 0:
 		rp.rotation_stopped.connect(결과가결정됨)
@@ -51,7 +51,7 @@ func 회전판추가(id :int) -> 회전판:
 	
 func 결과가결정됨(id :int) -> void:
 	print("결과" , 회전판들[0].각도로칸선택하기(90))
-	$TimedMessage.show_message( "%d %s (이)가 선택되었습니다." % [id, 회전판들[0].각도로칸선택하기(90)] ,3 )
+	$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[0].각도로칸선택하기(90).글내용] ,3 )
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
@@ -85,7 +85,7 @@ func 참가자추가하기() -> void:
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
-	참가자.text = "참가자%d" % [현재칸수+1]
+	참가자.text = "번호%02d" % [현재칸수+1]
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.add_theme_color_override("font_color",co[0])
