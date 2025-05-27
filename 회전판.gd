@@ -13,9 +13,7 @@ var 회전중인가 :bool # need emit
 
 func init(ida :int, 반지름a :float, 깊이a :float, 
 		원판색 :Color = Color.DARK_GREEN,
-		작은장식색 :Color = Color.GOLD,
-		큰장식색 :Color = Color.GOLDENROD,
-		십자장식색 :Color = Color.GOLDENROD,
+		장식색 :Color = Color.GOLD,
 		화살표색 :Color = Color.WHITE,
 		) -> 회전판:
 	id = ida
@@ -29,7 +27,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".mesh.material.albedo_color = 원판색
 	$"원판".position.y = -깊이
 	
-	$"원판/ValveHandle".init(반지름*0.1, 깊이, 작은장식색, 큰장식색, 십자장식색 )
+	$"원판/ValveHandle".init(반지름*0.1, 깊이, 장식색)
 
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	$화살표.rotation = Vector3(0,PI/2,-PI/2)
