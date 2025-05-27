@@ -36,13 +36,13 @@ func 회전판추가(id :int) -> 회전판:
 		NamedColorList.color_list.pick_random()[0],
 		)
 	회전판들.append(rp)
-	for i in 12:
+	for i in randi_range(4,32):
 		if id == 0:
 			참가자추가하기()
 		else :
 			var co = NamedColorList.color_list.pick_random()
 			rp.칸추가하기(co[0],"%d" % i)
-			rp.칸위치정리하기()
+	rp.칸위치정리하기()
 	if id == 0:
 		rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
@@ -92,7 +92,6 @@ func 참가자추가하기() -> void:
 	참가자.add_theme_constant_override("outline_size",1)
 	$"왼쪽패널/참가자목록".add_child(참가자)
 	회전판들[0].칸추가하기(co[0],참가자.text)
-	회전판들[0].칸위치정리하기()
 	참가자.text_changed.connect(
 		func(t :String):
 			참가자이름변경됨(현재칸수, t)
