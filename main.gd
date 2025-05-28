@@ -1,5 +1,7 @@
 extends Node3D
 
+# ♠♣♥♦
+
 var vp_size :Vector2
 var 짧은길이 :float
 var 회전판들 :Array
@@ -40,7 +42,7 @@ func 회전판추가(id :int) -> 회전판:
 			참가자추가하기()
 		else :
 			var co = NamedColorList.color_list.pick_random()
-			rp.칸추가하기(co[0],"%02X" % i)
+			rp.칸추가하기(co[0],"%s%02d" % [ "♠♣♥♦".split()[i%4] , i])
 	rp.칸위치정리하기()
 	if id == 0:
 		rp.rotation_stopped.connect(결과가결정됨)
@@ -83,7 +85,7 @@ func 참가자추가하기() -> void:
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
-	참가자.text = "번호%02d" % [현재칸수+1]
+	참가자.text =  "%s%02d" % ["♠♣♥♦".split()[현재칸수%4], 현재칸수+1]
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.add_theme_color_override("font_color",co[0])
