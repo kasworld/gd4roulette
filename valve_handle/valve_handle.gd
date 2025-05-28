@@ -17,13 +17,17 @@ func init(반지름a :float, 깊이a :float, 색 :Color = Color.GOLD) -> ValveHa
 	$"중앙기둥".mesh.material = mat
 	$"중앙기둥".position.y = 깊이
 
+	var sp = new_ball()
+	add_child(sp)
+	sp.position = Vector3(0, 깊이*2 , 0)
+
 	for i in 2:
 		var mesh = CylinderMesh.new()
 		mesh.height = 반지름*2
 		mesh.bottom_radius = 반지름*0.1
 		mesh.top_radius = 반지름*0.1
 		mesh.material = mat
-		var sp = MeshInstance3D.new()
+		sp = MeshInstance3D.new()
 		sp.mesh = mesh
 		sp.position = Vector3(0,깊이*2,0)
 		sp.rotate_x(PI/2)
@@ -32,14 +36,10 @@ func init(반지름a :float, 깊이a :float, 색 :Color = Color.GOLD) -> ValveHa
 		
 	var rd = 2*PI/4
 	for i in 4:
-		var sp = new_ball()
+		sp = new_ball()
 		add_child(sp)
 		sp.position = Vector3(sin(rd*i)*반지름, 깊이*2 , cos(rd*i)*반지름)
-	
-	var sp = new_ball()
-	add_child(sp)
-	sp.position = Vector3(0, 깊이*2 , 0)
-	
+		
 	return self
 
 func new_ball() -> MeshInstance3D:
