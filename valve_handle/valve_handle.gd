@@ -12,26 +12,44 @@ func init(반지름a :float, 깊이a :float, 색 :Color = Color.GOLD) -> ValveHa
 	mat.albedo_color = 색
 	
 	$"중앙기둥".mesh.height = 깊이*2
-	$"중앙기둥".mesh.radius = 반지름*0.1
+	$"중앙기둥".mesh.bottom_radius = 반지름*0.1
+	$"중앙기둥".mesh.top_radius = 반지름*0.1
 	$"중앙기둥".mesh.material = mat
-	$"중앙기둥".position.y = 깊이*1.5
+	$"중앙기둥".position.y = 깊이
 
-	$"중심구".mesh.radius = 반지름*0.2
-	$"중심구".mesh.height = 반지름*0.4
-	$"중심구".mesh.material = mat
-	$"중심구".position.y = 깊이*2
+	for i in 2:
+		var mesh = CylinderMesh.new()
+		mesh.height = 반지름*2
+		mesh.bottom_radius = 반지름*0.1
+		mesh.top_radius = 반지름*0.1
+		mesh.material = mat
+		var sp = MeshInstance3D.new()
+		sp.mesh = mesh
+		sp.position = Vector3(0,깊이*2,0)
+		sp.rotate_x(PI/2)
+		sp.rotate_y(PI/2*i)
+		add_child(sp)
+		
+	var rd = 2*PI/4
+	for i in 4:
+		var sp = new_ball()
+		add_child(sp)
+		sp.position = Vector3(sin(rd*i)*반지름, 깊이*2 , cos(rd*i)*반지름)
 	
-	$"가로막대기".mesh.height = 반지름*2
-	$"가로막대기".mesh.radius = 반지름*0.1
-	$"가로막대기".mesh.material = mat
-	$"가로막대기".position.y = 깊이*2
-
-	$"세로막대기".mesh.height = 반지름*2
-	$"세로막대기".mesh.radius = 반지름*0.1
-	$"세로막대기".mesh.material = mat
-	$"세로막대기".position.y = 깊이*2
-
+	var sp = new_ball()
+	add_child(sp)
+	sp.position = Vector3(0, 깊이*2 , 0)
+	
 	return self
+
+func new_ball() -> MeshInstance3D:
+	var mesh = SphereMesh.new()
+	mesh.radius = 반지름*0.2
+	mesh.height = 반지름*0.4
+	mesh.material = mat
+	var sp = MeshInstance3D.new()
+	sp.mesh = mesh
+	return sp
 
 func 색바꾸기(색 :Color = Color.GOLD) -> void:
 	mat.albedo_color = 색
