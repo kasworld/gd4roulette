@@ -5,6 +5,8 @@ extends Node3D
 var vp_size :Vector2
 var 짧은길이 :float
 var 회전판들 :Array
+var playing_card_deck :Array
+var deck_index :int
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
@@ -20,6 +22,7 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 
+	playing_card_deck = PlayingCard.make_deck_with_joker()
 	var n = 4
 	for i in n:
 		var rd = 2*PI/n *i
@@ -37,7 +40,7 @@ func 회전판추가(id :int) -> 회전판:
 		NamedColorList.color_list.pick_random()[0],
 		)
 	회전판들.append(rp)
-	var text_list := PlayingCard.AllCards.duplicate()
+	var text_list = PlayingCard.make_deck_with_joker()
 	text_list.shuffle()
 	for i in randi_range(4,text_list.size()):
 		if id == 0:
@@ -84,10 +87,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			마지막참가자제거하기()
 
 func 참가자추가하기() -> void:
+	var t = playing_card_deck[deck_index]
+	deck_index +=1
+	deck_index %= playing_card_deck.size()
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
-	참가자.text = PlayingCard.AllCards.pick_random()
+	참가자.text = t
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.add_theme_color_override("font_color",co[0])
