@@ -22,15 +22,15 @@ func init(팔길이a :float, 높이a :float, 팔개수 :int = 4, 색 :Color = Co
 	sp.position = Vector3(0, 높이 , 0)
 
 	var rd = 2*PI/팔개수
-	for i in 팔개수/2:
+	for i in 팔개수:
 		var mesh = CylinderMesh.new()
-		mesh.height = 팔길이*2
+		mesh.height = 팔길이
 		mesh.bottom_radius = 팔길이*0.1
 		mesh.top_radius = 팔길이*0.1
 		mesh.material = mat
 		sp = MeshInstance3D.new()
 		sp.mesh = mesh
-		sp.position = Vector3(0,높이,0)
+		sp.position = Vector3(sin(rd*i)*팔길이/2, 높이 , cos(rd*i)*팔길이/2)
 		sp.rotate_x(PI/2)
 		sp.rotate_y(rd*i)
 		add_child(sp)
