@@ -26,7 +26,6 @@ func _ready() -> void:
 		var r = 짧은길이*0.8
 		회전판추가(i)
 		회전판들[i].position = Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3)
-	
 	reset_camera_pos()
 
 func 회전판추가(id :int) -> 회전판:
@@ -37,12 +36,14 @@ func 회전판추가(id :int) -> 회전판:
 		NamedColorList.color_list.pick_random()[0],
 		)
 	회전판들.append(rp)
-	for i in randi_range(4,32):
+	var text_list := PlayingCard.AllCards.duplicate()
+	text_list.shuffle()
+	for i in randi_range(4,text_list.size()):
 		if id == 0:
 			참가자추가하기()
 		else :
 			var co = NamedColorList.color_list.pick_random()
-			rp.칸추가하기(co[0], PlayingCard.AllCards.pick_random() )
+			rp.칸추가하기(co[0], text_list[i] )
 	rp.칸위치정리하기()
 	if id == 0:
 		rp.rotation_stopped.connect(결과가결정됨)
@@ -85,7 +86,7 @@ func 참가자추가하기() -> void:
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
-	참가자.text =  PlayingCard.AllCards.pick_random() 
+	참가자.text = PlayingCard.AllCards.pick_random()
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.add_theme_color_override("font_color",co[0])
