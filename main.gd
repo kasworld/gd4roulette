@@ -87,13 +87,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			마지막참가자제거하기()
 
 func 참가자추가하기() -> void:
-	var t = playing_card_deck[deck_index]
+	var txt = playing_card_deck[deck_index]
 	deck_index +=1
 	deck_index %= playing_card_deck.size()
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = NamedColorList.color_list.pick_random()
 	var 참가자 = LineEdit.new()
-	참가자.text = t
+	참가자.text = txt
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	참가자.add_theme_color_override("font_color",co[0])
