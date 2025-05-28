@@ -33,6 +33,7 @@ func 회전판추가(id :int) -> 회전판:
 		id, 짧은길이*0.6, 짧은길이/40,
 		NamedColorList.color_list.pick_random()[0],
 		NamedColorList.color_list.pick_random()[0],
+		randi_range(2,8),
 		NamedColorList.color_list.pick_random()[0],
 		)
 	회전판들.append(rp)
