@@ -47,6 +47,9 @@ func 칸각도바꾸기(새각도 :float) -> void:
 	$"시작선".rotation.y = deg_to_rad(칸각도/2)
 	var rad = deg_to_rad(칸각도/2 + 90)
 	$"시작선".position = Vector3(sin(rad)*반지름*(선끝비 + 선시작비)/2, 깊이/2, cos(rad)*반지름*(선끝비 + 선시작비)/2)
+	var 글씨크기 = 48
+	var pixel_크기 = 반지름 *sin(deg_to_rad(칸각도)) *0.01
+	글씨크기바꾸기(pixel_크기,글씨크기)
 
 func 글내용바꾸기(새글내용 :String) -> void:
 	글내용 = 새글내용
