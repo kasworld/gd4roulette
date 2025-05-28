@@ -21,7 +21,9 @@ func init(반지름a :float, 깊이a :float, 색 :Color = Color.GOLD) -> ValveHa
 	add_child(sp)
 	sp.position = Vector3(0, 깊이*2 , 0)
 
-	for i in 2:
+	var n := 2
+	var rd = PI/n
+	for i in n:
 		var mesh = CylinderMesh.new()
 		mesh.height = 반지름*2
 		mesh.bottom_radius = 반지름*0.1
@@ -31,11 +33,12 @@ func init(반지름a :float, 깊이a :float, 색 :Color = Color.GOLD) -> ValveHa
 		sp.mesh = mesh
 		sp.position = Vector3(0,깊이*2,0)
 		sp.rotate_x(PI/2)
-		sp.rotate_y(PI/2*i)
+		sp.rotate_y(rd*i)
 		add_child(sp)
 		
-	var rd = 2*PI/4
-	for i in 4:
+	n = n*2
+	rd = 2*PI/n
+	for i in n:
 		sp = new_ball()
 		add_child(sp)
 		sp.position = Vector3(sin(rd*i)*반지름, 깊이*2 , cos(rd*i)*반지름)
