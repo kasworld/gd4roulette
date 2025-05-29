@@ -5,6 +5,7 @@ var 칸_scene = preload("res://칸.tscn")
 
 signal rotation_stopped(n :int)
 
+var 화살표위치각도 :float = 90.0
 var id :int
 var 반지름 :float
 var 깊이 :float
@@ -31,8 +32,8 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
 
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
-	$화살표.rotation = Vector3(0,PI/2,-PI/2)
-	$화살표.position = Vector3(0,깊이,반지름 + 반지름/10)
+	$화살표.rotation = Vector3(0,deg_to_rad(180-화살표위치각도), -PI/2)
+	$화살표.position = Vector3(cos(deg_to_rad(화살표위치각도)) *반지름*1.1, 깊이, sin(deg_to_rad(화살표위치각도)) *반지름*1.1 )
 	return self
 
 func 색바꾸기(
@@ -100,7 +101,7 @@ func 칸위치정리하기() -> void:
 	var pixel_크기 = 반지름 *sin(deg_to_rad(칸각도)) * 0.01
 	for i in 칸들.size():
 		칸들[i].칸각도바꾸기(칸각도)
-		var deg = 90+ 칸각도 * i
+		var deg = 화살표위치각도+ 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
 	#$"원판".mesh.radial_segments = 칸들.size()
