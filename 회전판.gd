@@ -99,15 +99,17 @@ func 칸위치정리하기() -> void:
 		return
 	var 칸각도 = 360.0/칸들.size()
 	var pixel_크기 = 반지름 *sin(deg_to_rad(칸각도)) * 0.01
+	if 칸들.size() <= 2:
+		pixel_크기 = 반지름 * 0.01
 	for i in 칸들.size():
 		칸들[i].칸각도바꾸기(칸각도)
 		var deg = 화살표위치각도+ 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
-	#$"원판".mesh.radial_segments = 칸들.size()
+	$"원판".mesh.radial_segments = 칸들.size()
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
-	선택각도 += rad_to_deg($"원판".rotation.y)
+	선택각도 += rad_to_deg($"원판".rotation.y)-화살표위치각도
 	if 칸들.size() == 0 :
 		return null
 	while 선택각도 < 0:
