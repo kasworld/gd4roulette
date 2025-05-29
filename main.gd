@@ -27,13 +27,14 @@ func _ready() -> void:
 	for i in n:
 		var rd = 2*PI/n *i
 		var r = 짧은길이*0.8
-		회전판추가(i , rad_to_deg(rd) )
+		회전판추가(i)
 		회전판들[i].position = Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3)
+		회전판들[i].rotation.y = rd + PI/2
 	reset_camera_pos()
 
-func 회전판추가(id :int, 선택각도 :float) -> 회전판:
+func 회전판추가(id :int) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
-		id, 짧은길이*0.6, 짧은길이/40, 선택각도,
+		id, 짧은길이*0.6, 짧은길이/40,
 		NamedColorList.color_list.pick_random()[0],
 		NamedColorList.color_list.pick_random()[0],
 		randi_range(2,8),

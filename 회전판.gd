@@ -13,7 +13,6 @@ var 칸들 :Array[칸]
 var 회전중인가 :bool # need emit
 
 func init(ida :int, 반지름a :float, 깊이a :float, 
-		선택각도a :float = 90.0,
 		원판색 :Color = Color.DARK_GREEN,
 		장식색 :Color = Color.GOLD,
 		장식팔개수 :int = 4,
@@ -22,7 +21,6 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	id = ida
 	반지름 = 반지름a
 	깊이 = 깊이a
-	선택각도 = 선택각도a
 	
 	$"원판".mesh.height = 깊이
 	$"원판".mesh.bottom_radius = 반지름
