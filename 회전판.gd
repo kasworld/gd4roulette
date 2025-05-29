@@ -5,7 +5,7 @@ var 칸_scene = preload("res://칸.tscn")
 
 signal rotation_stopped(n :int)
 
-var 화살표위치각도 :float = 90.0
+var 선택각도 :float = 90.0
 var id :int
 var 반지름 :float
 var 깊이 :float
@@ -13,6 +13,7 @@ var 칸들 :Array[칸]
 var 회전중인가 :bool # need emit
 
 func init(ida :int, 반지름a :float, 깊이a :float, 
+		선택각도a :float = 90.0,
 		원판색 :Color = Color.DARK_GREEN,
 		장식색 :Color = Color.GOLD,
 		장식팔개수 :int = 4,
@@ -21,6 +22,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	id = ida
 	반지름 = 반지름a
 	깊이 = 깊이a
+	선택각도 = 선택각도a
 	
 	$"원판".mesh.height = 깊이
 	$"원판".mesh.bottom_radius = 반지름
@@ -32,8 +34,8 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
 
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
-	$화살표.rotation = Vector3(0,deg_to_rad(180-화살표위치각도), -PI/2)
-	$화살표.position = Vector3(cos(deg_to_rad(화살표위치각도)) *반지름*1.1, 깊이, sin(deg_to_rad(화살표위치각도)) *반지름*1.1 )
+	$화살표.rotation = Vector3(0,deg_to_rad(180-선택각도), -PI/2)
+	$화살표.position = Vector3(cos(deg_to_rad(선택각도)) *반지름*1.1, 깊이, sin(deg_to_rad(선택각도)) *반지름*1.1 )
 	return self
 
 func 색바꾸기(
@@ -58,8 +60,8 @@ func 회전판돌리기(dur_sec :float = 1.0) -> void:
 		회전중인가 = false
 		rotation_per_second = 0.0
 
-func 회전판강조상태켜기(deg: float) -> void:
-	var 선택칸 = 각도로칸선택하기(deg)
+func 선택된칸강조상태켜기() -> void:
+	var 선택칸 = 선택된칸얻기()
 	if 선택칸 != null:
 		선택칸.강조상태켜기()
 
@@ -103,22 +105,22 @@ func 칸위치정리하기() -> void:
 		pixel_크기 = 반지름 * 0.01
 	for i in 칸들.size():
 		칸들[i].칸각도바꾸기(칸각도)
-		var deg = 화살표위치각도+ 칸각도 * i
+		var deg = 선택각도+ 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
 	#$"원판".mesh.radial_segments = 칸들.size()
 
-func 각도로칸선택하기(선택각도 :float) -> 칸:
-	선택각도 += rad_to_deg($"원판".rotation.y)-화살표위치각도
+func 선택된칸얻기() -> 칸:
+	var 각도 = rad_to_deg($"원판".rotation.y)
 	if 칸들.size() == 0 :
 		return null
-	while 선택각도 < 0:
-		선택각도 += 360
-	while 선택각도 >= 360:
-		선택각도 -= 360
+	while 각도 < 0:
+		각도 += 360
+	while 각도 >= 360:
+		각도 -= 360
 	var 칸각도 = 360.0 / 칸들.size()
 	for 현재칸번호 in 칸들.size():
-		if 칸각도/2 + 현재칸번호*칸각도 > 선택각도:
+		if 칸각도/2 + 현재칸번호*칸각도 > 각도:
 			return 칸들[현재칸번호]
 	return 칸들[0]
 

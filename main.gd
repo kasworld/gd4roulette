@@ -27,13 +27,13 @@ func _ready() -> void:
 	for i in n:
 		var rd = 2*PI/n *i
 		var r = 짧은길이*0.8
-		회전판추가(i)
+		회전판추가(i , rad_to_deg(rd) )
 		회전판들[i].position = Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3)
 	reset_camera_pos()
 
-func 회전판추가(id :int) -> 회전판:
+func 회전판추가(id :int, 선택각도 :float) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
-		id, 짧은길이*0.6, 짧은길이/40,
+		id, 짧은길이*0.6, 짧은길이/40, 선택각도,
 		NamedColorList.color_list.pick_random()[0],
 		NamedColorList.color_list.pick_random()[0],
 		randi_range(2,8),
@@ -55,8 +55,8 @@ func 회전판추가(id :int) -> 회전판:
 	return rp
 	
 func 결과가결정됨(id :int) -> void:
-	print("결과" , 회전판들[0].각도로칸선택하기(90))
-	$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[0].각도로칸선택하기(90).글내용] ,3 )
+	print("결과" , 회전판들[0].선택된칸얻기())
+	$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[0].선택된칸얻기().글내용] ,3 )
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
@@ -66,7 +66,7 @@ var camera_move = false
 func _process(delta: float) -> void:
 	for rp in 회전판들:
 		rp.회전판돌리기(delta)
-		rp.회전판강조상태켜기(90)
+		rp.선택된칸강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*짧은길이/2 ,짧은길이, cos(t)*짧은길이/2  )
