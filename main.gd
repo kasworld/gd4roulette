@@ -82,9 +82,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_SPACE:
 			_on_돌리기_pressed()
 		elif event.keycode == KEY_INSERT:
-			참가자추가하기()
+			_on_참가자추가_pressed()
 		elif event.keycode == KEY_DELETE:
-			마지막참가자제거하기()
+			_on_참가자제거_pressed()
 
 func 참가자추가하기() -> void:
 	var txt = playing_card_deck[deck_index]
@@ -123,9 +123,11 @@ func _on_돌리기_pressed() -> void:
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
+	회전판들[0].칸위치정리하기()
 
 func _on_참가자제거_pressed() -> void:
 	마지막참가자제거하기()
+	회전판들[0].칸위치정리하기()
 
 func _on_카메라변경_pressed() -> void:
 	camera_move = !camera_move

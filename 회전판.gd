@@ -91,7 +91,6 @@ func 마지막칸지우기() -> void:
 		return
 	var n = 칸들.pop_back()
 	$"원판".remove_child(n)
-	칸위치정리하기()
 
 # 칸들의 각도가 동일하게 조정한다.
 func 칸위치정리하기() -> void:
@@ -101,9 +100,10 @@ func 칸위치정리하기() -> void:
 	var pixel_크기 = 반지름 *sin(deg_to_rad(칸각도)) * 0.01
 	for i in 칸들.size():
 		칸들[i].칸각도바꾸기(칸각도)
-		var deg = 칸각도 * i
+		var deg = 90+ 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
+	#$"원판".mesh.radial_segments = 칸들.size()
 
 func 각도로칸선택하기(선택각도 :float) -> 칸:
 	선택각도 += rad_to_deg($"원판".rotation.y)
