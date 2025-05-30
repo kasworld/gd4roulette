@@ -29,7 +29,6 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".position.y = -깊이
 	
 	$"원판/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
-
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	선택각도바꾸기(선택각도)
 	return self
@@ -39,15 +38,9 @@ func 선택각도바꾸기(deg :float) -> void:
 	$화살표.rotation = Vector3(PI/2,deg_to_rad(180-선택각도), 0)
 	$화살표.position = Vector3(sin(deg_to_rad(선택각도)) *반지름*1.1, 깊이, cos(deg_to_rad(선택각도)) *반지름*1.1 )
 
-func 색바꾸기(
-		원판색 :Color = Color.DARK_GREEN,
-		작은장식색 :Color = Color.GOLD,
-		큰장식색 :Color = Color.GOLDENROD,
-		십자장식색 :Color = Color.GOLDENROD,
-		화살표색 :Color = Color.WHITE,
-		) -> void:
+func 색바꾸기(원판색 :Color, 장식색 :Color, 화살표색 :Color) -> void:
 	$"원판".mesh.material.albedo_color = 원판색
-	$"원판/ValveHandle".색바꾸기(작은장식색, 큰장식색, 십자장식색)
+	$"원판/ValveHandle".색바꾸기(장식색)
 	$"화살표".색바꾸기(화살표색)
 
 var rotation_per_second :float
