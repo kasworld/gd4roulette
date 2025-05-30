@@ -29,7 +29,7 @@ func _ready() -> void:
 		var r = 짧은길이*0.8
 		회전판추가(i)
 		회전판들[i].position = Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3)
-		회전판들[i].rotation.y = rd + PI/2
+		회전판들[i].rotation.y = rd +PI/2 
 	reset_camera_pos()
 
 func 회전판추가(id :int) -> 회전판:

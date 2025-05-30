@@ -5,7 +5,7 @@ var 칸_scene = preload("res://칸.tscn")
 
 signal rotation_stopped(n :int)
 
-var 선택각도 :float = 90.0
+var 선택각도 :float = 0.0
 var id :int
 var 반지름 :float
 var 깊이 :float
@@ -37,8 +37,8 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 
 func 선택각도바꾸기(deg :float) -> void:
 	선택각도 = deg
-	$화살표.rotation = Vector3(0,deg_to_rad(180-선택각도), -PI/2)
-	$화살표.position = Vector3(cos(deg_to_rad(선택각도)) *반지름*1.1, 깊이, sin(deg_to_rad(선택각도)) *반지름*1.1 )
+	$화살표.rotation = Vector3(PI/2,deg_to_rad(180-선택각도), 0)
+	$화살표.position = Vector3(sin(deg_to_rad(선택각도)) *반지름*1.1, 깊이, cos(deg_to_rad(선택각도)) *반지름*1.1 )
 
 func 색바꾸기(
 		원판색 :Color = Color.DARK_GREEN,
@@ -110,7 +110,7 @@ func 칸위치정리하기() -> void:
 		var deg = 칸각도 * i
 		칸들[i].rotation.y = deg_to_rad(-deg)
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
-	#$"원판".mesh.radial_segments = 칸들.size()
+	$"원판".mesh.radial_segments = 칸들.size()
 
 func 선택된칸얻기() -> 칸:
 	var 각도 = rad_to_deg($"원판".rotation.y) + 선택각도
