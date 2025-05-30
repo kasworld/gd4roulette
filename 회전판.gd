@@ -25,7 +25,6 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".mesh.height = 깊이
 	$"원판".mesh.bottom_radius = 반지름
 	$"원판".mesh.top_radius = 반지름
-	$"원판".mesh.radial_segments = 반지름
 	$"원판".mesh.material.albedo_color = 원판색
 	$"원판".position.y = -깊이
 	
