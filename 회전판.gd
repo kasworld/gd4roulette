@@ -29,10 +29,14 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".position.y = -깊이
 	
 	$"원판/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
+	var rot = 2*PI
+	if randi_range(0,1) == 0:
+		rot = - rot
 	$"원판/BarTree2".init_with_color(
 		장식색, 
 		원판색, 
-		반지름*0.3, 반지름*0.3, 반지름*0.05, 16, 2*PI, false )
+		반지름*2.0, 깊이, 반지름*0.05, 64, rot, false )
+	$"원판/BarTree2".position.y = 깊이/2
 	
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	선택각도바꾸기(선택각도)

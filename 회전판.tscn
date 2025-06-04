@@ -19,7 +19,6 @@ script = ExtResource("1_7pkjq")
 mesh = SubResource("CylinderMesh_ed2fd")
 
 [node name="ValveHandle" parent="원판" instance=ExtResource("2_14kvd")]
-visible = false
 
 [node name="BarTree2" parent="원판" instance=ExtResource("3_phm1c")]
 
