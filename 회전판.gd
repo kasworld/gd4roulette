@@ -2,6 +2,7 @@ extends Node3D
 class_name 회전판
 
 var 칸_scene = preload("res://칸.tscn")
+var bartree_scene = preload("res://bar_tree_2/bar_tree_2.tscn")
 
 signal rotation_stopped(n :int)
 
@@ -32,7 +33,8 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	var rot = 2*PI
 	if randi_range(0,1) == 0:
 		rot = - rot
-	$"원판/BarTree2".init_common_params(반지름*2.0, 깊이, 반지름*0.05, 256, rot, 0.0, false 
+
+	$"원판/BarTree2".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, 1.0, false 
 		).init_with_color(장식색, 원판색)
 	$"원판/BarTree2".position.y = 깊이/2
 	
