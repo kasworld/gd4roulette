@@ -126,6 +126,6 @@ func bar_rotation_y() -> void:
 	for i in multimesh.visible_instance_count:
 		var t = multimesh.get_instance_transform(i)
 		var rate = float(i)/bar_count
-		var bar_rot = rate * bar_rotation + bar_rotation_begin
+		var bar_rot = rate * bar_rotation 
 		t = t.rotated(Vector3(0,1,0), bar_rot)
 		multimesh.set_instance_transform(i,t )
