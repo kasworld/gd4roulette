@@ -6,7 +6,7 @@ var bartree_scene = preload("res://bar_tree_2/bar_tree_2.tscn")
 
 signal rotation_stopped(n :int)
 
-var 선택각도 :float = 0.0
+var 선택각도 :float = 0.0 # degree
 var id :int
 var 반지름 :float
 var 깊이 :float
@@ -34,7 +34,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	if randi_range(0,1) == 0:
 		rot = - rot
 
-	$"원판/BarTree2".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, 1.0, false 
+	$"원판/BarTree2".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도), 1.0, false 
 		).init_with_color(장식색, 원판색)
 	$"원판/BarTree2".position.y = 깊이/2
 	
@@ -44,8 +44,9 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 
 func 선택각도바꾸기(deg :float) -> void:
 	선택각도 = deg
-	$화살표.rotation = Vector3(PI/2,deg_to_rad(180-선택각도), 0)
-	$화살표.position = Vector3(sin(deg_to_rad(선택각도)) *반지름*1.1, 깊이, cos(deg_to_rad(선택각도)) *반지름*1.1 )
+	var rad = deg_to_rad(선택각도)
+	$화살표.rotation = Vector3(PI/2, PI+rad, 0)
+	$화살표.position = Vector3(sin(rad) *반지름*1.1, 깊이, cos(rad) *반지름*1.1 )
 
 func 색바꾸기(원판색 :Color, 장식색 :Color, 화살표색 :Color) -> void:
 	$"원판".mesh.material.albedo_color = 원판색
@@ -115,7 +116,7 @@ func 칸위치정리하기() -> void:
 	$"원판/BarTree2".set_visible_bar_count(칸들.size())
 
 func 선택된칸얻기() -> 칸:
-	var 각도 = rad_to_deg($"원판".rotation.y) + 선택각도
+	var 각도 = rad_to_deg($"원판".rotation.y) - 선택각도
 	if 칸들.size() == 0 :
 		return null
 	while 각도 < 0:
