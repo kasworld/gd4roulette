@@ -75,6 +75,11 @@ layout_mode = 2
 text = "Space: 회전판돌리기"
 alignment = 2
 
+[node name="자동돌리기" type="Button" parent="오른쪽패널"]
+layout_mode = 2
+text = "F2:자동돌리기"
+alignment = 2
+
 [node name="TimedMessage" parent="." instance=ExtResource("5_lquwl")]
 self_modulate = Color(1, 1, 1, 0.498039)
 theme = SubResource("Theme_7mycd")
@@ -84,3 +89,4 @@ theme = SubResource("Theme_7mycd")
 [connection signal="pressed" from="오른쪽패널/참가자숨기기" to="." method="_on_참가자숨기기_pressed"]
 [connection signal="pressed" from="오른쪽패널/카메라변경" to="." method="_on_카메라변경_pressed"]
 [connection signal="pressed" from="오른쪽패널/회전판돌리기" to="." method="_on_돌리기_pressed"]
+[connection signal="pressed" from="오른쪽패널/자동돌리기" to="." method="_on_자동돌리기_pressed"]
