@@ -30,14 +30,14 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판".position.y = -깊이
 	
 	$"원판/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
-	var rot = 2*PI
+	var rot = 0 #2*PI
 	if randi_range(0,1) == 0:
 		rot = - rot
 
-	$"원판/BarTree2".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도), 1.0, false 
+	$"원판/BarTree2".init_common_params(반지름*0.5, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도), 1.0, false 
 		).init_with_color(장식색, 원판색)
 	$"원판/BarTree2".position.y = 깊이/2
-	$"원판/BarTree3".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도+180), 1.0, false 
+	$"원판/BarTree3".init_common_params(반지름*0.5, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도+180), 1.0, false 
 		).init_with_color(장식색.inverted(), 원판색.inverted())
 	$"원판/BarTree3".position.y = 깊이/2
 	
@@ -66,6 +66,8 @@ func 회전판돌리기(dur_sec :float = 1.0) -> void:
 		rotation_stopped.emit(id)
 		회전중인가 = false
 		rotation_per_second = 0.0
+	$"원판/BarTree2".bar_rotation = -rotation_per_second/10
+	$"원판/BarTree3".bar_rotation = -rotation_per_second/10
 
 func 선택된칸강조상태켜기() -> void:
 	var 선택칸 = 선택된칸얻기()
@@ -76,6 +78,11 @@ func 선택된칸강조상태켜기() -> void:
 func 돌리기시작(spd :float) -> void:
 	rotation_per_second = spd
 	회전중인가 = true
+	$"원판/BarTree2".auto_rotate_bar = true
+	$"원판/BarTree2".bar_rotation = -spd/10
+	$"원판/BarTree3".auto_rotate_bar = true
+	$"원판/BarTree2".bar_rotation = -spd/10
+	$"원판/BarTree3".bar_rotation = -spd/10
 
 func 멈추기시작(decel :float=0.5) -> void:
 	assert(decel < 1.0)
