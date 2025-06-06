@@ -73,19 +73,24 @@ func _process(delta: float) -> void:
 		$Camera3D.position = Vector3(sin(t)*짧은길이/2 ,짧은길이, cos(t)*짧은길이/2  )
 		$Camera3D.look_at(Vector3.ZERO)
 
-# esc to exit
+var key2fn = {
+	KEY_ESCAPE:_on_button_esc_pressed,
+	KEY_ENTER:_on_카메라변경_pressed,
+	KEY_SPACE:_on_돌리기_pressed,
+	KEY_INSERT:_on_참가자추가_pressed,
+	KEY_DELETE:_on_참가자제거_pressed,
+	KEY_F1:_on_참가자숨기기_pressed,
+}
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_ESCAPE:
-			get_tree().quit()
-		elif event.keycode == KEY_ENTER:
-			_on_카메라변경_pressed()
-		elif event.keycode == KEY_SPACE:
-			_on_돌리기_pressed()
-		elif event.keycode == KEY_INSERT:
-			_on_참가자추가_pressed()
-		elif event.keycode == KEY_DELETE:
-			_on_참가자제거_pressed()
+		var fn = key2fn.get(event.keycode)
+		if fn != null:
+			fn.call()
+	elif event is InputEventMouseButton and event.is_pressed():
+		pass
+
+func _on_button_esc_pressed() -> void:
+	get_tree().quit()
 
 func 참가자추가하기() -> void:
 	var txt = playing_card_deck[deck_index]
@@ -134,3 +139,6 @@ func _on_카메라변경_pressed() -> void:
 	camera_move = !camera_move
 	if camera_move == false:
 		reset_camera_pos()
+
+func _on_참가자숨기기_pressed() -> void:
+	$"왼쪽패널".visible = not $"왼쪽패널".visible
