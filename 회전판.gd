@@ -37,6 +37,9 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"원판/BarTree2".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도), 1.0, false 
 		).init_with_color(장식색, 원판색)
 	$"원판/BarTree2".position.y = 깊이/2
+	$"원판/BarTree3".init_common_params(반지름*1.0, 깊이, 반지름*0.05, 256, rot, deg_to_rad(선택각도+180), 1.0, false 
+		).init_with_color(장식색.inverted(), 원판색.inverted())
+	$"원판/BarTree3".position.y = 깊이/2
 	
 	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
 	선택각도바꾸기(선택각도)
@@ -114,6 +117,7 @@ func 칸위치정리하기() -> void:
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
 	$"원판".mesh.radial_segments = 칸들.size()
 	$"원판/BarTree2".set_visible_bar_count(칸들.size())
+	$"원판/BarTree3".set_visible_bar_count(칸들.size())
 
 func 선택된칸얻기() -> 칸:
 	var 각도 = rad_to_deg($"원판".rotation.y) - 선택각도
