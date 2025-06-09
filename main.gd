@@ -3,8 +3,13 @@ extends Node3D
 var vp_size :Vector2
 var 짧은길이 :float
 var 회전판들 :Array
-var playing_card_deck :Array
+var 이름후보목록 :Array
 var deck_index :int
+func 이름후보얻기() -> String:
+	var txt = 이름후보목록[deck_index]
+	deck_index +=1
+	deck_index %= 이름후보목록.size()
+	return txt	
 var 자동으로다시돌리기 :bool = true
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
@@ -21,7 +26,9 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 
-	playing_card_deck = PlayingCard.make_deck_with_joker()
+	#이름후보목록 = Tarot.make_full_deck()
+	이름후보목록 = PlayingCard.make_deck_with_joker()
+	이름후보목록.shuffle()
 	var n = 4
 	for i in n:
 		var rd = 2*PI/n *i
@@ -42,13 +49,11 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float) -> 회전판:
 		make_random_color(),
 		)
 	회전판들.append(rp)
-	var text_list = PlayingCard.make_deck_with_joker()
-	text_list.shuffle()
-	for i in randi_range(4,text_list.size()):
+	for i in randi_range(4,이름후보목록.size()):
 		if id == 0:
 			참가자추가하기()
 		else :
-			rp.칸추가하기(make_random_color(), text_list[i] )
+			rp.칸추가하기(make_random_color(), 이름후보얻기() )
 	rp.칸위치정리하기()
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
@@ -98,9 +103,7 @@ func _on_button_esc_pressed() -> void:
 	get_tree().quit()
 
 func 참가자추가하기() -> void:
-	var txt = playing_card_deck[deck_index]
-	deck_index +=1
-	deck_index %= playing_card_deck.size()
+	var txt = 이름후보얻기()
 	var 현재칸수 = 회전판들[0].칸수얻기()
 	var co = make_random_color()
 	var 참가자 = LineEdit.new()
