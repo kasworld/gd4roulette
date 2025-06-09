@@ -57,11 +57,11 @@ func 색바꾸기(원판색 :Color, 장식색 :Color, 화살표색 :Color) -> vo
 	$"화살표".색바꾸기(화살표색)
 
 var rotation_per_second :float
-var decelerate := 0.5 # per second
+var acceleration := 0.3 # per second
 func 회전판돌리기(dur_sec :float = 1.0) -> void:
 	$"원판".rotation.y += rotation_per_second * 2 * PI * dur_sec
-	if decelerate > 0:
-		rotation_per_second /= pow( 1.0/decelerate , dur_sec)
+	if acceleration > 0:
+		rotation_per_second *= pow( acceleration , dur_sec)
 	if 회전중인가 and abs(rotation_per_second) <= 0.001:
 		rotation_stopped.emit(id)
 		회전중인가 = false
@@ -81,12 +81,11 @@ func 돌리기시작(spd :float) -> void:
 	$"원판/BarTree2".auto_rotate_bar = true
 	$"원판/BarTree2".bar_rotation = -spd/10
 	$"원판/BarTree3".auto_rotate_bar = true
-	$"원판/BarTree2".bar_rotation = -spd/10
 	$"원판/BarTree3".bar_rotation = -spd/10
 
-func 멈추기시작(decel :float=0.5) -> void:
-	assert(decel < 1.0)
-	decelerate = decel
+func 멈추기시작(accel :float=0.5) -> void:
+	assert(accel < 1.0)
+	acceleration = accel
 
 func 칸들지우기() -> void:
 	for i in 칸들.size():
