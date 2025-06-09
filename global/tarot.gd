@@ -25,26 +25,24 @@ const MajorArcana = [
 	["XXI", "The World"],
 ]
 
-const MinorArcanaSuits = [
-	"Wands",
-	"Cups",
-	"Swords",
-	"Pentacles",
-]
+const MinorArcanaSuits = ["Wands", "Cups", "Swords", "Pentacles"]
 
-const MinorArcanaNumbers = [
-	"Ace",
-	"Two",
-	"Three",
-	"Four",
-	"Five",
-	"Six",
-	"Seven",
-	"Eight",
-	"Nine",
-	"Ten",
-	"Page",
-	"Knight",
-	"Queen",
-	"King",
-]
+const MinorArcanaNumbers = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"]
+
+func make_MinorArcana_deck() -> Array:
+	var rtn := []
+	for s in MinorArcanaSuits:
+		for n in MinorArcanaNumbers:
+			rtn.append("%s of %s" %[n,s])
+	return rtn
+
+func make_MajorArcana_deck() -> Array:
+	var rtn := []
+	for c in MajorArcana:
+		rtn.append("%s - %s" %[c[0],c[1]])
+	return rtn
+	
+func make_full_deck() -> Array:
+	var rtn := make_MinorArcana_deck()
+	rtn.append_array(make_MajorArcana_deck())
+	return rtn

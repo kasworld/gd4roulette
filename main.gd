@@ -34,10 +34,10 @@ func _ready() -> void:
 func 회전판추가(id :int) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
 		id, 짧은길이*0.6, 짧은길이/40,
-		NamedColorList.color_list.pick_random()[0],
-		NamedColorList.color_list.pick_random()[0],
+		make_random_color(),
+		make_random_color(),
 		randi_range(2,8),
-		NamedColorList.color_list.pick_random()[0],
+		make_random_color(),
 		)
 	회전판들.append(rp)
 	var text_list = PlayingCard.make_deck_with_joker()
@@ -46,12 +46,14 @@ func 회전판추가(id :int) -> 회전판:
 		if id == 0:
 			참가자추가하기()
 		else :
-			var co = NamedColorList.color_list.pick_random()
-			rp.칸추가하기(co[0], text_list[i] )
+			rp.칸추가하기(make_random_color(), text_list[i] )
 	rp.칸위치정리하기()
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	return rp
+	
+func make_random_color() -> Color:
+	return NamedColorList.color_list.pick_random()[0]
 	
 func 결과가결정됨(id :int) -> void:
 	if id == 0:
@@ -98,16 +100,16 @@ func 참가자추가하기() -> void:
 	deck_index +=1
 	deck_index %= playing_card_deck.size()
 	var 현재칸수 = 회전판들[0].칸수얻기()
-	var co = NamedColorList.color_list.pick_random()
+	var co = make_random_color()
 	var 참가자 = LineEdit.new()
 	참가자.text = txt
 	참가자.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	참가자.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	참가자.add_theme_color_override("font_color",co[0])
+	참가자.add_theme_color_override("font_color",co)
 	참가자.add_theme_color_override("font_outline_color",Color.WHITE)
 	참가자.add_theme_constant_override("outline_size",1)
 	$"왼쪽패널/참가자목록".add_child(참가자)
-	회전판들[0].칸추가하기(co[0],참가자.text)
+	회전판들[0].칸추가하기(co,참가자.text)
 	참가자.text_changed.connect(
 		func(t :String):
 			참가자이름변경됨(현재칸수, t)
