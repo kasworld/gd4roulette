@@ -28,16 +28,31 @@ func _ready() -> void:
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	이름후보목록.shuffle()
 	
-	var n = 4
-	for i in n:
-		var rd = 2*PI/n *i
-		var r = 짧은길이*0.8
-		회전판추가(i, 짧은길이*0.6, 짧은길이/40, 
-			Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3), rd +PI/2)
-		
-	#var r = vp_size.y/4
-	#회전판추가(0, r, r/50).position = Vector3(r,0,r)
+	var xn = 6
+	var yn = 3
+	for i in xn*yn:
+		var rd = 2*PI/(xn*yn) *i
+		#var r = 짧은길이*0.8
+		#회전판추가(i, 짧은길이*0.6, 짧은길이/40, 
+			#Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3), rd +PI/2)
+		var r = min( vp_size.x / xn  , vp_size.y / yn  )
+		var pos = calc_posf_by_i(i, xn,yn)
+		print("%s %s" % [ i, pos])
+		회전판추가( 
+			i, r, r/40, 
+			Vector3(pos.y*vp_size.y*1.4 , 0, pos.x*vp_size.x*1.6), 
+			rd +PI/2)
+			
 	reset_camera_pos()
+
+func calc_posi_by_i(i :int, xn:int) -> Vector2i:
+	return Vector2i(i % xn, i / xn)
+
+func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
+	var posi := Vector2i(i % xn, i / xn)
+	var x = posi.x / float(xn-1) - 0.5
+	var y = posi.y / float(yn-1) - 0.5
+	return Vector2(x,y)
 
 func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
@@ -47,7 +62,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 		make_random_color(),
 		)
 	회전판들.append(rp)
-	for i in randi_range(4,이름후보목록.size()):
+	for i in randi_range(4,12):
 		if id == 0:
 			참가자추가하기()
 		else :
