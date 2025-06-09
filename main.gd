@@ -28,19 +28,16 @@ func _ready() -> void:
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	이름후보목록.shuffle()
 	
-	var xn = 6
+	var xn = 4
 	var yn = 3
 	for i in xn*yn:
 		var rd = 2*PI/(xn*yn) *i
-		#var r = 짧은길이*0.8
-		#회전판추가(i, 짧은길이*0.6, 짧은길이/40, 
-			#Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3), rd +PI/2)
 		var r = min( vp_size.x / xn  , vp_size.y / yn  )
+		var adjust = Vector2( 1.0- r/vp_size.x , 1.0- r/vp_size.y   )
 		var pos = calc_posf_by_i(i, xn,yn)
-		print("%s %s" % [ i, pos])
 		회전판추가( 
 			i, r, r/40, 
-			Vector3(pos.y*vp_size.y*1.4 , 0, pos.x*vp_size.x*1.6), 
+			Vector3(pos.y*vp_size.y*2*adjust.y , 0, pos.x*vp_size.x*2*adjust.x), 
 			rd +PI/2)
 			
 	reset_camera_pos()
