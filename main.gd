@@ -25,23 +25,21 @@ func _ready() -> void:
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
-
-	#이름후보목록 = Tarot.make_full_deck()
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	이름후보목록.shuffle()
+	
 	var n = 4
 	for i in n:
 		var rd = 2*PI/n *i
 		var r = 짧은길이*0.8
-		회전판추가(i,짧은길이*0.6, 짧은길이/40,)
-		회전판들[i].position = Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3)
-		회전판들[i].rotation.y = rd +PI/2 
+		회전판추가(i, 짧은길이*0.6, 짧은길이/40, 
+			Vector3(sin(rd)*r/1.3, 0, cos(rd)*r*1.3), rd +PI/2)
 		
 	#var r = vp_size.y/4
 	#회전판추가(0, r, r/50).position = Vector3(r,0,r)
 	reset_camera_pos()
 
-func 회전판추가(id :int, 반지름 :float, 깊이 :float) -> 회전판:
+func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
 		id, 반지름, 깊이,
 		make_random_color(),
@@ -57,6 +55,8 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float) -> 회전판:
 	rp.칸위치정리하기()
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
+	rp.position = pos
+	rp.rotation.y = rot
 	return rp
 	
 func make_random_color() -> Color:
