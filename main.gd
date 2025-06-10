@@ -21,7 +21,7 @@ func _ready() -> void:
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
 	$DirectionalLight3D.position = Vector3(짧은길이,짧은길이,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
-	$OmniLight3D.position = Vector3(-짧은길이,-짧은길이,짧은길이)
+	$OmniLight3D.position = Vector3(0,0,vp_size.length()/2)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
@@ -69,7 +69,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	add_child(rp)
 	rp.position = pos
 	rp.rotation.x = PI/2
-	rp.rotation.y = rot
+	rp.선택각도바꾸기(rot+90)
 	return rp
 	
 func make_random_color() -> Color:
@@ -84,6 +84,7 @@ func 결과가결정됨(id :int) -> void:
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
+	$Camera3D.far = vp_size.length()*2
 
 var camera_move = false
 func _process(delta: float) -> void:
