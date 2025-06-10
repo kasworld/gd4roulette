@@ -27,6 +27,7 @@ omni_range = 5000.0
 omni_attenuation = 0.1
 
 [node name="왼쪽패널" type="ScrollContainer" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.501961)
 offset_right = 40.0
 offset_bottom = 40.0

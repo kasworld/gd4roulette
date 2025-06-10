@@ -63,9 +63,9 @@ func 회전판돌리기(dur_sec :float = 1.0) -> void:
 	if acceleration > 0:
 		rotation_per_second *= pow( acceleration , dur_sec)
 	if 회전중인가 and abs(rotation_per_second) <= 0.001:
-		rotation_stopped.emit(id)
 		회전중인가 = false
 		rotation_per_second = 0.0
+		rotation_stopped.emit(id)
 	$"원판/BarTree2".bar_rotation = -rotation_per_second/10
 	$"원판/BarTree3".bar_rotation = -rotation_per_second/10
 

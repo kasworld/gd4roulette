@@ -11,6 +11,7 @@ func 이름후보얻기() -> String:
 	deck_index %= 이름후보목록.size()
 	return txt	
 var 자동으로다시돌리기 :bool = true
+
 func _ready() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
@@ -31,7 +32,7 @@ func _ready() -> void:
 	var xn = 5
 	var yn = 3
 	for i in xn*yn:
-		var rd = 2*PI/(xn*yn) *i
+		#var rd = 2*PI/(xn*yn) *i
 		var r = min( vp_size.x / xn  , vp_size.y / yn  )
 		var adjust = Vector2( 1.0- r/vp_size.x , 1.0- r/vp_size.y   )
 		var pos = calc_posf_by_i(i, xn,yn)
@@ -76,10 +77,17 @@ func make_random_color() -> Color:
 	return NamedColorList.color_list.pick_random()[0]
 	
 func 결과가결정됨(id :int) -> void:
-	if id == 0:
-		$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[id].선택된칸얻기().글내용] ,3 )
-	if 자동으로다시돌리기:
-		회전판들[id].돌리기시작.call_deferred(randfn(0, 5) )
+	var 모두멈추었나 = true
+	for n in 회전판들:
+		if n.회전중인가:
+			모두멈추었나 = false
+	if 모두멈추었나 and 자동으로다시돌리기:
+		for n in 회전판들:
+			n.돌리기시작.call_deferred(randfn(0, 5) )
+	
+	#if id == 0:
+		#$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[id].선택된칸얻기().글내용] ,3 )
+		
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
