@@ -19,16 +19,16 @@ func _ready() -> void:
 	$"왼쪽패널".size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
-	$DirectionalLight3D.position = Vector3(짧은길이,짧은길이,-짧은길이)
+	$DirectionalLight3D.position = Vector3(짧은길이,짧은길이,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
-	$OmniLight3D.position = Vector3(짧은길이,짧은길이,-짧은길이)
+	$OmniLight3D.position = Vector3(-짧은길이,-짧은길이,짧은길이)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	이름후보목록.shuffle()
 	
-	var xn = 4
+	var xn = 5
 	var yn = 3
 	for i in xn*yn:
 		var rd = 2*PI/(xn*yn) *i
@@ -37,8 +37,8 @@ func _ready() -> void:
 		var pos = calc_posf_by_i(i, xn,yn)
 		회전판추가( 
 			i, r, r/40, 
-			Vector3(pos.y*vp_size.y*2*adjust.y , 0, pos.x*vp_size.x*2*adjust.x), 
-			rd +PI/2)
+			Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
+			0)
 			
 	reset_camera_pos()
 
@@ -68,6 +68,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
+	rp.rotation.x = PI/2
 	rp.rotation.y = rot
 	return rp
 	
@@ -81,7 +82,7 @@ func 결과가결정됨(id :int) -> void:
 		회전판들[id].돌리기시작.call_deferred(randfn(0, 5) )
 
 func reset_camera_pos()->void:
-	$Camera3D.position = Vector3(-1,max(vp_size.x,vp_size.y),0)
+	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
 
 var camera_move = false
@@ -91,7 +92,7 @@ func _process(delta: float) -> void:
 		rp.선택된칸강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*짧은길이/2 ,짧은길이, cos(t)*짧은길이/2  )
+		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
 		$Camera3D.look_at(Vector3.ZERO)
 
 var key2fn = {

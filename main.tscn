@@ -16,13 +16,15 @@ script = ExtResource("1_uhxg1")
 [node name="Camera3D" type="Camera3D" parent="."]
 keep_aspect = 0
 fov = 90.0
+far = 40000.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_energy = 2.0
 shadow_enabled = true
 sky_mode = 1
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_energy = 5.0
+light_energy = 2.0
 shadow_enabled = true
 omni_range = 5000.0
 omni_attenuation = 0.1
