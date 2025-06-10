@@ -81,13 +81,13 @@ func 결과가결정됨(id :int) -> void:
 	for n in 회전판들:
 		if n.회전중인가:
 			모두멈추었나 = false
+	
+	var 결과들 = ""
 	if 모두멈추었나 and 자동으로다시돌리기:
 		for n in 회전판들:
 			n.돌리기시작.call_deferred(randfn(0, 5) )
-	
-	#if id == 0:
-		#$TimedMessage.show_message( "회전판%d 에서 %s (이)가 선택되었습니다." % [id, 회전판들[id].선택된칸얻기().글내용] ,3 )
-		
+			결과들 += n.선택된칸얻기().글내용 + " "
+			$TimedMessage.show_message( 결과들, 3)
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
