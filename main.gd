@@ -71,6 +71,8 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	rp.position = pos
 	rp.rotation.x = PI/2
 	rp.선택각도바꾸기(rot+90)
+	rp.rotation.x += pos.y / vp_size.y
+	rp.rotation.y -= pos.x / vp_size.x
 	return rp
 	
 func make_random_color() -> Color:
