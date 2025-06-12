@@ -15,13 +15,16 @@ material = SubResource("StandardMaterial3D_areq1")
 [node name="회전판" type="Node3D"]
 script = ExtResource("1_7pkjq")
 
-[node name="원판" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_ed2fd")
-
-[node name="ValveHandle" parent="원판" instance=ExtResource("2_14kvd")]
-
-[node name="BarTree2" parent="원판" instance=ExtResource("3_phm1c")]
-
-[node name="BarTree3" parent="원판" instance=ExtResource("3_phm1c")]
-
 [node name="화살표" parent="." instance=ExtResource("2_ed2fd")]
+
+[node name="돌림" type="Node3D" parent="."]
+
+[node name="원판" type="MeshInstance3D" parent="돌림"]
+mesh = SubResource("CylinderMesh_ed2fd")
+skeleton = NodePath("../..")
+
+[node name="ValveHandle" parent="돌림" instance=ExtResource("2_14kvd")]
+
+[node name="BarTree2" parent="돌림" instance=ExtResource("3_phm1c")]
+
+[node name="BarTree3" parent="돌림" instance=ExtResource("3_phm1c")]
