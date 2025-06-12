@@ -34,10 +34,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"돌림/ValveHandle".init(반지름*0.1, 반지름*0.1, 장식팔개수, 장식색)
 	$"돌림/ValveHandle".rotation.x = PI/2
 	
-	var rot = 0 #2*PI
-	if randi_range(0,1) == 0:
-		rot = - rot
-
+	var rot = 0
 	$"돌림/BarTree2".init_common_params(반지름*0.5, 깊이, 반지름*0.05, 256, rot, 선택rad, 1.0, false 
 		).init_with_color(장식색, 원판색)
 	$"돌림/BarTree2".position.z = 깊이/2
@@ -54,7 +51,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 
 func 선택rad바꾸기(rad :float) -> void:
 	$화살표.rotation = Vector3(0, 0, PI-rad)
-	$화살표.position = Vector3(sin(rad) *반지름*1.1, cos(rad) *반지름*1.1, 깊이 )
+	$화살표.position = Vector3(sin(rad) *반지름*1.1, cos(rad) *반지름*1.1, 0 )
 
 func 색바꾸기(원판색 :Color, 장식색 :Color, 화살표색 :Color) -> void:
 	$"돌림/원판".mesh.material.albedo_color = 원판색

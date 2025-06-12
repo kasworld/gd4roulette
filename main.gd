@@ -26,13 +26,12 @@ func _ready() -> void:
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
-	이름후보목록 = PlayingCard.make_deck_with_joker()
-	이름후보목록.shuffle()
+	이름후보목록 = PlayingCard.make_deck()
+	#이름후보목록.shuffle()
 	
-	var xn = 5
-	var yn = 3
+	var xn = 3
+	var yn = 2
 	for i in xn*yn:
-		#var rd = 2*PI/(xn*yn) *i
 		var r = min( vp_size.x / xn  , vp_size.y / yn  )
 		var adjust = Vector2( 1.0- r/vp_size.x , 1.0- r/vp_size.y   )
 		var pos = calc_posf_by_i(i, xn,yn)
@@ -60,7 +59,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 		make_random_color(),
 		)
 	회전판들.append(rp)
-	for i in randi_range(4,12):
+	for i in 이름후보목록.size()/2:# randi_range(4,12):
 		if id == 0:
 			참가자추가하기()
 		else :
@@ -84,9 +83,17 @@ func 결과가결정됨(id :int) -> void:
 	var 결과들 = ""
 	if 모두멈추었나 and 자동으로다시돌리기:
 		for n in 회전판들:
-			n.돌리기시작.call_deferred(randfn(0, 5) )
 			결과들 += n.선택된칸얻기().글내용 + " "
 			$TimedMessage.show_message( 결과들, 3)
+		모두돌리기()
+		
+func 모두돌리기() -> void:
+	for n in 회전판들:
+		var rot = randfn(2*PI, PI/2)
+		if randi_range(0,1) == 0:
+			rot = -rot
+		n.돌리기시작.call_deferred(rot)
+	
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
@@ -104,8 +111,6 @@ func _process(delta: float) -> void:
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
 		$Camera3D.look_at(Vector3.ZERO)
-		#for n in 회전판들:
-			#n.look_at($Camera3D.position, Vector3.UP, true)
 
 var key2fn = {
 	KEY_ESCAPE:_on_button_esc_pressed,
@@ -157,8 +162,7 @@ func 마지막참가자제거하기() -> void:
 	$"왼쪽패널/참가자목록".remove_child(마지막참가자)
 
 func _on_돌리기_pressed() -> void:
-	for rp in 회전판들:
-		rp.돌리기시작(randfn(0, 5) )
+	모두돌리기()
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
