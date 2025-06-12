@@ -59,7 +59,7 @@ func 색바꾸기(원판색 :Color, 장식색 :Color, 화살표색 :Color) -> vo
 var rotation_per_second :float
 var acceleration := 0.3 # per second
 func 회전판돌리기(dur_sec :float = 1.0) -> void:
-	$"돌림/원판".rotation.y += rotation_per_second * 2 * PI * dur_sec
+	$"돌림".rotation.y += rotation_per_second * 2 * PI * dur_sec
 	if acceleration > 0:
 		rotation_per_second *= pow( acceleration , dur_sec)
 	if 회전중인가 and abs(rotation_per_second) <= 0.001:
