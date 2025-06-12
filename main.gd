@@ -69,7 +69,6 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
-	#rp.rotation.x = PI
 	rp.선택rad바꾸기(rot)
 	return rp
 	
@@ -93,8 +92,8 @@ func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
-	#for n in 회전판들:
-		#n.look_at($Camera3D.position)
+	for n in 회전판들:
+		n.look_at($Camera3D.position, Vector3.UP, true)
 
 var camera_move = false
 func _process(delta: float) -> void:
