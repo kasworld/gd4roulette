@@ -97,7 +97,6 @@ func 칸들지우기() -> void:
 # 추가로 칸위치정리하기() 호출할것.
 func 칸추가하기(co :Color, t :String) -> void:
 	var 칸rad = 2*PI/(칸들.size()+1)
-	var rad = 칸rad * 칸들.size()
 	var l = 칸_scene.instantiate().init(칸rad, 반지름, 깊이, co , t)
 	l.position.z = 깊이/2
 	$"돌림/칸통".add_child(l)

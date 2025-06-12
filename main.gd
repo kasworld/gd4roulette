@@ -9,7 +9,7 @@ func 이름후보얻기() -> String:
 	var txt = 이름후보목록[deck_index]
 	deck_index +=1
 	deck_index %= 이름후보목록.size()
-	return txt	
+	return txt
 var 자동으로다시돌리기 :bool = true
 
 func _ready() -> void:
@@ -74,7 +74,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 func make_random_color() -> Color:
 	return NamedColorList.color_list.pick_random()[0]
 	
-func 결과가결정됨(id :int) -> void:
+func 결과가결정됨(_id :int) -> void:
 	var 모두멈추었나 = true
 	for n in 회전판들:
 		if n.회전중인가:
