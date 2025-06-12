@@ -28,3 +28,5 @@ skeleton = NodePath("../..")
 [node name="BarTree2" parent="돌림" instance=ExtResource("3_phm1c")]
 
 [node name="BarTree3" parent="돌림" instance=ExtResource("3_phm1c")]
+
+[node name="칸통" type="Node3D" parent="돌림"]

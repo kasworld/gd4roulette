@@ -5,7 +5,7 @@ class_name 칸
 const 선시작비 = 0.5
 const 선끝비 = 1.0
 
-var 칸각도 :float # degree
+var 칸rad :float
 var 반지름 :float
 var 깊이 :float
 var 색깔 :Color
@@ -30,16 +30,16 @@ func init(각도a :float, 반지름a :float, 깊이a :float, 색깔a :Color, 글
 	$"글씨".position = Vector3(0, 깊이/2, 반지름)
 	색깔바꾸기(색깔a)
 	글내용바꾸기(글내용a)
-	칸각도바꾸기(각도a)
+	칸rad바꾸기(각도a)
 	var 글씨크기 = 48
-	var pixel_크기 = 반지름 *sin(deg_to_rad(칸각도)) *0.01
+	var pixel_크기 = 반지름 *sin(칸rad) *0.01
 	글씨크기바꾸기(pixel_크기,글씨크기)
 	return self
 
-func 칸각도바꾸기(새각도 :float) -> void:
-	칸각도 = 새각도
-	$"시작선".rotation.y = deg_to_rad(칸각도/2+90)
-	var rad = deg_to_rad(칸각도/2)
+func 칸rad바꾸기(새각도 :float) -> void:
+	칸rad = 새각도
+	$"시작선".rotation.y = 칸rad/2+PI/2
+	var rad = 칸rad/2
 	$"시작선".position = Vector3(sin(rad)*반지름*(선끝비 + 선시작비)/2, 깊이/2, cos(rad)*반지름*(선끝비 + 선시작비)/2)
 
 func 글내용바꾸기(새글내용 :String) -> void:

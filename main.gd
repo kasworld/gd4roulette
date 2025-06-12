@@ -27,7 +27,7 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 	이름후보목록 = PlayingCard.make_deck_with_joker()
-	이름후보목록.shuffle()
+	#이름후보목록.shuffle()
 	
 	var xn = 5
 	var yn = 3
@@ -39,8 +39,8 @@ func _ready() -> void:
 		회전판추가( 
 			i, r, r/40, 
 			Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
-			0)
-			
+			PI/2)
+
 	reset_camera_pos()
 
 func calc_posi_by_i(i :int, xn:int) -> Vector2i:
@@ -69,10 +69,8 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
-	rp.rotation.x = PI/2
-	rp.선택각도바꾸기(rot+90)
-	rp.rotation.x += pos.y / vp_size.y
-	rp.rotation.y -= pos.x / vp_size.x
+	#rp.rotation.x = PI
+	rp.선택rad바꾸기(rot)
 	return rp
 	
 func make_random_color() -> Color:
@@ -95,6 +93,8 @@ func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
+	#for n in 회전판들:
+		#n.look_at($Camera3D.position)
 
 var camera_move = false
 func _process(delta: float) -> void:
