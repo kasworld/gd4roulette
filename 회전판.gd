@@ -123,16 +123,16 @@ func 칸위치정리하기() -> void:
 	for i in 칸들.size():
 		칸들[i].칸rad바꾸기(칸rad)
 		var rad = 칸rad * i
-		칸들[i].rotation.y = -rad + PI/2
+		칸들[i].rotation.y = -rad 
 		칸들[i].글씨크기바꾸기(pixel_크기, 48)
 	$"돌림/원판".mesh.radial_segments = 칸들.size()
 	$"돌림/BarTree2".set_visible_bar_count(칸들.size())
 	$"돌림/BarTree3".set_visible_bar_count(칸들.size())
 
 func 선택된칸얻기() -> 칸:
-	var rad = $"돌림".rotation.z - 선택rad
 	if 칸들.size() == 0 :
 		return null
+	var rad = $"돌림".rotation.z - 선택rad - PI/2
 	rad = fposmod(rad, 2*PI)
 	var 칸rad = 2*PI / 칸들.size()
 	for 현재칸번호 in 칸들.size():

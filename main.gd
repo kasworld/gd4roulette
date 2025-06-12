@@ -27,7 +27,7 @@ func _ready() -> void:
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
 	이름후보목록 = PlayingCard.make_deck_with_joker()
-	#이름후보목록.shuffle()
+	이름후보목록.shuffle()
 	
 	var xn = 5
 	var yn = 3
@@ -92,8 +92,8 @@ func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
-	for n in 회전판들:
-		n.look_at($Camera3D.position, Vector3.UP, true)
+	#for n in 회전판들:
+		#n.look_at($Camera3D.position, Vector3.UP, true)
 
 var camera_move = false
 func _process(delta: float) -> void:
@@ -104,6 +104,8 @@ func _process(delta: float) -> void:
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
 		$Camera3D.look_at(Vector3.ZERO)
+		#for n in 회전판들:
+			#n.look_at($Camera3D.position, Vector3.UP, true)
 
 var key2fn = {
 	KEY_ESCAPE:_on_button_esc_pressed,
