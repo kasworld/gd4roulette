@@ -25,6 +25,7 @@ func _ready() -> void:
 	$OmniLight3D.position = Vector3(0,0,짧은길이)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
+	$TimedMessage.panel_hidden.connect(message_hidden)
 	$TimedMessage.show_message("",0)
 	이름후보목록 = PlayingCard.make_deck()
 	#이름후보목록.shuffle()
@@ -35,14 +36,15 @@ func _ready() -> void:
 	var yn = 3
 	for i in xn*yn:
 		var r = min( vp_size.x / xn  , vp_size.y / yn  )
-		var adjust = Vector2( 1.0- r/vp_size.x , 1.0- r/vp_size.y   )
 		var pos = calc_posf_by_i(i, xn,yn)
 		회전판추가(i, r, r/40, 
 			calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
-			#Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
 			PI/2)
 	face_to_camera()
-	
+
+func message_hidden(_s :String) -> void:
+	모두돌리기()
+
 # x,y : -0.5 ~ 0.5
 func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
 	var posi := Vector2i(i % xn, i / xn)
@@ -93,7 +95,6 @@ func 결과가결정됨(_id :int) -> void:
 		for n in 회전판들:
 			결과들 += n.선택된칸얻기().글내용 + " "
 			$TimedMessage.show_message( 결과들, 3)
-		모두돌리기()
 		
 func 모두돌리기() -> void:
 	for n in 회전판들:
