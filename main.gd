@@ -22,7 +22,7 @@ func _ready() -> void:
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
 	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
-	$OmniLight3D.position = Vector3(0,0,vp_size.length()/2)
+	$OmniLight3D.position = Vector3(0,0,짧은길이)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
 	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
 	$TimedMessage.show_message("",0)
@@ -54,7 +54,7 @@ func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
 func calc_posf_spherical( src :Vector2, r :float, xvprad :float, yvprad :float) -> Vector3:
 	var xrtn = r*sin(src.x *xvprad )
 	var yrtn = r*sin(src.y *yvprad)
-	var zrtn = -r*cos(src.x *xvprad) *cos(src.y *yvprad) +r/2
+	var zrtn = -r*cos(src.x *xvprad) *cos(src.y *yvprad) +r
 	var rtn = Vector3(xrtn,yrtn,zrtn)
 	print(rtn)
 	return rtn
@@ -103,13 +103,13 @@ func 모두돌리기() -> void:
 		n.돌리기시작.call_deferred(rot)
 
 func reset_camera_pos()->void:
-	$Camera3D.position = Vector3(1,0,min(vp_size.x,vp_size.y)*1.5)
+	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y)*1.5)
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
 
 func face_to_camera() -> void:
 	for n in 회전판들:
-		n.look_at(Vector3.ZERO, Vector3.UP, true)
+		n.look_at($Camera3D.position, Vector3.UP, true)
 	
 var camera_move = false
 func _process(delta: float) -> void:
@@ -118,7 +118,7 @@ func _process(delta: float) -> void:
 		rp.선택된칸강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이/2)
+		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
 		$Camera3D.look_at(Vector3.ZERO)
 
 var key2fn = {
