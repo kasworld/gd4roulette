@@ -20,7 +20,7 @@ func _ready() -> void:
 	$"왼쪽패널".size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
-	$DirectionalLight3D.position = Vector3(짧은길이,짧은길이,짧은길이)
+	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(0,0,vp_size.length()/2)
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
@@ -28,38 +28,46 @@ func _ready() -> void:
 	$TimedMessage.show_message("",0)
 	이름후보목록 = PlayingCard.make_deck()
 	#이름후보목록.shuffle()
+	reset_camera_pos()
 	
-	var xn = 3
-	var yn = 2
+	var aspect = vp_size.x / vp_size.y
+	var xn = 5
+	var yn = 3
 	for i in xn*yn:
 		var r = min( vp_size.x / xn  , vp_size.y / yn  )
 		var adjust = Vector2( 1.0- r/vp_size.x , 1.0- r/vp_size.y   )
 		var pos = calc_posf_by_i(i, xn,yn)
-		회전판추가( 
-			i, r, r/40, 
-			Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
+		회전판추가(i, r, r/40, 
+			calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
+			#Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
 			PI/2)
-
-	reset_camera_pos()
-
-func calc_posi_by_i(i :int, xn:int) -> Vector2i:
-	return Vector2i(i % xn, i / xn)
-
+	#face_to_camera()
+	
+# x,y : -0.5 ~ 0.5
 func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
 	var posi := Vector2i(i % xn, i / xn)
 	var x = posi.x / float(xn-1) - 0.5
 	var y = posi.y / float(yn-1) - 0.5
-	return Vector2(x,y)
+	var rtn = Vector2(x,y)
+	return rtn
+
+func calc_posf_spherical( src :Vector2, r :float, xvprad :float, yvprad :float) -> Vector3:
+	var xrtn = r*sin(src.x *xvprad )
+	var yrtn = r*sin(src.y *yvprad)
+	var zrtn = -r*cos(src.x *xvprad) *cos(src.y *yvprad) +r/2
+	var rtn = Vector3(xrtn,yrtn,zrtn)
+	print(rtn)
+	return rtn
 
 func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> 회전판:
 	var rp = preload("res://회전판.tscn").instantiate().init(
 		id, 반지름, 깊이,
 		make_random_color(),
-		make_random_color(), randi_range(2,8),
+		make_random_color(), id +2,
 		make_random_color(),
 		)
 	회전판들.append(rp)
-	for i in 이름후보목록.size()/2:# randi_range(4,12):
+	for i in randi_range(4,12):
 		if id == 0:
 			참가자추가하기()
 		else :
@@ -93,15 +101,16 @@ func 모두돌리기() -> void:
 		if randi_range(0,1) == 0:
 			rot = -rot
 		n.돌리기시작.call_deferred(rot)
-	
 
 func reset_camera_pos()->void:
 	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
-	#for n in 회전판들:
-		#n.look_at($Camera3D.position, Vector3.UP, true)
 
+func face_to_camera() -> void:
+	for n in 회전판들:
+		n.look_at(Vector3.ZERO, Vector3.UP, true)
+	
 var camera_move = false
 func _process(delta: float) -> void:
 	for rp in 회전판들:
@@ -109,7 +118,7 @@ func _process(delta: float) -> void:
 		rp.선택된칸강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
+		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이/2)
 		$Camera3D.look_at(Vector3.ZERO)
 
 var key2fn = {
