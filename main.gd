@@ -41,7 +41,7 @@ func _ready() -> void:
 			calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
 			#Vector3(pos.x*vp_size.x*2*adjust.x, pos.y*vp_size.y*2*adjust.y , 0), 
 			PI/2)
-	#face_to_camera()
+	face_to_camera()
 	
 # x,y : -0.5 ~ 0.5
 func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
@@ -63,7 +63,7 @@ func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot
 	var rp = preload("res://회전판.tscn").instantiate().init(
 		id, 반지름, 깊이,
 		make_random_color(),
-		make_random_color(), id +2,
+		make_random_color(), randi_range(2,8),
 		make_random_color(),
 		)
 	회전판들.append(rp)
@@ -103,7 +103,7 @@ func 모두돌리기() -> void:
 		n.돌리기시작.call_deferred(rot)
 
 func reset_camera_pos()->void:
-	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y))
+	$Camera3D.position = Vector3(1,0,min(vp_size.x,vp_size.y)*1.5)
 	$Camera3D.look_at(Vector3.ZERO)
 	$Camera3D.far = vp_size.length()*2
 
