@@ -23,6 +23,12 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	반지름 = 반지름a
 	깊이 = 깊이a
 	
+	# for debug
+	$IDLabel.text = "%s" % id
+	$IDLabel.font_size = 반지름/5
+	$IDLabel.outline_size = 반지름/20
+	$IDLabel.pixel_size = 1 #반지름/2000
+	
 	$"돌림/원판".mesh.height = 깊이
 	$"돌림/원판".mesh.bottom_radius = 반지름
 	$"돌림/원판".mesh.top_radius = 반지름

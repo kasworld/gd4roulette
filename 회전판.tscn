@@ -30,3 +30,10 @@ skeleton = NodePath("../..")
 [node name="BarTree3" parent="돌림" instance=ExtResource("3_phm1c")]
 
 [node name="칸통" type="Node3D" parent="돌림"]
+
+[node name="IDLabel" type="Label3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
