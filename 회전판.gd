@@ -51,7 +51,7 @@ func init(ida :int, 반지름a :float, 깊이a :float,
 	$"돌림/BarTree3".position.z = 깊이/2
 	$"돌림/BarTree3".rotation.x = PI/2
 	
-	$화살표.init(반지름/5, 화살표색, 깊이/2, 깊이*1.5,0.5)
+	$화살표.set_size(반지름/5,깊이/2, 깊이*1.5,0.5).set_color(화살표색)
 	선택rad바꾸기(선택rad)
 	return self
 
