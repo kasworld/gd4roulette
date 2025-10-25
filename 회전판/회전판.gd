@@ -1,9 +1,6 @@
 extends Node3D
 class_name 회전판
 
-var 칸_scene = preload("res://칸.tscn")
-var bartree_scene = preload("res://bar_tree_2/bar_tree_2.tscn")
-
 signal rotation_stopped(n :int)
 
 var 선택rad :float = 0.0
@@ -103,7 +100,7 @@ func 칸들지우기() -> void:
 # 추가로 칸위치정리하기() 호출할것.
 func 칸추가하기(co :Color, t :String) -> void:
 	var 칸rad = 2*PI/(칸들.size()+1)
-	var l = 칸_scene.instantiate().init(칸rad, 반지름, 깊이, co , t)
+	var l = preload("res://회전판/칸/칸.tscn").instantiate().init(칸rad, 반지름, 깊이, co , t)
 	l.position.z = 깊이/2
 	$"돌림/칸통".add_child(l)
 	칸들.append(l)

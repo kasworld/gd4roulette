@@ -31,15 +31,21 @@ func _ready() -> void:
 	#이름후보목록.shuffle()
 	reset_camera_pos()
 	
-	var aspect = vp_size.x / vp_size.y
-	var xn = 5
-	var yn = 3
-	for i in xn*yn:
-		var r = min( vp_size.x / xn  , vp_size.y / yn  )
-		var pos = calc_posf_by_i(i, xn,yn)
-		회전판추가(i, r, r/40, 
-			calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
-			PI/2)
+	#var aspect = vp_size.x / vp_size.y
+	#var xn = 3
+	#var yn = 2
+	#for i in xn*yn:
+		#var r = min( vp_size.x / xn  , vp_size.y / yn  )
+		#var pos = calc_posf_by_i(i, xn,yn)
+		#회전판추가(i, r, r/40, 
+			#calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
+			#PI/2)
+	var r = max( vp_size.x, vp_size.y)*0.9
+	회전판추가(0, r, r/40, 
+		Vector3(0,0,0), 
+		PI/2)
+
+
 	face_to_camera()
 
 func message_hidden(_s :String) -> void:
@@ -62,7 +68,7 @@ func calc_posf_spherical( src :Vector2, r :float, xvprad :float, yvprad :float) 
 	return rtn
 
 func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> 회전판:
-	var rp = preload("res://회전판.tscn").instantiate().init(
+	var rp = preload("res://회전판/회전판.tscn").instantiate().init(
 		id, 반지름, 깊이,
 		make_random_color(),
 		make_random_color(), randi_range(2,8),
