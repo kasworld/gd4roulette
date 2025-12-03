@@ -2,7 +2,7 @@ extends Node3D
 
 var vp_size :Vector2
 var 짧은길이 :float
-var 회전판들 :Array
+var wheel들 :Array
 var 이름후보목록 :Array
 var deck_index :int
 func 이름후보얻기() -> String:
@@ -13,7 +13,7 @@ func 이름후보얻기() -> String:
 var 자동으로다시돌리기 :bool = true
 
 func _ready() -> void:
-	vp_size = get_viewport().get_visible_rect().size
+	timed_message_init()
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
 	짧은길이 = min(vp_size.x,vp_size.y)
 
@@ -23,30 +23,37 @@ func _ready() -> void:
 	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(0,0,짧은길이)
-	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
-	$TimedMessage.init(80, msgrect, tr("회전판 2.0.0"))
-	$TimedMessage.panel_hidden.connect(message_hidden)
-	$TimedMessage.show_message("",0)
-	이름후보목록 = PlayingCard.make_deck()
+	이름후보목록 = PlayingCard.make_deck_with_joker()
 	#이름후보목록.shuffle()
 	reset_camera_pos()
-	
+
 	#var aspect = vp_size.x / vp_size.y
 	#var xn = 3
 	#var yn = 2
 	#for i in xn*yn:
 		#var r = min( vp_size.x / xn  , vp_size.y / yn  )
 		#var pos = calc_posf_by_i(i, xn,yn)
-		#회전판추가(i, r, r/40, 
-			#calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ), 
+		#wheel추가(i, r, r/40,
+			#calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ),
 			#PI/2)
 	var r = max( vp_size.x, vp_size.y)*0.9
-	회전판추가(0, r, r/40, 
-		Vector3(0,0,0), 
+	wheel추가(0, r, r/40,
+		Vector3(0,0,0),
 		PI/2)
 
-
 	face_to_camera()
+
+func timed_message_init() -> void:
+	vp_size = get_viewport().get_visible_rect().size
+	var msgrect := Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
+	$TimedMessage.init(80, msgrect,
+		"%s %s" % [
+			ProjectSettings.get_setting("application/config/name"),
+			ProjectSettings.get_setting("application/config/version")
+			] )
+
+	$TimedMessage.panel_hidden.connect(message_hidden)
+	$TimedMessage.show_message("",0)
 
 func message_hidden(_s :String) -> void:
 	모두돌리기()
@@ -67,43 +74,43 @@ func calc_posf_spherical( src :Vector2, r :float, xvprad :float, yvprad :float) 
 	print(rtn)
 	return rtn
 
-func 회전판추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> 회전판:
-	var rp = preload("res://회전판/회전판.tscn").instantiate().init(
+func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3, rot :float) -> RouletteWheel:
+	var rp = preload("res://roulette_wheel/roulette_wheel.tscn").instantiate().init(
 		id, 반지름, 깊이,
 		make_random_color(),
 		make_random_color(), randi_range(2,8),
 		make_random_color(),
 		)
-	회전판들.append(rp)
-	for i in randi_range(4,12):
+	wheel들.append(rp)
+	for i in 54: #  randi_range(4,12):
 		if id == 0:
 			참가자추가하기()
 		else :
 			rp.칸추가하기(make_random_color(), 이름후보얻기() )
-	rp.칸위치정리하기()
+	rp.cell위치정리하기()
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
 	rp.선택rad바꾸기(rot)
 	return rp
-	
+
 func make_random_color() -> Color:
 	return NamedColorList.color_list.pick_random()[0]
-	
+
 func 결과가결정됨(_id :int) -> void:
 	var 모두멈추었나 = true
-	for n in 회전판들:
+	for n in wheel들:
 		if n.회전중인가:
 			모두멈추었나 = false
-	
+
 	var 결과들 = ""
 	if 모두멈추었나 and 자동으로다시돌리기:
-		for n in 회전판들:
-			결과들 += n.선택된칸얻기().글내용 + " "
-			$TimedMessage.show_message( 결과들, 3)
-		
+		for n in wheel들:
+			결과들 += n.선택된cell얻기().글내용 + " "
+		$TimedMessage.show_message( 결과들, 3)
+
 func 모두돌리기() -> void:
-	for n in 회전판들:
+	for n in wheel들:
 		var rot = randfn(2*PI, PI/2)
 		if randi_range(0,1) == 0:
 			rot = -rot
@@ -115,14 +122,14 @@ func reset_camera_pos()->void:
 	$Camera3D.far = vp_size.length()*2
 
 func face_to_camera() -> void:
-	for n in 회전판들:
+	for n in wheel들:
 		n.look_at($Camera3D.position, Vector3.UP, true)
-	
+
 var camera_move = false
 func _process(delta: float) -> void:
-	for rp in 회전판들:
-		rp.회전판돌리기(delta)
-		rp.선택된칸강조상태켜기()
+	for rp in wheel들:
+		rp.돌리기(delta)
+		rp.선택된cell강조상태켜기()
 	var t = Time.get_unix_time_from_system() /-3.0
 	if camera_move:
 		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
@@ -150,7 +157,7 @@ func _on_button_esc_pressed() -> void:
 
 func 참가자추가하기() -> void:
 	var txt = 이름후보얻기()
-	var 현재칸수 = 회전판들[0].칸수얻기()
+	var 현재칸수 = wheel들[0].cell_count얻기()
 	var co = make_random_color()
 	var 참가자 = LineEdit.new()
 	참가자.text = txt
@@ -160,17 +167,17 @@ func 참가자추가하기() -> void:
 	참가자.add_theme_color_override("font_outline_color",Color.WHITE)
 	참가자.add_theme_constant_override("outline_size",1)
 	$"왼쪽패널/참가자목록".add_child(참가자)
-	회전판들[0].칸추가하기(co,참가자.text)
+	wheel들[0].cell추가하기(co,참가자.text)
 	참가자.text_changed.connect(
 		func(t :String):
 			참가자이름변경됨(현재칸수, t)
 	)
 
 func 참가자이름변경됨(i :int, t :String) -> void:
-	회전판들[0].칸얻기(i).글내용바꾸기(t)
+	wheel들[0].cell얻기(i).글내용바꾸기(t)
 
 func 마지막참가자제거하기() -> void:
-	회전판들[0].마지막칸지우기()
+	wheel들[0].마지막cell지우기()
 	var 현재참가자수 = $"왼쪽패널/참가자목록".get_child_count()
 	if 현재참가자수 <= 0:
 		return
@@ -182,11 +189,11 @@ func _on_돌리기_pressed() -> void:
 
 func _on_참가자추가_pressed() -> void:
 	참가자추가하기()
-	회전판들[0].칸위치정리하기()
+	wheel들[0].cell위치정리하기()
 
 func _on_참가자제거_pressed() -> void:
 	마지막참가자제거하기()
-	회전판들[0].칸위치정리하기()
+	wheel들[0].cell위치정리하기()
 
 func _on_카메라변경_pressed() -> void:
 	camera_move = !camera_move

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dqc03uxia85uv"]
 
-[ext_resource type="Script" uid="uid://nl8f2irb6sdu" path="res://회전판/칸/칸.gd" id="1_0xk0q"]
+[ext_resource type="Script" uid="uid://nl8f2irb6sdu" path="res://roulette_wheel/roulette_cell/roulette_cell.gd" id="1_0xk0q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gkdu"]
 resource_local_to_scene = true
@@ -55,7 +55,7 @@ _data = {
 &"글씨강조끄기": SubResource("Animation_hqw3w")
 }
 
-[node name="칸" type="Node3D"]
+[node name="RouletteCell" type="Node3D"]
 script = ExtResource("1_0xk0q")
 
 [node name="시작선" type="MeshInstance3D" parent="."]

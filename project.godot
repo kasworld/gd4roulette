@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="gd4돌림판"
+config/name="RouletteWheel"
+config/version="3.0.0"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
