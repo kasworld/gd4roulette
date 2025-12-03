@@ -25,12 +25,12 @@ func _ready() -> void:
 
 	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
-	$OmniLight3D.position = Vector3(0,0,짧은길이)
+	$OmniLight3D.position = Vector3(0,0,-짧은길이)
+	$OmniLight3D.omni_range = 짧은길이 *2
 
-	$FixedCameraLight.set_center_pos_far(
-		Vector3.ZERO,
-		Vector3(0, 0, WorldSize.z*2),
-		WorldSize.length()*2)
+	$FixedCameraLight.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
+	$MovingCameraLightHober.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
+	$MovingCameraLightAround.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
 
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	#이름후보목록.shuffle()
