@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=8 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" uid="uid://duug0uf5apx3u" path="res://main.gd" id="1_uhxg1"]
+[ext_resource type="PackedScene" uid="uid://dl14flc0fkeyt" path="res://axis_arrow3d/axis_arrow_3d.tscn" id="4_1bvp3"]
 [ext_resource type="Theme" uid="uid://u40dw1dx85dc" path="res://패널테마.tres" id="4_endm8"]
+[ext_resource type="PackedScene" uid="uid://ces3a6yv0c5fi" path="res://moving_carmera_light/moving_camera_light.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c6cct2gj2a3im" path="res://timed_message/timed_message.tscn" id="5_lquwl"]
 
 [sub_resource type="SystemFont" id="SystemFont_bejao"]
@@ -12,10 +14,6 @@ default_font = SubResource("SystemFont_bejao")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-keep_aspect = 0
-fov = 90.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 shadow_enabled = true
@@ -83,6 +81,14 @@ alignment = 2
 [node name="TimedMessage" parent="." instance=ExtResource("5_lquwl")]
 self_modulate = Color(1, 1, 1, 0.498039)
 theme = SubResource("Theme_7mycd")
+
+[node name="AxisArrow3D" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="FixedCameraLight" parent="." instance=ExtResource("5_7mycd")]
+
+[node name="MovingCameraLightHober" parent="." instance=ExtResource("5_7mycd")]
+
+[node name="MovingCameraLightAround" parent="." instance=ExtResource("5_7mycd")]
 
 [connection signal="pressed" from="오른쪽패널/참가자추가" to="." method="_on_참가자추가_pressed"]
 [connection signal="pressed" from="오른쪽패널/참가자제거" to="." method="_on_참가자제거_pressed"]

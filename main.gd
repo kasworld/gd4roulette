@@ -1,5 +1,6 @@
 extends Node3D
 
+var WorldSize :Vector3
 var vp_size :Vector2
 var 짧은길이 :float
 var wheel들 :Array
@@ -16,16 +17,24 @@ func _ready() -> void:
 	timed_message_init()
 	RenderingServer.set_default_clear_color( Global3d.colors.default_clear)
 	짧은길이 = min(vp_size.x,vp_size.y)
+	WorldSize = Vector3(vp_size.x, vp_size.y , vp_size.length())
 
 	$"왼쪽패널".size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
+
 	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(0,0,짧은길이)
+
+	$FixedCameraLight.set_center_pos_far(
+		Vector3.ZERO,
+		Vector3(0, 0, WorldSize.z*2),
+		WorldSize.length()*2)
+
 	이름후보목록 = PlayingCard.make_deck_with_joker()
 	#이름후보목록.shuffle()
-	reset_camera_pos()
+	$AxisArrow3D.set_size(1000)
 
 	#var aspect = vp_size.x / vp_size.y
 	#var xn = 3
@@ -123,26 +132,37 @@ func reset_camera_pos()->void:
 
 func face_to_camera() -> void:
 	for n in wheel들:
-		n.look_at($Camera3D.position, Vector3.UP, true)
+		n.look_at($FixedCameraLight.position, Vector3.UP, true)
 
-var camera_move = false
 func _process(delta: float) -> void:
 	for rp in wheel들:
 		rp.돌리기(delta)
 		rp.선택된cell강조상태켜기()
-	var t = Time.get_unix_time_from_system() /-3.0
-	if camera_move:
-		$Camera3D.position = Vector3(sin(t)*짧은길이, cos(t)*짧은길이, 짧은길이)
-		$Camera3D.look_at(Vector3.ZERO)
+
+	if $MovingCameraLightHober.is_current_camera():
+		$MovingCameraLightHober.move_hober_around_z(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
+	elif $MovingCameraLightAround.is_current_camera():
+		$MovingCameraLightAround.move_around_y(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
+
+func _on_카메라변경_pressed() -> void:
+	MovingCameraLight.NextCamera()
+
+func _on_button_fov_up_pressed() -> void:
+	MovingCameraLight.GetCurrentCamera().fov_camera_inc()
+
+func _on_button_fov_down_pressed() -> void:
+	MovingCameraLight.GetCurrentCamera().fov_camera_dec()
 
 var key2fn = {
 	KEY_ESCAPE:_on_button_esc_pressed,
-	KEY_ENTER:_on_카메라변경_pressed,
 	KEY_SPACE:_on_돌리기_pressed,
-	KEY_INSERT:_on_참가자추가_pressed,
-	KEY_DELETE:_on_참가자제거_pressed,
+	#KEY_INSERT:_on_참가자추가_pressed,
+	#KEY_DELETE:_on_참가자제거_pressed,
 	KEY_F1:_on_참가자숨기기_pressed,
 	KEY_F2:_on_자동돌리기_pressed,
+	KEY_ENTER:_on_카메라변경_pressed,
+	KEY_INSERT:_on_button_fov_up_pressed,
+	KEY_DELETE:_on_button_fov_down_pressed,
 }
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -194,11 +214,6 @@ func _on_참가자추가_pressed() -> void:
 func _on_참가자제거_pressed() -> void:
 	마지막참가자제거하기()
 	wheel들[0].cell위치정리하기()
-
-func _on_카메라변경_pressed() -> void:
-	camera_move = !camera_move
-	if camera_move == false:
-		reset_camera_pos()
 
 func _on_참가자숨기기_pressed() -> void:
 	$"왼쪽패널".visible = not $"왼쪽패널".visible
