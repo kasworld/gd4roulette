@@ -49,9 +49,9 @@ func _ready() -> void:
 	$MovingCameraLightAround.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
 	$AxisArrow3D.set_size(1000)
 
-	var r = max( vp_size.x, vp_size.y)*0.9
-	for z in range(-4,5):
-		wheel추가(0, r, r/40, Vector3(0,0,z*300))
+	var r = min( vp_size.x, vp_size.y)*0.7
+	for z in range(-10,11):
+		wheel추가(0, r, r/100, Vector3(0,0,z*100))
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
 	var cell정보목록 := []
