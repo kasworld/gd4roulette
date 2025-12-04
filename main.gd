@@ -69,10 +69,10 @@ func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roul
 func make_random_color() -> Color:
 	return NamedColorList.color_list.pick_random()[0]
 
-func 결과가결정됨(_id :int) -> void:
+func 결과가결정됨(_rl :Roulette) -> void:
 	var 모두멈추었나 = true
 	for n in wheel들:
-		if n.회전중인가:
+		if n.회전중인가():
 			모두멈추었나 = false
 
 	var 결과들 = ""
