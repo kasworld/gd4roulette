@@ -2,6 +2,11 @@ extends Node3D
 
 var colorlist :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_light_color_list())
 var cardlist :Array = PlayingCard.make_deck_with_joker()
+func make_color_text_info_list() -> Array:
+	var rtn := []
+	for i in cardlist.size():
+		rtn.append( [ colorlist[i%colorlist.size()], cardlist[i] ] )
+	return rtn
 
 var WorldSize :Vector3
 var vp_size :Vector2
@@ -50,15 +55,13 @@ func _ready() -> void:
 	$AxisArrow3D.set_size(1000)
 
 	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(0,1):
+	for z in range(-10,11):
 		wheel추가(0, r, r/100, Vector3(0,0,z*100))
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var cell정보목록 := []
-	for i in cardlist.size():
-		cell정보목록.append( [ colorlist[i%colorlist.size()] , cardlist[i] ] )
-	cell정보목록.shuffle()
-	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, cell정보목록)
+	var color_text_info_list := make_color_text_info_list().duplicate()
+	color_text_info_list.shuffle()
+	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
 	wheel들.append(rp)
 	rp.rotation_stopped.connect(결과가결정됨)
