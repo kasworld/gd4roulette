@@ -33,5 +33,7 @@ mesh = SubResource("CylinderMesh_cdnmj")
 visible = false
 
 [node name="BarTree2" parent="Wheel" instance=ExtResource("3_phm1c")]
+visible = false
 
 [node name="BarTree3" parent="Wheel" instance=ExtResource("3_phm1c")]
+visible = false

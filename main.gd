@@ -1,6 +1,6 @@
 extends Node3D
 
-var colorlist :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_dark_color_list())
+var colorlist :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_light_color_list())
 var cardlist :Array = PlayingCard.make_deck_with_joker()
 
 var WorldSize :Vector3
@@ -19,12 +19,10 @@ func ui_panel_init() -> void:
 func timed_message_init() -> void:
 	vp_size = get_viewport().get_visible_rect().size
 	var msgrect := Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
-	$TimedMessage.init(80, msgrect,
-		"%s %s" % [
+	$TimedMessage.init(80, msgrect, "%s %s" % [
 			ProjectSettings.get_setting("application/config/name"),
 			ProjectSettings.get_setting("application/config/version")
 			] )
-
 	$TimedMessage.panel_hidden.connect(message_hidden)
 	$TimedMessage.show_message("",0)
 
@@ -44,49 +42,22 @@ func _ready() -> void:
 	$DirectionalLight3D.position = Vector3(1,1,짧은길이)
 	$DirectionalLight3D.look_at(Vector3.ZERO)
 	$OmniLight3D.position = Vector3(0,0,-짧은길이)
-	$OmniLight3D.omni_range = 짧은길이 *2
+	$OmniLight3D.omni_range = WorldSize.length() *2
 
 	$FixedCameraLight.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
 	$MovingCameraLightHober.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
 	$MovingCameraLightAround.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
-
 	$AxisArrow3D.set_size(1000)
 
-	#var aspect = vp_size.x / vp_size.y
-	#var xn = 3
-	#var yn = 2
-	#for i in xn*yn:
-		#var r = min( vp_size.x / xn  , vp_size.y / yn  )
-		#var pos = calc_posf_by_i(i, xn,yn)
-		#wheel추가(i, r, r/40,
-			#calc_posf_spherical(pos, vp_size.length(), PI/4 *aspect, PI/4 ),
-			#PI/2)
 	var r = max( vp_size.x, vp_size.y)*0.9
-	wheel추가(0, r, r/40, Vector3(0,0,0))
-	face_to_camera()
-
-# x,y : -0.5 ~ 0.5
-func calc_posf_by_i(i :int, xn :int, yn :int) -> Vector2:
-	var posi := Vector2i(i % xn, i / xn)
-	var x = posi.x / float(xn-1) - 0.5
-	var y = posi.y / float(yn-1) - 0.5
-	var rtn = Vector2(x,y)
-	return rtn
-
-func calc_posf_spherical( src :Vector2, r :float, xvprad :float, yvprad :float) -> Vector3:
-	var xrtn = r*sin(src.x *xvprad )
-	var yrtn = r*sin(src.y *yvprad)
-	var zrtn = -r*cos(src.x *xvprad) *cos(src.y *yvprad) +r
-	var rtn = Vector3(xrtn,yrtn,zrtn)
-	print(rtn)
-	return rtn
+	for z in range(-4,5):
+		wheel추가(0, r, r/40, Vector3(0,0,z*300))
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
 	var cell정보목록 := []
 	for i in cardlist.size():
 		cell정보목록.append( [ colorlist[i%colorlist.size()] , cardlist[i] ] )
 	cell정보목록.shuffle()
-
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, cell정보목록)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
 	wheel들.append(rp)
@@ -116,15 +87,6 @@ func 모두돌리기() -> void:
 		if randi_range(0,1) == 0:
 			rot = -rot
 		n.돌리기시작.call_deferred(rot)
-
-func reset_camera_pos()->void:
-	$Camera3D.position = Vector3(1,0,max(vp_size.x,vp_size.y)*1.5)
-	$Camera3D.look_at(Vector3.ZERO)
-	$Camera3D.far = vp_size.length()*2
-
-func face_to_camera() -> void:
-	for n in wheel들:
-		n.look_at($FixedCameraLight.position, Vector3.UP, true)
 
 func _process(delta: float) -> void:
 	for rp in wheel들:
