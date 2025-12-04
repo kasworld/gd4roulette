@@ -37,13 +37,17 @@ func cell얻기(i :int) -> RouletteCell:
 	return cell_list[i]
 
 func 각도로cell얻기(rad :float) -> RouletteCell:
+	return cell얻기( 각도로cell번호얻기(rad) )
+
+func 각도로cell번호얻기(rad :float) -> int:
 	var 현재각도 = fposmod(-rad, 2*PI)
-	return cell얻기( ceili( (현재각도-cell각도/2) / cell각도 ) % cell_list.size() )
+	return ceili( (현재각도-cell각도/2) / cell각도 ) % cell_list.size()
 
-func cell중심각도(n :int) -> float:
-	return cell각도 * n
+func cell중심각도(cell번호 :int) -> float:
+	return cell각도 * cell번호
 
-#func cell중심근처인가() -> bool:
-	#var 현재각도 = fposmod(-rotation.x, 2*PI)
-	#var 중심각도 = cell중심각도(선택된cell번호())
-	#return abs(현재각도 - 중심각도) <= cell각도/100
+func cell중심근처인가(rad :float) -> bool:
+	var 현재cell번호 := 각도로cell번호얻기(rad)
+	var 현재각도 = fposmod(-rad, 2*PI)
+	var 중심각도 = cell중심각도(현재cell번호)
+	return abs(현재각도 - 중심각도) <= cell각도/100
