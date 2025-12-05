@@ -12,7 +12,7 @@ var WorldSize :Vector3
 var vp_size :Vector2
 var 짧은길이 :float
 var wheel들 :Array
-var 자동으로다시돌리기 :bool = true
+var 자동으로다시돌리기 :bool = false
 
 func ui_panel_init() -> void:
 	vp_size = get_viewport().get_visible_rect().size
@@ -58,8 +58,10 @@ func _ready() -> void:
 	for z in range(0,1):
 		wheel추가(0, r, r/100, Vector3(0,0,z*100))
 
+	$FixedCameraLight.make_current()
+
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list().duplicate().slice(0,8)
+	var color_text_info_list := make_color_text_info_list().duplicate().slice(0,5)
 	color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
@@ -138,3 +140,7 @@ func _on_참가자숨기기_pressed() -> void:
 
 func _on_자동돌리기_pressed() -> void:
 	자동으로다시돌리기 = not 자동으로다시돌리기
+
+func _on_h_slider_value_changed(value: float) -> void:
+	wheel들[0].get_wheel().rotation.z = deg_to_rad(value)
+	$"오른쪽패널/LabelDebug".text = wheel들[0].get_wheel().debug_str()

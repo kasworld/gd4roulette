@@ -8,6 +8,9 @@ var id :int
 var 반지름 :float
 var 깊이 :float
 
+func get_wheel() -> RouletteWheel:
+	return $Wheel
+
 func init(ida :int, 반지름a :float, 깊이a :float, color_text_info_list :Array ) -> Roulette:
 	id = ida
 	반지름 = 반지름a
