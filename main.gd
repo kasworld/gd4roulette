@@ -55,11 +55,11 @@ func _ready() -> void:
 	$AxisArrow3D.set_size(1000)
 
 	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(-10,11):
+	for z in range(0,1):
 		wheel추가(0, r, r/100, Vector3(0,0,z*100))
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list().duplicate()
+	var color_text_info_list := make_color_text_info_list().duplicate().slice(0,8)
 	color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
