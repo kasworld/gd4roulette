@@ -32,7 +32,8 @@ func timed_message_init() -> void:
 	$TimedMessage.show_message("",0)
 
 func message_hidden(_s :String) -> void:
-	모두돌리기()
+	if 자동으로다시돌리기:
+		모두돌리기()
 
 func on_viewport_size_changed():
 	ui_panel_init()
@@ -61,8 +62,8 @@ func _ready() -> void:
 	$FixedCameraLight.make_current()
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list().duplicate().slice(0,5)
-	color_text_info_list.shuffle()
+	var color_text_info_list := make_color_text_info_list().duplicate().slice(0,3)
+	#color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
 	wheel들.append(rp)

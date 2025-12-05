@@ -78,11 +78,11 @@ func cell중심각도(cell번호 :int) -> float:
 
 # 0 - 1
 func 중심각차이율(rad :float) -> float:
-	var 각도차이 := fposmod(rad, cell각도)
+	var 각도차이 := fposmod(PI/2 +rad, cell각도)
 	return abs(각도차이 / cell각도 - 0.5) *2
 
-func cell중심근처인가(rad :float) -> bool:
-	var 현재cell번호 := 각도로cell번호얻기(rad)
-	var 현재각도 = fposmod(-rad, 2*PI)
-	var 중심각도 = cell중심각도(현재cell번호)
-	return abs(현재각도 - 중심각도 ) <= cell각도/100
+#func cell중심근처인가(rad :float) -> bool:
+	#var 현재cell번호 := 각도로cell번호얻기(rad)
+	#var 현재각도 = fposmod(-rad, 2*PI)
+	#var 중심각도 = cell중심각도(현재cell번호)
+	#return abs(현재각도 - 중심각도 ) <= cell각도/100
