@@ -23,6 +23,9 @@ func init(각도 :float, 반지름 :float, 깊이 :float, color_text_info :Array
 	$"글씨".mesh.pixel_size = 반지름 *sin(각도) *0.05
 	return self
 
+func 글내용얻기() -> String:
+	return $"글씨".mesh.text
+
 func 강조상태켜기() -> void:
 	if $AnimationPlayer.is_playing():
 		return

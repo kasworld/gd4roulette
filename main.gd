@@ -56,7 +56,7 @@ func _ready() -> void:
 	$AxisArrow3D.set_size(1000)
 
 	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(0,1):
+	for z in range(-10,11):
 		wheel추가(0, r, r/100, Vector3(0,0,z*100))
 
 	$FixedCameraLight.make_current()
@@ -70,6 +70,7 @@ func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roul
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
+	rp.rotation.z = PI/2
 	return rp
 
 func make_random_color() -> Color:
@@ -84,7 +85,7 @@ func 결과가결정됨(_rl :Roulette) -> void:
 	var 결과들 = ""
 	if 모두멈추었나 and 자동으로다시돌리기:
 		for n in wheel들:
-			결과들 += n.선택된cell얻기().글내용 + " "
+			결과들 += n.선택된cell얻기().글내용얻기() + " "
 		$TimedMessage.show_message( 결과들, 3)
 
 func 모두돌리기() -> void:
@@ -141,6 +142,8 @@ func _on_참가자숨기기_pressed() -> void:
 
 func _on_자동돌리기_pressed() -> void:
 	자동으로다시돌리기 = not 자동으로다시돌리기
+	if 자동으로다시돌리기:
+		모두돌리기()
 
 func _on_h_slider_value_changed(value: float) -> void:
 	wheel들[0].get_wheel().rotation.z = deg_to_rad(value)
