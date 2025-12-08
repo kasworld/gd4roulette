@@ -1,11 +1,13 @@
 extends Node3D
 
-var colorlist :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_light_color_list())
+var colorlist_dark :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_dark_color_list())
+var colorlist_light :Array = NamedColorList.filter_to_colorlist(NamedColorList.make_light_color_list())
 var cardlist :Array = PlayingCard.make_deck_with_joker()
-func make_color_text_info_list() -> Array:
+
+func make_color_text_info_list(colist :Array, cdlist :Array) -> Array:
 	var rtn := []
-	for i in cardlist.size():
-		rtn.append( [ colorlist[i%colorlist.size()], cardlist[i] ] )
+	for i in cdlist.size():
+		rtn.append( [ colist[i%colist.size()], cdlist[i] ] )
 	return rtn
 
 var WorldSize :Vector3
@@ -56,13 +58,13 @@ func _ready() -> void:
 	$AxisArrow3D.set_size(1000)
 
 	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(-10,11):
-		wheel추가(0, r, r/100, Vector3(0,0,z*100))
+	for z in range(-0,1):
+		wheel추가( 0, r, r/100, Vector3(0, 0, z*100) )
 
 	$FixedCameraLight.make_current()
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list().duplicate() #.slice(0,8)
+	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate() #.slice(0,8)
 	#color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
@@ -95,9 +97,9 @@ func 모두돌리기() -> void:
 			rot = -rot
 		n.돌리기시작.call_deferred(rot)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	for rp in wheel들:
-		rp.돌리기(delta)
+		rp.장식돌리기()
 		rp.선택된cell강조상태켜기()
 
 	var t := Time.get_unix_time_from_system() /2.3
