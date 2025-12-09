@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://byl56f6ovr5ld"]
+[gd_scene load_steps=11 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" uid="uid://duug0uf5apx3u" path="res://main.gd" id="1_uhxg1"]
 [ext_resource type="PackedScene" uid="uid://dl14flc0fkeyt" path="res://axis_arrow3d/axis_arrow_3d.tscn" id="4_1bvp3"]
@@ -11,6 +11,20 @@
 [sub_resource type="Theme" id="Theme_7mycd"]
 resource_local_to_scene = true
 default_font = SubResource("SystemFont_bejao")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lquwl"]
+
+[sub_resource type="Sky" id="Sky_7mycd"]
+sky_material = SubResource("ProceduralSkyMaterial_lquwl")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 2
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_7mycd")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 2
+glow_enabled = true
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uhxg1")
@@ -85,6 +99,9 @@ theme = SubResource("Theme_7mycd")
 [node name="MovingCameraLightHober" parent="." instance=ExtResource("5_7mycd")]
 
 [node name="MovingCameraLightAround" parent="." instance=ExtResource("5_7mycd")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lquwl")
 
 [connection signal="value_changed" from="오른쪽패널/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="오른쪽패널/참가자숨기기" to="." method="_on_참가자숨기기_pressed"]

@@ -59,7 +59,7 @@ func _ready() -> void:
 
 	var r = min( vp_size.x, vp_size.y)*0.7
 	for z in range(-10,11):
-		wheel추가( 0, r, r/100, Vector3(0, 0, z*100) )
+		wheel추가( 0, r, r/20, Vector3(0, 0, z*100) )
 
 	$FixedCameraLight.make_current()
 
