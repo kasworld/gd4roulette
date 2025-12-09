@@ -59,12 +59,12 @@ func _ready() -> void:
 
 	var r = min( vp_size.x, vp_size.y)*0.7
 	for z in range(-0,1):
-		wheel추가( 0, r, r/100, Vector3(0, 0, z*100) )
+		wheel추가( 0, r, r/10, Vector3(0, 0, z*100) )
 
 	$FixedCameraLight.make_current()
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate() #.slice(0,8)
+	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate().slice(0,8)
 	#color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
@@ -72,7 +72,6 @@ func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roul
 	rp.rotation_stopped.connect(결과가결정됨)
 	add_child(rp)
 	rp.position = pos
-	rp.rotation.z = PI/2
 	return rp
 
 func make_random_color() -> Color:
