@@ -58,8 +58,8 @@ func _ready() -> void:
 	$AxisArrow3D.set_size(1000)
 
 	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(-0,1):
-		wheel추가( 0, r, r/10, Vector3(0, 0, z*100) )
+	for z in range(-10,11):
+		wheel추가( 0, r, r/100, Vector3(0, 0, z*100) )
 
 	$FixedCameraLight.make_current()
 
