@@ -64,7 +64,7 @@ func _ready() -> void:
 	$FixedCameraLight.make_current()
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate().slice(0,8)
+	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate()#.slice(0,8)
 	#color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )

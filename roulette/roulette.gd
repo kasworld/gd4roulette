@@ -79,12 +79,11 @@ func 색설정하기(원판색 :Color, 장식색 :Color, 화살표색 :Color) ->
 	$"화살표".set_color(화살표색)
 	$"Wheel/BarTree2".init_with_color(장식색, 원판색)
 	$"Wheel/BarTree3".init_with_color(장식색.inverted(), 원판색.inverted())
-	var n :int = $Wheel.cell_count얻기()
-	$"Wheel/BarTree2".set_visible_bar_count(n)
-	$"Wheel/BarTree3".set_visible_bar_count(n)
-
-
-
+	var count :int = $Wheel.cell_count얻기()
+	$"Wheel/BarTree2".set_visible_bar_count(count)
+	$"Wheel/BarTree3".set_visible_bar_count(count)
+	for i in count:
+		$"Wheel/구분선들".set_inst_color(i, 원판색.inverted())
 
 func 장식돌리기() -> void:
 	$"Wheel/BarTree2".bar_rotation = -$"Wheel".rotation_per_second/10
