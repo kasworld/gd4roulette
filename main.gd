@@ -10,6 +10,14 @@ func make_color_text_info_list(colist :Array, cdlist :Array) -> Array:
 		rtn.append( [ colist[i%colist.size()], cdlist[i] ] )
 	return rtn
 
+func make_gradient_text_info_list(co1 :Color, co2 :Color, cdlist :Array) -> Array:
+	var rtn := []
+	for i in cdlist.size():
+		var rate := float(i)/cdlist.size()
+		rtn.append( [ co1.lerp(co2, rate), cdlist[i] ] )
+	return rtn
+
+
 var WorldSize :Vector3
 var vp_size :Vector2
 var 짧은길이 :float
@@ -57,14 +65,16 @@ func _ready() -> void:
 	$MovingCameraLightAround.set_center_pos_far( Vector3.ZERO, Vector3(0, 0, WorldSize.z), WorldSize.length()*2)
 	$AxisArrow3D.set_size(1000)
 
-	var r = min( vp_size.x, vp_size.y)*0.7
-	for z in range(-10,11):
-		wheel추가( 0, r, r/20, Vector3(0, 0, z*100) )
+	var r :float = min( vp_size.x, vp_size.y)*0.7
+	for z in range(-20,21):
+		var rr := r * ( sin(z/10.0*PI)/6 +1.0)
+		wheel추가( 0, rr, rr/20, Vector3(0, 0, z*100) )
 
 	$FixedCameraLight.make_current()
 
 func wheel추가(id :int, 반지름 :float, 깊이 :float, pos :Vector3) -> Roulette:
-	var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate()#.slice(0,8)
+	var color_text_info_list := make_gradient_text_info_list(Color.RED, Color.BLUE, cardlist)
+	#var color_text_info_list := make_color_text_info_list(colorlist_light, cardlist).duplicate()#.slice(0,8)
 	#color_text_info_list.shuffle()
 	var rp = preload("res://roulette/roulette.tscn").instantiate().init(id, 반지름, 깊이, color_text_info_list)
 	rp.색설정하기(make_random_color(), make_random_color(), make_random_color() )
@@ -90,11 +100,17 @@ func 결과가결정됨(_rl :Roulette) -> void:
 		$TimedMessage.show_message( 결과들, 3)
 
 func 모두돌리기() -> void:
+	var rot := PI
 	for n in wheel들:
-		var rot = randfn(2*PI, PI/2)
-		if randi_range(0,1) == 0:
-			rot = -rot
+		#var rot = randfn(2*PI, PI/2)
+		#if randi_range(0,1) == 0:
+			#rot = -rot
 		n.돌리기시작.call_deferred(rot)
+		rot += PI/100
+
+func 회전초기화하기() -> void:
+	for n in wheel들:
+		n.get_wheel().회전초기화하기()
 
 func _process(_delta: float) -> void:
 	for rp in wheel들:
@@ -124,6 +140,7 @@ var key2fn = {
 	KEY_ENTER:_on_카메라변경_pressed,
 	KEY_PAGEUP:_on_button_fov_up_pressed,
 	KEY_PAGEDOWN:_on_button_fov_down_pressed,
+	KEY_HOME: 회전초기화하기,
 }
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:

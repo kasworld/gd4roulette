@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://sjnpttkqk1qs"]
+[gd_scene load_steps=10 format=3 uid="uid://sjnpttkqk1qs"]
 
 [ext_resource type="Script" uid="uid://dwpxaxvkorfar" path="res://roulette/roulette.gd" id="1_7pkjq"]
 [ext_resource type="PackedScene" uid="uid://d4kkhfcvaexg1" path="res://valve_handle/valve_handle.tscn" id="2_14kvd"]
@@ -11,10 +11,17 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_cdnmj"]
 material = SubResource("StandardMaterial3D_wjn2p")
 
+[sub_resource type="MultiMesh" id="MultiMesh_wjn2p"]
+resource_local_to_scene = true
+
+[sub_resource type="MultiMesh" id="MultiMesh_cdnmj"]
+resource_local_to_scene = true
+
 [node name="Roulette" type="Node3D"]
 script = ExtResource("1_7pkjq")
 
 [node name="화살표" parent="." instance=ExtResource("2_ed2fd")]
+visible = false
 
 [node name="IDLabel" type="Label3D" parent="."]
 visible = false
@@ -34,6 +41,8 @@ visible = false
 
 [node name="BarTree2" parent="Wheel" instance=ExtResource("3_phm1c")]
 visible = false
+multimesh = SubResource("MultiMesh_wjn2p")
 
 [node name="BarTree3" parent="Wheel" instance=ExtResource("3_phm1c")]
 visible = false
+multimesh = SubResource("MultiMesh_cdnmj")
