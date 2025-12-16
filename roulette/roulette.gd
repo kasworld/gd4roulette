@@ -37,11 +37,12 @@ func init(ida :int, 반지름a :float, 깊이a :float, color_text_info_list :Arr
 	$"Wheel/ValveHandle".rotation.x = PI/2
 
 	var count := color_text_info_list.size()
-	$"Wheel/BarTree2".init_bar_with_color(Color.BLACK, Color.WHITE, count).init_bar_transform(반지름, 깊이, 반지름*0.05, 0)
+	var tree_size := Vector3(반지름, 깊이, 반지름*0.05)
+	$"Wheel/BarTree2".init_bartree_with_color(Color.BLACK, Color.WHITE, count).init_bartree_transform(tree_size, 0)
 	$"Wheel/BarTree2".position.z = 깊이/2
 	$"Wheel/BarTree2".rotation.x = PI/2
 
-	$"Wheel/BarTree3".init_bar_with_color(Color.BLACK, Color.WHITE, count).init_bar_transform(반지름, 깊이, 반지름*0.05, 0)
+	$"Wheel/BarTree3".init_bartree_with_color(Color.BLACK, Color.WHITE, count).init_bartree_transform(tree_size, 0)
 	$"Wheel/BarTree3".position.z = 깊이/2
 	$"Wheel/BarTree3".rotation.x = PI/2
 	$"Wheel/BarTree3".rotate(Vector3.FORWARD, PI/2)
@@ -67,8 +68,8 @@ func 색설정하기(원판색 :Color, 장식색 :Color, 화살표색 :Color) ->
 	$"Wheel/원판".mesh.material.albedo_color = 원판색
 	$"Wheel/ValveHandle".색바꾸기(장식색)
 	$"화살표".set_color(화살표색)
-	$"Wheel/BarTree2".set_gradient_color(장식색, 원판색)
-	$"Wheel/BarTree3".set_gradient_color(장식색.inverted(), 원판색.inverted())
+	$"Wheel/BarTree2".set_gradient_color_all(장식색, 원판색)
+	$"Wheel/BarTree3".set_gradient_color_all(장식색.inverted(), 원판색.inverted())
 	var count :int = $Wheel.cell_count얻기()
 	$"Wheel/BarTree2".set_visible_count(count)
 	$"Wheel/BarTree3".set_visible_count(count)
@@ -83,8 +84,8 @@ func 돌리기시작(spd :float) -> void:
 
 var bar_rot := 0.1
 func _process(_delta: float) -> void:
-	$"Wheel/BarTree2".rotate_bar_y(bar_rot)
-	$"Wheel/BarTree3".rotate_bar_y(bar_rot)
+	$"Wheel/BarTree2".rotate_tree_bar_y(bar_rot)
+	$"Wheel/BarTree3".rotate_tree_bar_y(bar_rot)
 
 func 멈추기시작(accel :float=0.5) -> void:
 	$"Wheel".멈추기시작(accel)
