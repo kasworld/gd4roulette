@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://byl56f6ovr5ld"]
 
 [ext_resource type="Script" uid="uid://duug0uf5apx3u" path="res://main.gd" id="1_uhxg1"]
-[ext_resource type="PackedScene" uid="uid://dl14flc0fkeyt" path="res://axis_arrow3d/axis_arrow_3d.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dl14flc0fkeyt" path="res://axis_arrow_3d/axis_arrow_3d.tscn" id="4_1bvp3"]
 [ext_resource type="Theme" uid="uid://u40dw1dx85dc" path="res://패널테마.tres" id="4_endm8"]
 [ext_resource type="PackedScene" uid="uid://ces3a6yv0c5fi" path="res://moving_carmera_light/moving_camera_light.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c6cct2gj2a3im" path="res://timed_message/timed_message.tscn" id="5_lquwl"]
